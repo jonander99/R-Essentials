@@ -1,6 +1,6 @@
 --- 
 title: "Essential R Skills"
-author: "Jon Anderson"
+author: "UMN-Morris Statistics Discipline"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
