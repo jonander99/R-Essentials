@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 6 Summary Statistics For One Variable | Essential R Skills</title>
+  <meta name="description" content="This book provides R code examples expected in all UMN-Morris Statistics courses." />
+  <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 6 Summary Statistics For One Variable | Essential R Skills" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This book provides R code examples expected in all UMN-Morris Statistics courses." />
+  <meta name="github-repo" content="jonander99/R-Essentials" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 6 Summary Statistics For One Variable | Essential R Skills" />
+  
+  <meta name="twitter:description" content="This book provides R code examples expected in all UMN-Morris Statistics courses." />
+  
+
+<meta name="author" content="Jon Anderson" />
+
+
+<meta name="date" content="2020-06-01" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="UnivariateGraphicalDisplays.html"/>
+<link rel="next" href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Essential R Skills</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Motivation</a></li>
+<li class="chapter" data-level="2" data-path="GettingStarted.html"><a href="GettingStarted.html"><i class="fa fa-check"></i><b>2</b> Getting Started</a><ul>
+<li class="chapter" data-level="2.1" data-path="GettingStarted.html"><a href="GettingStarted.html#packages"><i class="fa fa-check"></i><b>2.1</b> Packages</a></li>
+<li class="chapter" data-level="2.2" data-path="GettingStarted.html"><a href="GettingStarted.html#the-tidyverse-package"><i class="fa fa-check"></i><b>2.2</b> The tidyverse Package</a></li>
+<li class="chapter" data-level="2.3" data-path="GettingStarted.html"><a href="GettingStarted.html#gapminder-data"><i class="fa fa-check"></i><b>2.3</b> Gapminder Data:</a></li>
+<li class="chapter" data-level="2.4" data-path="GettingStarted.html"><a href="GettingStarted.html#set-working-directory"><i class="fa fa-check"></i><b>2.4</b> Set Working Directory</a></li>
+<li class="chapter" data-level="2.5" data-path="GettingStarted.html"><a href="GettingStarted.html#reading-data-from-a-csv-file"><i class="fa fa-check"></i><b>2.5</b> Reading Data From a CSV File</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="OverviewDataframe.html"><a href="OverviewDataframe.html"><i class="fa fa-check"></i><b>3</b> Overview of a Dataframe</a><ul>
+<li class="chapter" data-level="3.1" data-path="OverviewDataframe.html"><a href="OverviewDataframe.html#glimpse"><i class="fa fa-check"></i><b>3.1</b> glimpse</a></li>
+<li class="chapter" data-level="3.2" data-path="OverviewDataframe.html"><a href="OverviewDataframe.html#head"><i class="fa fa-check"></i><b>3.2</b> head</a></li>
+<li class="chapter" data-level="3.3" data-path="OverviewDataframe.html"><a href="OverviewDataframe.html#summary"><i class="fa fa-check"></i><b>3.3</b> summary</a></li>
+<li class="chapter" data-level="3.4" data-path="OverviewDataframe.html"><a href="OverviewDataframe.html#dataframe-details-funmodeling-package"><i class="fa fa-check"></i><b>3.4</b> Dataframe Details: funModeling package</a></li>
+<li class="chapter" data-level="3.5" data-path="OverviewDataframe.html"><a href="OverviewDataframe.html#dataframe-details-skimr-package"><i class="fa fa-check"></i><b>3.5</b> Dataframe Details: skimr package</a></li>
+<li class="chapter" data-level="3.6" data-path="OverviewDataframe.html"><a href="OverviewDataframe.html#describe-hmisc-package"><i class="fa fa-check"></i><b>3.6</b> describe: Hmisc package</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html"><i class="fa fa-check"></i><b>4</b> Introduction to Data Wrangling</a><ul>
+<li class="chapter" data-level="4.1" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#subset-using-filter"><i class="fa fa-check"></i><b>4.1</b> Subset using filter</a></li>
+<li class="chapter" data-level="4.2" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#subset-using-multiple-conditions"><i class="fa fa-check"></i><b>4.2</b> Subset using multiple conditions</a></li>
+<li class="chapter" data-level="4.3" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#saving-as-a-new-dataframe"><i class="fa fa-check"></i><b>4.3</b> Saving as a new dataframe</a></li>
+<li class="chapter" data-level="4.4" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#subset-using-select"><i class="fa fa-check"></i><b>4.4</b> Subset using select</a></li>
+<li class="chapter" data-level="4.5" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#order-using-arrange"><i class="fa fa-check"></i><b>4.5</b> Order using arrange</a></li>
+<li class="chapter" data-level="4.6" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#grouped-filter"><i class="fa fa-check"></i><b>4.6</b> Grouped Filter</a></li>
+<li class="chapter" data-level="4.7" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#new-variables-using-mutate"><i class="fa fa-check"></i><b>4.7</b> New Variables Using Mutate</a></li>
+<li class="chapter" data-level="4.8" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#missing-values"><i class="fa fa-check"></i><b>4.8</b> Missing Values</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html"><i class="fa fa-check"></i><b>5</b> Univariate Graphical Displays</a><ul>
+<li class="chapter" data-level="5.1" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html#a-quantitative-variable"><i class="fa fa-check"></i><b>5.1</b> A Quantitative Variable</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html#dotplot"><i class="fa fa-check"></i><b>5.1.1</b> Dotplot</a></li>
+<li class="chapter" data-level="5.1.2" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html#histogram"><i class="fa fa-check"></i><b>5.1.2</b> Histogram</a></li>
+<li class="chapter" data-level="5.1.3" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html#density-plot"><i class="fa fa-check"></i><b>5.1.3</b> Density Plot</a></li>
+<li class="chapter" data-level="5.1.4" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html#boxplot"><i class="fa fa-check"></i><b>5.1.4</b> Boxplot</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html#displays-of-a-categorical-variable"><i class="fa fa-check"></i><b>5.2</b> Displays of a Categorical Variable</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html#bar-graph"><i class="fa fa-check"></i><b>5.2.1</b> Bar Graph</a></li>
+<li class="chapter" data-level="5.2.2" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html#pie-graph"><i class="fa fa-check"></i><b>5.2.2</b> Pie Graph</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html"><i class="fa fa-check"></i><b>6</b> Summary Statistics For One Variable</a><ul>
+<li class="chapter" data-level="6.1" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#one-quantitative-variable"><i class="fa fa-check"></i><b>6.1</b> One Quantitative Variable</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#using-base-r-summary-function"><i class="fa fa-check"></i><b>6.1.1</b> Using base R summary function</a></li>
+<li class="chapter" data-level="6.1.2" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#using-dplyr-summarise-function"><i class="fa fa-check"></i><b>6.1.2</b> Using dplyr summarise function</a></li>
+<li class="chapter" data-level="6.1.3" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#summary-statistics-using-funmodeling-package"><i class="fa fa-check"></i><b>6.1.3</b> Summary Statistics Using funModeling package</a></li>
+<li class="chapter" data-level="6.1.4" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#summary-statistics-skimr-package"><i class="fa fa-check"></i><b>6.1.4</b> Summary Statistics: skimr package</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#one-categorical-variable"><i class="fa fa-check"></i><b>6.2</b> One Categorical Variable</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#counting-values"><i class="fa fa-check"></i><b>6.2.1</b> Counting Values</a></li>
+<li class="chapter" data-level="6.2.2" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#categorical-variable-skimr-package"><i class="fa fa-check"></i><b>6.2.2</b> Categorical variable: skimr package</a></li>
+<li class="chapter" data-level="6.2.3" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#categorical-variable-funmodeling-package"><i class="fa fa-check"></i><b>6.2.3</b> Categorical variable: funModeling package</a></li>
+<li class="chapter" data-level="6.2.4" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#categorical-variable-janitor-package"><i class="fa fa-check"></i><b>6.2.4</b> Categorical variable: janitor package</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><i class="fa fa-check"></i><b>7</b> Exploratory Data Analysis For One Quantitative Variable: by Groups</a><ul>
+<li class="chapter" data-level="7.1" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#summary-statistics-dplyr"><i class="fa fa-check"></i><b>7.1</b> Summary Statistics: dplyr</a></li>
+<li class="chapter" data-level="7.2" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#summary-statistics-skimr"><i class="fa fa-check"></i><b>7.2</b> Summary Statistics: skimr</a></li>
+<li class="chapter" data-level="7.3" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#graphical-displays-of-a-quantitative-variable-separated-by-groups"><i class="fa fa-check"></i><b>7.3</b> Graphical Displays of a quantitative variable, separated by groups</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#dotplots"><i class="fa fa-check"></i><b>7.3.1</b> Dotplots</a></li>
+<li class="chapter" data-level="7.3.2" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#histograms"><i class="fa fa-check"></i><b>7.3.2</b> Histograms</a></li>
+<li class="chapter" data-level="7.3.3" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#density-plots-in-facets"><i class="fa fa-check"></i><b>7.3.3</b> Density Plots in Facets</a></li>
+<li class="chapter" data-level="7.3.4" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#overlaid-density-plots"><i class="fa fa-check"></i><b>7.3.4</b> Overlaid Density Plots</a></li>
+<li class="chapter" data-level="7.3.5" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#boxplots-grouped-data"><i class="fa fa-check"></i><b>7.3.5</b> Boxplots, Grouped Data</a></li>
+<li class="chapter" data-level="7.3.6" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#boxplots-overlay-points-on-the-boxplots-with-color-control"><i class="fa fa-check"></i><b>7.3.6</b> Boxplots, overlay points on the boxplots with color control</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="analysis-of-one-categorical-variable-by-another-categorical-variable.html"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html"><i class="fa fa-check"></i><b>8</b> Analysis of One Categorical Variable by another categorical variable</a><ul>
+<li class="chapter" data-level="8.1" data-path="analysis-of-one-categorical-variable-by-another-categorical-variable.html"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#tables"><i class="fa fa-check"></i><b>8.1</b> Tables</a></li>
+<li class="chapter" data-level="8.2" data-path="analysis-of-one-categorical-variable-by-another-categorical-variable.html"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#graphical-displays"><i class="fa fa-check"></i><b>8.2</b> Graphical Displays</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/jonander99/R-Essentials" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Essential R Skills</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="summary-statistics-for-one-variable" class="section level1">
+<h1><span class="header-section-number">Chapter 6</span> Summary Statistics For One Variable</h1>
+<div id="one-quantitative-variable" class="section level2">
+<h2><span class="header-section-number">6.1</span> One Quantitative Variable</h2>
+<div id="using-base-r-summary-function" class="section level3">
+<h3><span class="header-section-number">6.1.1</span> Using base R summary function</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(lifeExp) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summary</span>()</code></pre></div>
+<pre><code>##     lifeExp     
+##  Min.   :36.09  
+##  1st Qu.:55.63  
+##  Median :69.39  
+##  Mean   :65.01  
+##  3rd Qu.:74.17  
+##  Max.   :80.69</code></pre>
+</div>
+<div id="using-dplyr-summarise-function" class="section level3">
+<h3><span class="header-section-number">6.1.2</span> Using dplyr summarise function</h3>
+<p>It is often helpful to create data summaries during preliminary phases of examination. Here is how to use the summarise command in the analysis pipeline system.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">      </span>dplyr<span class="op">::</span><span class="kw">summarise</span>(<span class="dt">meanLE=</span><span class="kw">mean</span>(lifeExp,<span class="dt">na.rm=</span><span class="ot">TRUE</span>),
+                       <span class="dt">medLE=</span><span class="kw">median</span>(lifeExp,<span class="dt">na.rm=</span><span class="ot">TRUE</span>),
+                       <span class="dt">sd=</span><span class="kw">sd</span>(lifeExp,<span class="dt">na.rm=</span><span class="ot">TRUE</span>),
+                       <span class="dt">iqr=</span><span class="kw">IQR</span>(lifeExp,<span class="dt">na.rm=</span><span class="ot">TRUE</span>),
+                      <span class="dt">Q1=</span><span class="kw">quantile</span>(lifeExp,<span class="dt">probs=</span><span class="fl">0.25</span>,<span class="dt">na.rm=</span><span class="ot">TRUE</span>),
+                      <span class="dt">Q3=</span><span class="kw">quantile</span>(lifeExp,<span class="dt">probs=</span><span class="fl">0.75</span>),
+                      <span class="dt">n=</span><span class="kw">n</span>())</code></pre></div>
+<pre><code>## # A tibble: 1 x 7
+##   meanLE medLE    sd   iqr    Q1    Q3     n
+##    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;
+## 1   65.0  69.4  11.6  18.5  55.6  74.2   142</code></pre>
+</div>
+<div id="summary-statistics-using-funmodeling-package" class="section level3">
+<h3><span class="header-section-number">6.1.3</span> Summary Statistics Using funModeling package</h3>
+<p>The <code>profiling_num</code> and <code>plot_num</code> functions from the <em>funModeling</em> package help give a concise numeric and visual overview of the numeric variables in the dataframe.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">funModeling<span class="op">::</span><span class="kw">profiling_num</span>(gapminder)</code></pre></div>
+<pre><code>##    variable         mean      std_dev variation_coef        p_01        p_05
+## 1      year 1.979500e+03 1.726533e+01    0.008722066   1952.0000   1952.0000
+## 2   lifeExp 5.947444e+01 1.291711e+01    0.217187544     33.4926     38.4924
+## 3       pop 2.960121e+07 1.061579e+08    3.586268548 154117.9200 475458.9000
+## 4 gdpPercap 7.215327e+03 9.857455e+03    1.366182632    369.2201    547.9964
+##          p_25         p_50         p_75         p_95         p_99   skewness
+## 1    1965.750    1979.5000 1.993250e+03     2007.000 2.007000e+03  0.0000000
+## 2      48.198      60.7125 7.084550e+01       77.437 8.023892e+01 -0.2524798
+## 3 2793664.000 7023595.5000 1.958522e+07 89822054.500 6.319900e+08  8.3328742
+## 4    1202.060    3531.8470 9.325462e+03    26608.333 3.678357e+04  3.8468819
+##    kurtosis          iqr                       range_98
+## 1  1.783217 2.750000e+01                   [1952, 2007]
+## 2  1.873099 2.264750e+01            [33.4926, 80.23892]
+## 3 80.716151 1.679156e+07  [154117.92, 631990000.000002]
+## 4 30.431702 8.123402e+03 [369.220127794, 36783.5723707]
+##                       range_80
+## 1                 [1957, 2002]
+## 2            [41.5108, 75.097]
+## 3       [946367.1, 54801369.5]
+## 4 [687.71836128, 19449.138209]</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">funModeling<span class="op">::</span><span class="kw">plot_num</span>(gapminder)</code></pre></div>
+<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
+<p>This example shows summary statistics for two quantitative variables. For only one variable, simply use <code>select</code> for only one variable.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(lifeExp,gdpPercap) <span class="op">%&gt;%</span>
+funModeling<span class="op">::</span><span class="kw">profiling_num</span>() </code></pre></div>
+<pre><code>##    variable       mean     std_dev variation_coef      p_01      p_05
+## 1   lifeExp   65.01468    11.55944      0.1777974  40.03681  43.83415
+## 2 gdpPercap 9090.17536 10171.49326      1.1189546 434.72721 590.90598
+##         p_25     p_50        p_75       p_95       p_99   skewness kurtosis
+## 1   55.63375   69.394    74.16975    78.7635    79.7499 -0.6427906 2.218599
+## 2 1366.83796 4781.825 12022.86719 29088.8709 38442.0133  1.2979366 3.604446
+##         iqr                       range_98                     range_80
+## 1    18.536            [40.03681, 79.7499]            [47.4671, 77.548]
+## 2 10656.029 [434.727210598, 38442.0133187] [789.29339925, 26905.596049]</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#</span>
+gapminder <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(lifeExp,gdpPercap) <span class="op">%&gt;%</span>
+funModeling<span class="op">::</span><span class="kw">plot_num</span>() </code></pre></div>
+<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-56-1.png" width="672" /></p>
+</div>
+<div id="summary-statistics-skimr-package" class="section level3">
+<h3><span class="header-section-number">6.1.4</span> Summary Statistics: skimr package</h3>
+<p>The <em>skimr</em> package produces summary statistics about variables and overviews for dataframes. It is easy to manipulate and use pipes, select, and filter from the tidyverse family of packages.</p>
+<p>The next code supplies a dataframe that contains both categorical variables (continent), and numeric variables (lifeExp, gdpPercap). Numeric variables are chosen with the <code>yank</code> function, then some attributes are omitted from the display (n_missing, complete_rate) using the <code>select</code> function from dplyr.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">varlist &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;n_missing&quot;</span>,<span class="st">&quot;complete_rate&quot;</span>)
+gapminder <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>year, <span class="op">-</span>country, <span class="op">-</span>pop) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span>skimr<span class="op">::</span><span class="kw">skim_without_charts</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span>skimr<span class="op">::</span><span class="kw">yank</span>(<span class="st">&quot;numeric&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(<span class="op">-</span><span class="kw">one_of</span>(varlist))</code></pre></div>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">lifeExp</td>
+<td align="right">65.01</td>
+<td align="right">11.56</td>
+<td align="right">36.09</td>
+<td align="right">55.63</td>
+<td align="right">69.39</td>
+<td align="right">74.17</td>
+<td align="right">80.69</td>
+</tr>
+<tr class="even">
+<td align="left">gdpPercap</td>
+<td align="right">9090.18</td>
+<td align="right">10171.49</td>
+<td align="right">312.19</td>
+<td align="right">1366.84</td>
+<td align="right">4781.83</td>
+<td align="right">12022.87</td>
+<td align="right">41283.16</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="one-categorical-variable" class="section level2">
+<h2><span class="header-section-number">6.2</span> One Categorical Variable</h2>
+<div id="counting-values" class="section level3">
+<h3><span class="header-section-number">6.2.1</span> Counting Values</h3>
+<p>The next command counts the number of rows in the dataset for each continent - then we show a variant which pipes the output into the kable function for a more attractive table.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(continent)</code></pre></div>
+<pre><code>## # A tibble: 5 x 2
+##   continent     n
+##   &lt;fct&gt;     &lt;int&gt;
+## 1 Africa      624
+## 2 Americas    300
+## 3 Asia        396
+## 4 Europe      360
+## 5 Oceania      24</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#</span>
+gapminder <span class="op">%&gt;%</span><span class="st">  </span><span class="kw">count</span>(continent) <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw">kable</span>()</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">continent</th>
+<th align="right">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Africa</td>
+<td align="right">624</td>
+</tr>
+<tr class="even">
+<td align="left">Americas</td>
+<td align="right">300</td>
+</tr>
+<tr class="odd">
+<td align="left">Asia</td>
+<td align="right">396</td>
+</tr>
+<tr class="even">
+<td align="left">Europe</td>
+<td align="right">360</td>
+</tr>
+<tr class="odd">
+<td align="left">Oceania</td>
+<td align="right">24</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#</span>
+gapminder <span class="op">%&gt;%</span><span class="st">  </span><span class="kw">count</span>(continent, <span class="dt">sort=</span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw">kable</span>()</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">continent</th>
+<th align="right">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Africa</td>
+<td align="right">624</td>
+</tr>
+<tr class="even">
+<td align="left">Asia</td>
+<td align="right">396</td>
+</tr>
+<tr class="odd">
+<td align="left">Europe</td>
+<td align="right">360</td>
+</tr>
+<tr class="even">
+<td align="left">Americas</td>
+<td align="right">300</td>
+</tr>
+<tr class="odd">
+<td align="left">Oceania</td>
+<td align="right">24</td>
+</tr>
+</tbody>
+</table>
+<p>The previous code tells us how many lines (rows) for each continent, but many rows are repeated for each country - just different years.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span> <span class="op">|</span><span class="st"> </span>year<span class="op">==</span><span class="dv">1967</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(continent) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>(), <span class="dt">n_countries =</span> <span class="kw">n_distinct</span>(country)) <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw">kable</span>()</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">continent</th>
+<th align="right">n</th>
+<th align="right">n_countries</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Africa</td>
+<td align="right">104</td>
+<td align="right">52</td>
+</tr>
+<tr class="even">
+<td align="left">Americas</td>
+<td align="right">50</td>
+<td align="right">25</td>
+</tr>
+<tr class="odd">
+<td align="left">Asia</td>
+<td align="right">66</td>
+<td align="right">33</td>
+</tr>
+<tr class="even">
+<td align="left">Europe</td>
+<td align="right">60</td>
+<td align="right">30</td>
+</tr>
+<tr class="odd">
+<td align="left">Oceania</td>
+<td align="right">4</td>
+<td align="right">2</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="categorical-variable-skimr-package" class="section level3">
+<h3><span class="header-section-number">6.2.2</span> Categorical variable: skimr package</h3>
+<p>Here we summarize a categorical variable (continent), and observe it has 5 unique values (levels) and the most frequent values are displayed.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(lifeExp,continent) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span>skimr<span class="op">::</span><span class="kw">skim_without_charts</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span>skimr<span class="op">::</span><span class="kw">yank</span>(<span class="st">&quot;factor&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(<span class="op">-</span>n_missing,<span class="op">-</span>ordered,<span class="op">-</span>complete_rate)</code></pre></div>
+<p><strong>Variable type: factor</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_unique</th>
+<th align="left">top_counts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">continent</td>
+<td align="right">5</td>
+<td align="left">Afr: 52, Asi: 33, Eur: 30, Ame: 25</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="categorical-variable-funmodeling-package" class="section level3">
+<h3><span class="header-section-number">6.2.3</span> Categorical variable: funModeling package</h3>
+<p>The <em>funModeling</em> package gives an easy way to learn about categorical variables of types: character and factor. There are two categorical variables in the gapminder dataframe: country and continent. There are a lot of countries, so we demonstrate this command for only the continent variable.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Frequency distribution of entire dataframe</span>
+<span class="co"># will produce lots of output and warnings</span>
+<span class="co">#funModeling::freq(gapminder)</span>
+<span class="co"># next command for one category variable:  continent</span>
+funModeling<span class="op">::</span><span class="kw">freq</span>(gapminder<span class="op">$</span>continent)</code></pre></div>
+<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-61-1.png" width="672" /></p>
+<pre><code>##        var frequency percentage cumulative_perc
+## 1   Africa       624      36.62           36.62
+## 2     Asia       396      23.24           59.86
+## 3   Europe       360      21.13           80.99
+## 4 Americas       300      17.61           98.60
+## 5  Oceania        24       1.41          100.00</code></pre>
+<p>There are a lot of observations (rows) for Africa and very few for Oceania (Australia, New Zealand, etc).</p>
+</div>
+<div id="categorical-variable-janitor-package" class="section level3">
+<h3><span class="header-section-number">6.2.4</span> Categorical variable: janitor package</h3>
+<p>Let’s begin with the base R function <code>table</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(continent) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">table</span>()</code></pre></div>
+<pre><code>## .
+##   Africa Americas     Asia   Europe  Oceania 
+##       52       25       33       30        2</code></pre>
+<p>Now contrast with the <code>tabyl</code> function from the <em>janitor</em> package:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>janitor<span class="op">::</span><span class="kw">tabyl</span>(continent,<span class="dt">sort=</span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">continent</th>
+<th align="right">n</th>
+<th align="right">percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Africa</td>
+<td align="right">52</td>
+<td align="right">0.3661972</td>
+</tr>
+<tr class="even">
+<td align="left">Americas</td>
+<td align="right">25</td>
+<td align="right">0.1760563</td>
+</tr>
+<tr class="odd">
+<td align="left">Asia</td>
+<td align="right">33</td>
+<td align="right">0.2323944</td>
+</tr>
+<tr class="even">
+<td align="left">Europe</td>
+<td align="right">30</td>
+<td align="right">0.2112676</td>
+</tr>
+<tr class="odd">
+<td align="left">Oceania</td>
+<td align="right">2</td>
+<td align="right">0.0140845</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#</span>
+gapminder <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>janitor<span class="op">::</span><span class="kw">tabyl</span>(continent,<span class="dt">sort=</span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>janitor<span class="op">::</span><span class="kw">adorn_pct_formatting</span>(<span class="dt">digits=</span><span class="dv">2</span>,<span class="dt">affix_sign =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">continent</th>
+<th align="right">n</th>
+<th align="left">percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Africa</td>
+<td align="right">52</td>
+<td align="left">36.62%</td>
+</tr>
+<tr class="even">
+<td align="left">Americas</td>
+<td align="right">25</td>
+<td align="left">17.61%</td>
+</tr>
+<tr class="odd">
+<td align="left">Asia</td>
+<td align="right">33</td>
+<td align="left">23.24%</td>
+</tr>
+<tr class="even">
+<td align="left">Europe</td>
+<td align="right">30</td>
+<td align="left">21.13%</td>
+</tr>
+<tr class="odd">
+<td align="left">Oceania</td>
+<td align="right">2</td>
+<td align="left">1.41%</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="UnivariateGraphicalDisplays.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/jonander99/R-Essentials/edit/master/05-summaryStatsOneVar.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown-R-Essentials.pdf", "bookdown-R-Essentials.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

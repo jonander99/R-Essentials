@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 Introduction to Data Wrangling | Essential R Skills</title>
+  <meta name="description" content="This book provides R code examples expected in all UMN-Morris Statistics courses." />
+  <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 Introduction to Data Wrangling | Essential R Skills" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This book provides R code examples expected in all UMN-Morris Statistics courses." />
+  <meta name="github-repo" content="jonander99/R-Essentials" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Introduction to Data Wrangling | Essential R Skills" />
+  
+  <meta name="twitter:description" content="This book provides R code examples expected in all UMN-Morris Statistics courses." />
+  
+
+<meta name="author" content="Jon Anderson" />
+
+
+<meta name="date" content="2020-06-01" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="OverviewDataframe.html"/>
+<link rel="next" href="UnivariateGraphicalDisplays.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Essential R Skills</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Motivation</a></li>
+<li class="chapter" data-level="2" data-path="GettingStarted.html"><a href="GettingStarted.html"><i class="fa fa-check"></i><b>2</b> Getting Started</a><ul>
+<li class="chapter" data-level="2.1" data-path="GettingStarted.html"><a href="GettingStarted.html#packages"><i class="fa fa-check"></i><b>2.1</b> Packages</a></li>
+<li class="chapter" data-level="2.2" data-path="GettingStarted.html"><a href="GettingStarted.html#the-tidyverse-package"><i class="fa fa-check"></i><b>2.2</b> The tidyverse Package</a></li>
+<li class="chapter" data-level="2.3" data-path="GettingStarted.html"><a href="GettingStarted.html#gapminder-data"><i class="fa fa-check"></i><b>2.3</b> Gapminder Data:</a></li>
+<li class="chapter" data-level="2.4" data-path="GettingStarted.html"><a href="GettingStarted.html#set-working-directory"><i class="fa fa-check"></i><b>2.4</b> Set Working Directory</a></li>
+<li class="chapter" data-level="2.5" data-path="GettingStarted.html"><a href="GettingStarted.html#reading-data-from-a-csv-file"><i class="fa fa-check"></i><b>2.5</b> Reading Data From a CSV File</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="OverviewDataframe.html"><a href="OverviewDataframe.html"><i class="fa fa-check"></i><b>3</b> Overview of a Dataframe</a><ul>
+<li class="chapter" data-level="3.1" data-path="OverviewDataframe.html"><a href="OverviewDataframe.html#glimpse"><i class="fa fa-check"></i><b>3.1</b> glimpse</a></li>
+<li class="chapter" data-level="3.2" data-path="OverviewDataframe.html"><a href="OverviewDataframe.html#head"><i class="fa fa-check"></i><b>3.2</b> head</a></li>
+<li class="chapter" data-level="3.3" data-path="OverviewDataframe.html"><a href="OverviewDataframe.html#summary"><i class="fa fa-check"></i><b>3.3</b> summary</a></li>
+<li class="chapter" data-level="3.4" data-path="OverviewDataframe.html"><a href="OverviewDataframe.html#dataframe-details-funmodeling-package"><i class="fa fa-check"></i><b>3.4</b> Dataframe Details: funModeling package</a></li>
+<li class="chapter" data-level="3.5" data-path="OverviewDataframe.html"><a href="OverviewDataframe.html#dataframe-details-skimr-package"><i class="fa fa-check"></i><b>3.5</b> Dataframe Details: skimr package</a></li>
+<li class="chapter" data-level="3.6" data-path="OverviewDataframe.html"><a href="OverviewDataframe.html#describe-hmisc-package"><i class="fa fa-check"></i><b>3.6</b> describe: Hmisc package</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html"><i class="fa fa-check"></i><b>4</b> Introduction to Data Wrangling</a><ul>
+<li class="chapter" data-level="4.1" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#subset-using-filter"><i class="fa fa-check"></i><b>4.1</b> Subset using filter</a></li>
+<li class="chapter" data-level="4.2" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#subset-using-multiple-conditions"><i class="fa fa-check"></i><b>4.2</b> Subset using multiple conditions</a></li>
+<li class="chapter" data-level="4.3" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#saving-as-a-new-dataframe"><i class="fa fa-check"></i><b>4.3</b> Saving as a new dataframe</a></li>
+<li class="chapter" data-level="4.4" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#subset-using-select"><i class="fa fa-check"></i><b>4.4</b> Subset using select</a></li>
+<li class="chapter" data-level="4.5" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#order-using-arrange"><i class="fa fa-check"></i><b>4.5</b> Order using arrange</a></li>
+<li class="chapter" data-level="4.6" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#grouped-filter"><i class="fa fa-check"></i><b>4.6</b> Grouped Filter</a></li>
+<li class="chapter" data-level="4.7" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#new-variables-using-mutate"><i class="fa fa-check"></i><b>4.7</b> New Variables Using Mutate</a></li>
+<li class="chapter" data-level="4.8" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#missing-values"><i class="fa fa-check"></i><b>4.8</b> Missing Values</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html"><i class="fa fa-check"></i><b>5</b> Univariate Graphical Displays</a><ul>
+<li class="chapter" data-level="5.1" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html#a-quantitative-variable"><i class="fa fa-check"></i><b>5.1</b> A Quantitative Variable</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html#dotplot"><i class="fa fa-check"></i><b>5.1.1</b> Dotplot</a></li>
+<li class="chapter" data-level="5.1.2" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html#histogram"><i class="fa fa-check"></i><b>5.1.2</b> Histogram</a></li>
+<li class="chapter" data-level="5.1.3" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html#density-plot"><i class="fa fa-check"></i><b>5.1.3</b> Density Plot</a></li>
+<li class="chapter" data-level="5.1.4" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html#boxplot"><i class="fa fa-check"></i><b>5.1.4</b> Boxplot</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html#displays-of-a-categorical-variable"><i class="fa fa-check"></i><b>5.2</b> Displays of a Categorical Variable</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html#bar-graph"><i class="fa fa-check"></i><b>5.2.1</b> Bar Graph</a></li>
+<li class="chapter" data-level="5.2.2" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html#pie-graph"><i class="fa fa-check"></i><b>5.2.2</b> Pie Graph</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html"><i class="fa fa-check"></i><b>6</b> Summary Statistics For One Variable</a><ul>
+<li class="chapter" data-level="6.1" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#one-quantitative-variable"><i class="fa fa-check"></i><b>6.1</b> One Quantitative Variable</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#using-base-r-summary-function"><i class="fa fa-check"></i><b>6.1.1</b> Using base R summary function</a></li>
+<li class="chapter" data-level="6.1.2" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#using-dplyr-summarise-function"><i class="fa fa-check"></i><b>6.1.2</b> Using dplyr summarise function</a></li>
+<li class="chapter" data-level="6.1.3" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#summary-statistics-using-funmodeling-package"><i class="fa fa-check"></i><b>6.1.3</b> Summary Statistics Using funModeling package</a></li>
+<li class="chapter" data-level="6.1.4" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#summary-statistics-skimr-package"><i class="fa fa-check"></i><b>6.1.4</b> Summary Statistics: skimr package</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#one-categorical-variable"><i class="fa fa-check"></i><b>6.2</b> One Categorical Variable</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#counting-values"><i class="fa fa-check"></i><b>6.2.1</b> Counting Values</a></li>
+<li class="chapter" data-level="6.2.2" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#categorical-variable-skimr-package"><i class="fa fa-check"></i><b>6.2.2</b> Categorical variable: skimr package</a></li>
+<li class="chapter" data-level="6.2.3" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#categorical-variable-funmodeling-package"><i class="fa fa-check"></i><b>6.2.3</b> Categorical variable: funModeling package</a></li>
+<li class="chapter" data-level="6.2.4" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#categorical-variable-janitor-package"><i class="fa fa-check"></i><b>6.2.4</b> Categorical variable: janitor package</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><i class="fa fa-check"></i><b>7</b> Exploratory Data Analysis For One Quantitative Variable: by Groups</a><ul>
+<li class="chapter" data-level="7.1" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#summary-statistics-dplyr"><i class="fa fa-check"></i><b>7.1</b> Summary Statistics: dplyr</a></li>
+<li class="chapter" data-level="7.2" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#summary-statistics-skimr"><i class="fa fa-check"></i><b>7.2</b> Summary Statistics: skimr</a></li>
+<li class="chapter" data-level="7.3" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#graphical-displays-of-a-quantitative-variable-separated-by-groups"><i class="fa fa-check"></i><b>7.3</b> Graphical Displays of a quantitative variable, separated by groups</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#dotplots"><i class="fa fa-check"></i><b>7.3.1</b> Dotplots</a></li>
+<li class="chapter" data-level="7.3.2" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#histograms"><i class="fa fa-check"></i><b>7.3.2</b> Histograms</a></li>
+<li class="chapter" data-level="7.3.3" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#density-plots-in-facets"><i class="fa fa-check"></i><b>7.3.3</b> Density Plots in Facets</a></li>
+<li class="chapter" data-level="7.3.4" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#overlaid-density-plots"><i class="fa fa-check"></i><b>7.3.4</b> Overlaid Density Plots</a></li>
+<li class="chapter" data-level="7.3.5" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#boxplots-grouped-data"><i class="fa fa-check"></i><b>7.3.5</b> Boxplots, Grouped Data</a></li>
+<li class="chapter" data-level="7.3.6" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#boxplots-overlay-points-on-the-boxplots-with-color-control"><i class="fa fa-check"></i><b>7.3.6</b> Boxplots, overlay points on the boxplots with color control</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="analysis-of-one-categorical-variable-by-another-categorical-variable.html"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html"><i class="fa fa-check"></i><b>8</b> Analysis of One Categorical Variable by another categorical variable</a><ul>
+<li class="chapter" data-level="8.1" data-path="analysis-of-one-categorical-variable-by-another-categorical-variable.html"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#tables"><i class="fa fa-check"></i><b>8.1</b> Tables</a></li>
+<li class="chapter" data-level="8.2" data-path="analysis-of-one-categorical-variable-by-another-categorical-variable.html"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#graphical-displays"><i class="fa fa-check"></i><b>8.2</b> Graphical Displays</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/jonander99/R-Essentials" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Essential R Skills</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="IntroDataWrangling" class="section level1">
+<h1><span class="header-section-number">Chapter 4</span> Introduction to Data Wrangling</h1>
+<p>In this chapter we present some very basic data handling and processing functions (data wrangline) that will be necessary for doing basic analyses, comparisons, and graphics. Most of the commands presented in this section stress the functions and R packages in the <em>tidyverse</em> - a set or family of packages that have similar syntax and behaviors.</p>
+<div id="subset-using-filter" class="section level2">
+<h2><span class="header-section-number">4.1</span> Subset using filter</h2>
+<p>Suppose we wish to examine a subset of data for only one country, Jon’s favorite country, Australia!! The following code starts by taking the gapminder dataset and then “pipes” it into the filtering (selecting rows) action so that only dataset rows from Australia are selected. The pipe function is %&gt;% and is similar to a plumbing pipe that goes one direction: from left to right. After the “Australia” rows are selected, the result is “piped” into the head function for display. The head function says show the top 12 rows. When no rows are specified in the head function, the default is 6 rows. Note that the filter function resides in the <em>dplyr</em> package within the <em>tidyverse</em> family.</p>
+<p>If the <em>tidyverse</em> or <em>dplyr</em> packages have been loaded, you don’t need to supply the <code>dplyr::</code> prefix to the <code>filter</code> command.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#gapminder %&gt;% filter(country==&quot;Australia&quot;) %&gt;% head(n=12)</span>
+gapminder <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(country<span class="op">==</span><span class="st">&quot;Australia&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dt">n=</span><span class="dv">12</span>)</code></pre></div>
+<pre><code>## # A tibble: 12 x 6
+##    country   continent  year lifeExp      pop gdpPercap
+##    &lt;fct&gt;     &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+##  1 Australia Oceania    1952    69.1  8691212    10040.
+##  2 Australia Oceania    1957    70.3  9712569    10950.
+##  3 Australia Oceania    1962    70.9 10794968    12217.
+##  4 Australia Oceania    1967    71.1 11872264    14526.
+##  5 Australia Oceania    1972    71.9 13177000    16789.
+##  6 Australia Oceania    1977    73.5 14074100    18334.
+##  7 Australia Oceania    1982    74.7 15184200    19477.
+##  8 Australia Oceania    1987    76.3 16257249    21889.
+##  9 Australia Oceania    1992    77.6 17481977    23425.
+## 10 Australia Oceania    1997    78.8 18565243    26998.
+## 11 Australia Oceania    2002    80.4 19546792    30688.
+## 12 Australia Oceania    2007    81.2 20434176    34435.</code></pre>
+</div>
+<div id="subset-using-multiple-conditions" class="section level2">
+<h2><span class="header-section-number">4.2</span> Subset using multiple conditions</h2>
+<p>Let’s select by contintent and year. The head function will then show some of the rows selected. Here the gapminder dataframe is piped to the <code>filter</code> function to select rows to be further piped to the <code>head()</code> function for display. The logical condtion inside <code>filter</code> restricts continent to “Oceania” AND (AND condition is “&amp;”) year to be 1997. Both of these conditions must be TRUE for the row to enter the dataframe to displayed by the <code>head()</code> function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(continent<span class="op">==</span><span class="st">&quot;Oceania&quot;</span> <span class="op">&amp;</span><span class="st"> </span>year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">head</span>()</code></pre></div>
+<pre><code>## # A tibble: 2 x 6
+##   country     continent  year lifeExp      pop gdpPercap
+##   &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+## 1 Australia   Oceania    1997    78.8 18565243    26998.
+## 2 New Zealand Oceania    1997    77.6  3676187    21050.</code></pre>
+<p>The next example uses an “or” condition to specify the desired rows in the first <code>filter</code> expression - the next <code>filter</code> permits only observations from 1997.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(continent<span class="op">==</span><span class="st">&quot;Oceania&quot;</span> <span class="op">|</span><span class="st"> </span>continent <span class="op">==</span><span class="st">&quot;Americas&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">head</span>()</code></pre></div>
+<pre><code>## # A tibble: 6 x 6
+##   country   continent  year lifeExp       pop gdpPercap
+##   &lt;fct&gt;     &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;     &lt;int&gt;     &lt;dbl&gt;
+## 1 Argentina Americas   1997    73.3  36203463    10967.
+## 2 Australia Oceania    1997    78.8  18565243    26998.
+## 3 Bolivia   Americas   1997    62.0   7693188     3326.
+## 4 Brazil    Americas   1997    69.4 168546719     7958.
+## 5 Canada    Americas   1997    78.6  30305843    28955.
+## 6 Chile     Americas   1997    75.8  14599929    10118.</code></pre>
+<p>The next example selects observations/rows from a list of countries and also restricts year to 1997.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(country <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Australia&quot;</span>, <span class="st">&quot;New Zealand&quot;</span>,<span class="st">&quot;Argentina&quot;</span>) <span class="op">&amp;</span><span class="st"> </span>year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">head</span>()</code></pre></div>
+<pre><code>## # A tibble: 3 x 6
+##   country     continent  year lifeExp      pop gdpPercap
+##   &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+## 1 Argentina   Americas   1997    73.3 36203463    10967.
+## 2 Australia   Oceania    1997    78.8 18565243    26998.
+## 3 New Zealand Oceania    1997    77.6  3676187    21050.</code></pre>
+<p>The next example selects observations by omitting one continent (Oceania is excluded) and then specifies a year. The code that causes “omit” is the “!=” syntax. In the code <code>year==1997</code>, the double equal sign <code>==</code> means make a logical check if year is 1997. Only rows where both aspects of the filter conditions pass through to be displayed by <code>head</code>. Again, the logical operator “AND” is expressed by the <code>&amp;</code> expression.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(continent<span class="op">!=</span><span class="st">&quot;Oceania&quot;</span> <span class="op">&amp;</span><span class="st"> </span>year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">head</span>()</code></pre></div>
+<pre><code>## # A tibble: 6 x 6
+##   country     continent  year lifeExp      pop gdpPercap
+##   &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+## 1 Afghanistan Asia       1997    41.8 22227415      635.
+## 2 Albania     Europe     1997    73.0  3428038     3193.
+## 3 Algeria     Africa     1997    69.2 29072015     4797.
+## 4 Angola      Africa     1997    41.0  9875024     2277.
+## 5 Argentina   Americas   1997    73.3 36203463    10967.
+## 6 Austria     Europe     1997    77.5  8069876    29096.</code></pre>
+<p>Please note that in all the above examples, the <code>filter</code> function accepts/rejects rows or observations in a dataframe according to the logical conditions specified inside the filter function.</p>
+</div>
+<div id="saving-as-a-new-dataframe" class="section level2">
+<h2><span class="header-section-number">4.3</span> Saving as a new dataframe</h2>
+<p>Here we save the the modified dataset as a new dataframe called gap97.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gap97 &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(continent<span class="op">!=</span><span class="st">&quot;Oceania&quot;</span> <span class="op">&amp;</span><span class="st"> </span>year<span class="op">==</span><span class="dv">1997</span>) 
+<span class="co">#</span>
+dplyr<span class="op">::</span><span class="kw">glimpse</span>(gap97)</code></pre></div>
+<pre><code>## Observations: 140
+## Variables: 6
+## $ country   &lt;fct&gt; Afghanistan, Albania, Algeria, Angola, Argentina, Austria, …
+## $ continent &lt;fct&gt; Asia, Europe, Africa, Africa, Americas, Europe, Asia, Asia,…
+## $ year      &lt;int&gt; 1997, 1997, 1997, 1997, 1997, 1997, 1997, 1997, 1997, 1997,…
+## $ lifeExp   &lt;dbl&gt; 41.763, 72.950, 69.152, 40.963, 73.275, 77.510, 73.925, 59.…
+## $ pop       &lt;int&gt; 22227415, 3428038, 29072015, 9875024, 36203463, 8069876, 59…
+## $ gdpPercap &lt;dbl&gt; 635.3414, 3193.0546, 4797.2951, 2277.1409, 10967.2820, 2909…</code></pre>
+</div>
+<div id="subset-using-select" class="section level2">
+<h2><span class="header-section-number">4.4</span> Subset using select</h2>
+<p>The <code>filter</code> function controls the rows of the dataframe. Sometimes we might want to include only a few of the variables (columns) in a dataset. We frequently want to create a data subset with only a few variables when the original dataset has hundreds of variables. The <code>select</code> function is used to select and rename variables.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the next command selects three variables and renames two of them:</span>
+gapminder <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(country, <span class="dt">Year=</span>year,<span class="dt">LifeExp=</span>lifeExp) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</code></pre></div>
+<pre><code>## # A tibble: 6 x 3
+##   country      Year LifeExp
+##   &lt;fct&gt;       &lt;int&gt;   &lt;dbl&gt;
+## 1 Afghanistan  1952    28.8
+## 2 Afghanistan  1957    30.3
+## 3 Afghanistan  1962    32.0
+## 4 Afghanistan  1967    34.0
+## 5 Afghanistan  1972    36.1
+## 6 Afghanistan  1977    38.4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># to change the order of display, puts year first in the list of variables</span>
+gapminder <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(year,<span class="kw">everything</span>()) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</code></pre></div>
+<pre><code>## # A tibble: 6 x 6
+##    year country     continent lifeExp      pop gdpPercap
+##   &lt;int&gt; &lt;fct&gt;       &lt;fct&gt;       &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+## 1  1952 Afghanistan Asia         28.8  8425333      779.
+## 2  1957 Afghanistan Asia         30.3  9240934      821.
+## 3  1962 Afghanistan Asia         32.0 10267083      853.
+## 4  1967 Afghanistan Asia         34.0 11537966      836.
+## 5  1972 Afghanistan Asia         36.1 13079460      740.
+## 6  1977 Afghanistan Asia         38.4 14880372      786.</code></pre>
+<p>The <code>profiling_num</code> command from the <em>funModeling</em> package produces a lot of output, some we might not want. We will show how to modify the output of this command here. The command produces a dataframe which has many columns we might not wish to display or consider further.</p>
+<p>We begin by removing some columns of summary statistics that we wish to ignore. Selecting a list of column names with a “minus” - sign in front of the list will remove these items from the dataframe and keep the rest in place. The command below pipes the modified dataframe to the <code>kable</code> command in the <em>knitr</em> package for a more pleasing tabular display.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Let&#39;s observe the contents of profiling_num:</span>
+funModeling<span class="op">::</span><span class="kw">profiling_num</span>(gapminder) <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">glimpse</span>()</code></pre></div>
+<pre><code>## Observations: 4
+## Variables: 16
+## $ variable       &lt;chr&gt; &quot;year&quot;, &quot;lifeExp&quot;, &quot;pop&quot;, &quot;gdpPercap&quot;
+## $ mean           &lt;dbl&gt; 1.979500e+03, 5.947444e+01, 2.960121e+07, 7.215327e+03
+## $ std_dev        &lt;dbl&gt; 1.726533e+01, 1.291711e+01, 1.061579e+08, 9.857455e+03
+## $ variation_coef &lt;dbl&gt; 0.008722066, 0.217187544, 3.586268548, 1.366182632
+## $ p_01           &lt;dbl&gt; 1952.0000, 33.4926, 154117.9200, 369.2201
+## $ p_05           &lt;dbl&gt; 1952.0000, 38.4924, 475458.9000, 547.9964
+## $ p_25           &lt;dbl&gt; 1965.750, 48.198, 2793664.000, 1202.060
+## $ p_50           &lt;dbl&gt; 1979.5000, 60.7125, 7023595.5000, 3531.8470
+## $ p_75           &lt;dbl&gt; 1.993250e+03, 7.084550e+01, 1.958522e+07, 9.325462e+03
+## $ p_95           &lt;dbl&gt; 2007.000, 77.437, 89822054.500, 26608.333
+## $ p_99           &lt;dbl&gt; 2.007000e+03, 8.023892e+01, 6.319900e+08, 3.678357e+04
+## $ skewness       &lt;dbl&gt; 0.0000000, -0.2524798, 8.3328742, 3.8468819
+## $ kurtosis       &lt;dbl&gt; 1.783217, 1.873099, 80.716151, 30.431702
+## $ iqr            &lt;dbl&gt; 2.750000e+01, 2.264750e+01, 1.679156e+07, 8.123402e+03
+## $ range_98       &lt;chr&gt; &quot;[1952, 2007]&quot;, &quot;[33.4926, 80.23892]&quot;, &quot;[154117.92, 63…
+## $ range_80       &lt;chr&gt; &quot;[1957, 2002]&quot;, &quot;[41.5108, 75.097]&quot;, &quot;[946367.1, 54801…</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># now remove unwanted columns from summary display</span>
+funModeling<span class="op">::</span><span class="kw">profiling_num</span>(gapminder) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span><span class="kw">c</span>(<span class="st">&quot;variation_coef&quot;</span>,<span class="st">&quot;skewness&quot;</span>,<span class="st">&quot;kurtosis&quot;</span>,<span class="st">&quot;range_98&quot;</span>,<span class="st">&quot;range_80&quot;</span>,<span class="st">&quot;p_01&quot;</span>,<span class="st">&quot;p_99&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">variable</th>
+<th align="right">mean</th>
+<th align="right">std_dev</th>
+<th align="right">p_05</th>
+<th align="right">p_25</th>
+<th align="right">p_50</th>
+<th align="right">p_75</th>
+<th align="right">p_95</th>
+<th align="right">iqr</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">year</td>
+<td align="right">1.979500e+03</td>
+<td align="right">1.726533e+01</td>
+<td align="right">1952.0000</td>
+<td align="right">1965.750</td>
+<td align="right">1979.5000</td>
+<td align="right">1.993250e+03</td>
+<td align="right">2007.000</td>
+<td align="right">2.750000e+01</td>
+</tr>
+<tr class="even">
+<td align="left">lifeExp</td>
+<td align="right">5.947444e+01</td>
+<td align="right">1.291711e+01</td>
+<td align="right">38.4924</td>
+<td align="right">48.198</td>
+<td align="right">60.7125</td>
+<td align="right">7.084550e+01</td>
+<td align="right">77.437</td>
+<td align="right">2.264750e+01</td>
+</tr>
+<tr class="odd">
+<td align="left">pop</td>
+<td align="right">2.960121e+07</td>
+<td align="right">1.061579e+08</td>
+<td align="right">475458.9000</td>
+<td align="right">2793664.000</td>
+<td align="right">7023595.5000</td>
+<td align="right">1.958522e+07</td>
+<td align="right">89822054.500</td>
+<td align="right">1.679156e+07</td>
+</tr>
+<tr class="even">
+<td align="left">gdpPercap</td>
+<td align="right">7.215327e+03</td>
+<td align="right">9.857455e+03</td>
+<td align="right">547.9964</td>
+<td align="right">1202.060</td>
+<td align="right">3531.8470</td>
+<td align="right">9.325462e+03</td>
+<td align="right">26608.333</td>
+<td align="right">8.123402e+03</td>
+</tr>
+</tbody>
+</table>
+<p>In the next command we take a different approach - we explicitly select the statistics (columns) we want to keep and display. The most commonly used summaries are chosen.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">funModeling<span class="op">::</span><span class="kw">profiling_num</span>(gapminder) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(<span class="kw">c</span>(<span class="st">&quot;variable&quot;</span>,<span class="st">&quot;mean&quot;</span>,<span class="st">&quot;std_dev&quot;</span>,<span class="st">&quot;p_25&quot;</span>,<span class="st">&quot;p_50&quot;</span>,<span class="st">&quot;p_75&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">variable</th>
+<th align="right">mean</th>
+<th align="right">std_dev</th>
+<th align="right">p_25</th>
+<th align="right">p_50</th>
+<th align="right">p_75</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">year</td>
+<td align="right">1.979500e+03</td>
+<td align="right">1.726533e+01</td>
+<td align="right">1965.750</td>
+<td align="right">1979.5000</td>
+<td align="right">1.993250e+03</td>
+</tr>
+<tr class="even">
+<td align="left">lifeExp</td>
+<td align="right">5.947444e+01</td>
+<td align="right">1.291711e+01</td>
+<td align="right">48.198</td>
+<td align="right">60.7125</td>
+<td align="right">7.084550e+01</td>
+</tr>
+<tr class="odd">
+<td align="left">pop</td>
+<td align="right">2.960121e+07</td>
+<td align="right">1.061579e+08</td>
+<td align="right">2793664.000</td>
+<td align="right">7023595.5000</td>
+<td align="right">1.958522e+07</td>
+</tr>
+<tr class="even">
+<td align="left">gdpPercap</td>
+<td align="right">7.215327e+03</td>
+<td align="right">9.857455e+03</td>
+<td align="right">1202.060</td>
+<td align="right">3531.8470</td>
+<td align="right">9.325462e+03</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="order-using-arrange" class="section level2">
+<h2><span class="header-section-number">4.5</span> Order using arrange</h2>
+<p>Sometimes we might want to know the countries with the largest or smallest values of some variables. In the following examples we sort/order by the values of life expectancy. In the code below, when we use the command <code>filter(year==1997)</code>, the double equal sign means make a logical check if year is 1997, and only allow dataframe rows where this is true to pass through to the next stage of the analysis pipeline.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This command will show the countries with highest life expectancy because </span>
+<span class="co"># the data are arranged in descending order of life expectancy (larger to smaller)</span>
+gapminder <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span><span class="st">   </span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(country, continent, lifeExp) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">arrange</span>(<span class="kw">desc</span>(lifeExp)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">head</span>()</code></pre></div>
+<pre><code>## # A tibble: 6 x 3
+##   country          continent lifeExp
+##   &lt;fct&gt;            &lt;fct&gt;       &lt;dbl&gt;
+## 1 Japan            Asia         80.7
+## 2 Hong Kong, China Asia         80  
+## 3 Sweden           Europe       79.4
+## 4 Switzerland      Europe       79.4
+## 5 Iceland          Europe       79.0
+## 6 Australia        Oceania      78.8</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This command uses the default ascending (increasing) order with</span>
+<span class="co"># respect to life expectancy (order smaller to larger)</span>
+gapminder <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span><span class="st">  </span>
+<span class="st">  </span><span class="kw">select</span>(country, continent, lifeExp) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">arrange</span>(lifeExp) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">head</span>()</code></pre></div>
+<pre><code>## # A tibble: 6 x 3
+##   country      continent lifeExp
+##   &lt;fct&gt;        &lt;fct&gt;       &lt;dbl&gt;
+## 1 Rwanda       Africa       36.1
+## 2 Sierra Leone Africa       39.9
+## 3 Zambia       Africa       40.2
+## 4 Angola       Africa       41.0
+## 5 Afghanistan  Asia         41.8
+## 6 Liberia      Africa       42.2</code></pre>
+<p>The <code>top_n</code> function from the <em>dplyr</em> package will select the n rows with the largest values of a variable. This is similar to the code above that orders the rows - then use <code>head</code> function to select the number of desired rows.</p>
+<p>This first example uses the default alphabetical ordering of country name.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span><span class="st">  </span>
+<span class="st">  </span><span class="kw">select</span>(country, continent, lifeExp) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">top_n</span>(<span class="dt">n=</span><span class="dv">6</span>,<span class="dt">wt=</span>lifeExp) <span class="op">%&gt;%</span>
+<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">country</th>
+<th align="left">continent</th>
+<th align="right">lifeExp</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Australia</td>
+<td align="left">Oceania</td>
+<td align="right">78.83</td>
+</tr>
+<tr class="even">
+<td align="left">Hong Kong, China</td>
+<td align="left">Asia</td>
+<td align="right">80.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Iceland</td>
+<td align="left">Europe</td>
+<td align="right">78.95</td>
+</tr>
+<tr class="even">
+<td align="left">Japan</td>
+<td align="left">Asia</td>
+<td align="right">80.69</td>
+</tr>
+<tr class="odd">
+<td align="left">Sweden</td>
+<td align="left">Europe</td>
+<td align="right">79.39</td>
+</tr>
+<tr class="even">
+<td align="left">Switzerland</td>
+<td align="left">Europe</td>
+<td align="right">79.37</td>
+</tr>
+</tbody>
+</table>
+<p>The results can then be ordered by the life expectancy:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span><span class="st">  </span>
+<span class="st">  </span><span class="kw">select</span>(country, continent, lifeExp) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">top_n</span>(<span class="dt">n=</span><span class="dv">6</span>,<span class="dt">wt=</span>lifeExp) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">arrange</span>(<span class="kw">desc</span>(lifeExp)) <span class="op">%&gt;%</span>
+<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">country</th>
+<th align="left">continent</th>
+<th align="right">lifeExp</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Japan</td>
+<td align="left">Asia</td>
+<td align="right">80.69</td>
+</tr>
+<tr class="even">
+<td align="left">Hong Kong, China</td>
+<td align="left">Asia</td>
+<td align="right">80.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Sweden</td>
+<td align="left">Europe</td>
+<td align="right">79.39</td>
+</tr>
+<tr class="even">
+<td align="left">Switzerland</td>
+<td align="left">Europe</td>
+<td align="right">79.37</td>
+</tr>
+<tr class="odd">
+<td align="left">Iceland</td>
+<td align="left">Europe</td>
+<td align="right">78.95</td>
+</tr>
+<tr class="even">
+<td align="left">Australia</td>
+<td align="left">Oceania</td>
+<td align="right">78.83</td>
+</tr>
+</tbody>
+</table>
+<p>The countries with the largest life expectancy can then be ordered by another variable like population. Here we find the 6 countries in 1997 with the highest life expectancy - then display them in order of population size.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span><span class="st">  </span>
+<span class="st">  </span><span class="kw">select</span>(country, continent, lifeExp, pop) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">top_n</span>(<span class="dt">n=</span><span class="dv">6</span>,<span class="dt">wt=</span>lifeExp) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">arrange</span>(<span class="kw">desc</span>(pop)) <span class="op">%&gt;%</span>
+<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">country</th>
+<th align="left">continent</th>
+<th align="right">lifeExp</th>
+<th align="right">pop</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Japan</td>
+<td align="left">Asia</td>
+<td align="right">80.69</td>
+<td align="right">125956499</td>
+</tr>
+<tr class="even">
+<td align="left">Australia</td>
+<td align="left">Oceania</td>
+<td align="right">78.83</td>
+<td align="right">18565243</td>
+</tr>
+<tr class="odd">
+<td align="left">Sweden</td>
+<td align="left">Europe</td>
+<td align="right">79.39</td>
+<td align="right">8897619</td>
+</tr>
+<tr class="even">
+<td align="left">Switzerland</td>
+<td align="left">Europe</td>
+<td align="right">79.37</td>
+<td align="right">7193761</td>
+</tr>
+<tr class="odd">
+<td align="left">Hong Kong, China</td>
+<td align="left">Asia</td>
+<td align="right">80.00</td>
+<td align="right">6495918</td>
+</tr>
+<tr class="even">
+<td align="left">Iceland</td>
+<td align="left">Europe</td>
+<td align="right">78.95</td>
+<td align="right">271192</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="grouped-filter" class="section level2">
+<h2><span class="header-section-number">4.6</span> Grouped Filter</h2>
+<p>Another useful verb in the <em>tidyverse</em> is <code>group_by</code>. Suppose we wanted to view the two countries with the highest life expectancy in 1997, in each continent.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span><span class="st">  </span>
+<span class="st">  </span><span class="kw">select</span>(country, continent, lifeExp, pop) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(continent) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">top_n</span>(<span class="dt">n=</span><span class="dv">2</span>,<span class="dt">wt=</span>lifeExp) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">arrange</span>(continent) <span class="op">%&gt;%</span>
+<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">country</th>
+<th align="left">continent</th>
+<th align="right">lifeExp</th>
+<th align="right">pop</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Reunion</td>
+<td align="left">Africa</td>
+<td align="right">74.772</td>
+<td align="right">684810</td>
+</tr>
+<tr class="even">
+<td align="left">Tunisia</td>
+<td align="left">Africa</td>
+<td align="right">71.973</td>
+<td align="right">9231669</td>
+</tr>
+<tr class="odd">
+<td align="left">Canada</td>
+<td align="left">Americas</td>
+<td align="right">78.610</td>
+<td align="right">30305843</td>
+</tr>
+<tr class="even">
+<td align="left">Costa Rica</td>
+<td align="left">Americas</td>
+<td align="right">77.260</td>
+<td align="right">3518107</td>
+</tr>
+<tr class="odd">
+<td align="left">Hong Kong, China</td>
+<td align="left">Asia</td>
+<td align="right">80.000</td>
+<td align="right">6495918</td>
+</tr>
+<tr class="even">
+<td align="left">Japan</td>
+<td align="left">Asia</td>
+<td align="right">80.690</td>
+<td align="right">125956499</td>
+</tr>
+<tr class="odd">
+<td align="left">Sweden</td>
+<td align="left">Europe</td>
+<td align="right">79.390</td>
+<td align="right">8897619</td>
+</tr>
+<tr class="even">
+<td align="left">Switzerland</td>
+<td align="left">Europe</td>
+<td align="right">79.370</td>
+<td align="right">7193761</td>
+</tr>
+<tr class="odd">
+<td align="left">Australia</td>
+<td align="left">Oceania</td>
+<td align="right">78.830</td>
+<td align="right">18565243</td>
+</tr>
+<tr class="even">
+<td align="left">New Zealand</td>
+<td align="left">Oceania</td>
+<td align="right">77.550</td>
+<td align="right">3676187</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="new-variables-using-mutate" class="section level2">
+<h2><span class="header-section-number">4.7</span> New Variables Using Mutate</h2>
+<p>In many problems we may wish to create a new variable based on an existing variable. Here we illustrate by making a new variable - the natural logarithm of population - based on the original variable <code>pop</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">logpopulation =</span> <span class="kw">log</span>(pop)) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">glimpse</span>()</code></pre></div>
+<pre><code>## Observations: 1,704
+## Variables: 7
+## $ country       &lt;fct&gt; Afghanistan, Afghanistan, Afghanistan, Afghanistan, Afg…
+## $ continent     &lt;fct&gt; Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, A…
+## $ year          &lt;int&gt; 1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992, 1…
+## $ lifeExp       &lt;dbl&gt; 28.801, 30.332, 31.997, 34.020, 36.088, 38.438, 39.854,…
+## $ pop           &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13079460, 1488037…
+## $ gdpPercap     &lt;dbl&gt; 779.4453, 820.8530, 853.1007, 836.1971, 739.9811, 786.1…
+## $ logpopulation &lt;dbl&gt; 15.94675, 16.03915, 16.14445, 16.26115, 16.38655, 16.51…</code></pre>
+<p>If I want to change the name of the new variable from <code>logpopulation</code> to something shorter like <code>logPop</code>, we could re-run the <code>mutate</code> command, or use a <code>rename</code> function.</p>
+<p>In addition we create a new version of the gapminder dataset that contains the new variable - called gapVers1. This dataframe is now available to be used in the ongoing analysis.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapVers1 &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">logpopulation =</span> <span class="kw">log</span>(pop)) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">rename</span>(<span class="dt">logPop=</span>logpopulation) 
+<span class="co">#</span>
+  dplyr<span class="op">::</span><span class="kw">glimpse</span>(gapVers1)</code></pre></div>
+<pre><code>## Observations: 1,704
+## Variables: 7
+## $ country   &lt;fct&gt; Afghanistan, Afghanistan, Afghanistan, Afghanistan, Afghani…
+## $ continent &lt;fct&gt; Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia,…
+## $ year      &lt;int&gt; 1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992, 1997,…
+## $ lifeExp   &lt;dbl&gt; 28.801, 30.332, 31.997, 34.020, 36.088, 38.438, 39.854, 40.…
+## $ pop       &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13079460, 14880372, 1…
+## $ gdpPercap &lt;dbl&gt; 779.4453, 820.8530, 853.1007, 836.1971, 739.9811, 786.1134,…
+## $ logPop    &lt;dbl&gt; 15.94675, 16.03915, 16.14445, 16.26115, 16.38655, 16.51555,…</code></pre>
+<p>The next code uses a <code>mutate</code> command with logical conditions to make a new, two-level categorical variable region as a character variable. Then we use <code>mutate</code> again to convert <code>region</code> (character) to a factor variable named <code>regionf</code>. In statistical models, factor variables are preferred, but in data handling stages, character versions are probably easier to manipulate.</p>
+<p>The <code>if_else</code> function from <em>dplyr</em> has the form `if_else(logical condition,value if TRUE, value if FALSE).</p>
+<p>The next example uses the “T-pipe” function <code>%T&gt;%</code> to break the piping so that the result of the second <code>mutate</code> flows to both <code>glimpse</code> and to <code>head</code> - in this construction, it is understood the output of <code>glimpse</code> does not pipe to <code>head</code>, but rather the original data flow from the second <code>mutate</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">region =</span> <span class="kw">if_else</span>(country<span class="op">==</span><span class="st">&quot;Oceania&quot;</span>,<span class="st">&quot;Oceania&quot;</span>,<span class="st">&quot;NotOceania&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">regionf =</span> <span class="kw">as_factor</span>(region)) <span class="op">%T&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">glimpse</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">head</span>()</code></pre></div>
+<pre><code>## Observations: 1,704
+## Variables: 8
+## $ country   &lt;fct&gt; Afghanistan, Afghanistan, Afghanistan, Afghanistan, Afghani…
+## $ continent &lt;fct&gt; Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia,…
+## $ year      &lt;int&gt; 1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992, 1997,…
+## $ lifeExp   &lt;dbl&gt; 28.801, 30.332, 31.997, 34.020, 36.088, 38.438, 39.854, 40.…
+## $ pop       &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13079460, 14880372, 1…
+## $ gdpPercap &lt;dbl&gt; 779.4453, 820.8530, 853.1007, 836.1971, 739.9811, 786.1134,…
+## $ region    &lt;chr&gt; &quot;NotOceania&quot;, &quot;NotOceania&quot;, &quot;NotOceania&quot;, &quot;NotOceania&quot;, &quot;No…
+## $ regionf   &lt;fct&gt; NotOceania, NotOceania, NotOceania, NotOceania, NotOceania,…</code></pre>
+<pre><code>## # A tibble: 6 x 8
+##   country     continent  year lifeExp      pop gdpPercap region     regionf   
+##   &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;      &lt;fct&gt;     
+## 1 Afghanistan Asia       1952    28.8  8425333      779. NotOceania NotOceania
+## 2 Afghanistan Asia       1957    30.3  9240934      821. NotOceania NotOceania
+## 3 Afghanistan Asia       1962    32.0 10267083      853. NotOceania NotOceania
+## 4 Afghanistan Asia       1967    34.0 11537966      836. NotOceania NotOceania
+## 5 Afghanistan Asia       1972    36.1 13079460      740. NotOceania NotOceania
+## 6 Afghanistan Asia       1977    38.4 14880372      786. NotOceania NotOceania</code></pre>
+</div>
+<div id="missing-values" class="section level2">
+<h2><span class="header-section-number">4.8</span> Missing Values</h2>
+<p>If a variable is not complete and contains empty places, these are denoted in R as <code>NA</code>. We will often wish to create a dataframe without any missing values, or discover how many rows contain variables with missing values.</p>
+<p>First let’s create a small dataset with missing values:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="ot">NA</span>,<span class="dv">4</span>)
+y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">11</span>,<span class="dv">12</span>,<span class="dv">13</span>,<span class="ot">NA</span>)
+z &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>)
+tempdf &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x,y,z)
+tempdf</code></pre></div>
+<pre><code>##    x  y  z
+## 1  1 11  7
+## 2  2 12  8
+## 3 NA 13  9
+## 4  4 NA 10</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># count missing values for variable x</span>
+tempdf <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">summarise</span>(<span class="dt">count =</span> <span class="kw">sum</span>(<span class="kw">is.na</span>(x)))</code></pre></div>
+<pre><code>##   count
+## 1     1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># count rows with missing y</span>
+tempdf <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">tally</span>(<span class="kw">is.na</span>(y))</code></pre></div>
+<pre><code>##   n
+## 1 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># subset of rows with complete data for specified columns</span>
+tempdf <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(y,z) <span class="op">%&gt;%</span>
+<span class="st">  </span>tidyr<span class="op">::</span><span class="kw">drop_na</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">head</span>()</code></pre></div>
+<pre><code>##    y z
+## 1 11 7
+## 2 12 8
+## 3 13 9</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#  </span>
+tempdf <span class="op">%&gt;%</span>
+<span class="st">  </span>tidyr<span class="op">::</span><span class="kw">drop_na</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">head</span>()</code></pre></div>
+<pre><code>##   x  y z
+## 1 1 11 7
+## 2 2 12 8</code></pre>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="OverviewDataframe.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="UnivariateGraphicalDisplays.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/jonander99/R-Essentials/edit/master/03-IntroDataWrangling.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown-R-Essentials.pdf", "bookdown-R-Essentials.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

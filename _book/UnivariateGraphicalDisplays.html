@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 Univariate Graphical Displays | Essential R Skills</title>
+  <meta name="description" content="This book provides R code examples expected in all UMN-Morris Statistics courses." />
+  <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 Univariate Graphical Displays | Essential R Skills" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This book provides R code examples expected in all UMN-Morris Statistics courses." />
+  <meta name="github-repo" content="jonander99/R-Essentials" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 Univariate Graphical Displays | Essential R Skills" />
+  
+  <meta name="twitter:description" content="This book provides R code examples expected in all UMN-Morris Statistics courses." />
+  
+
+<meta name="author" content="Jon Anderson" />
+
+
+<meta name="date" content="2020-06-01" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="IntroDataWrangling.html"/>
+<link rel="next" href="summary-statistics-for-one-variable.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Essential R Skills</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Motivation</a></li>
+<li class="chapter" data-level="2" data-path="GettingStarted.html"><a href="GettingStarted.html"><i class="fa fa-check"></i><b>2</b> Getting Started</a><ul>
+<li class="chapter" data-level="2.1" data-path="GettingStarted.html"><a href="GettingStarted.html#packages"><i class="fa fa-check"></i><b>2.1</b> Packages</a></li>
+<li class="chapter" data-level="2.2" data-path="GettingStarted.html"><a href="GettingStarted.html#the-tidyverse-package"><i class="fa fa-check"></i><b>2.2</b> The tidyverse Package</a></li>
+<li class="chapter" data-level="2.3" data-path="GettingStarted.html"><a href="GettingStarted.html#gapminder-data"><i class="fa fa-check"></i><b>2.3</b> Gapminder Data:</a></li>
+<li class="chapter" data-level="2.4" data-path="GettingStarted.html"><a href="GettingStarted.html#set-working-directory"><i class="fa fa-check"></i><b>2.4</b> Set Working Directory</a></li>
+<li class="chapter" data-level="2.5" data-path="GettingStarted.html"><a href="GettingStarted.html#reading-data-from-a-csv-file"><i class="fa fa-check"></i><b>2.5</b> Reading Data From a CSV File</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="OverviewDataframe.html"><a href="OverviewDataframe.html"><i class="fa fa-check"></i><b>3</b> Overview of a Dataframe</a><ul>
+<li class="chapter" data-level="3.1" data-path="OverviewDataframe.html"><a href="OverviewDataframe.html#glimpse"><i class="fa fa-check"></i><b>3.1</b> glimpse</a></li>
+<li class="chapter" data-level="3.2" data-path="OverviewDataframe.html"><a href="OverviewDataframe.html#head"><i class="fa fa-check"></i><b>3.2</b> head</a></li>
+<li class="chapter" data-level="3.3" data-path="OverviewDataframe.html"><a href="OverviewDataframe.html#summary"><i class="fa fa-check"></i><b>3.3</b> summary</a></li>
+<li class="chapter" data-level="3.4" data-path="OverviewDataframe.html"><a href="OverviewDataframe.html#dataframe-details-funmodeling-package"><i class="fa fa-check"></i><b>3.4</b> Dataframe Details: funModeling package</a></li>
+<li class="chapter" data-level="3.5" data-path="OverviewDataframe.html"><a href="OverviewDataframe.html#dataframe-details-skimr-package"><i class="fa fa-check"></i><b>3.5</b> Dataframe Details: skimr package</a></li>
+<li class="chapter" data-level="3.6" data-path="OverviewDataframe.html"><a href="OverviewDataframe.html#describe-hmisc-package"><i class="fa fa-check"></i><b>3.6</b> describe: Hmisc package</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html"><i class="fa fa-check"></i><b>4</b> Introduction to Data Wrangling</a><ul>
+<li class="chapter" data-level="4.1" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#subset-using-filter"><i class="fa fa-check"></i><b>4.1</b> Subset using filter</a></li>
+<li class="chapter" data-level="4.2" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#subset-using-multiple-conditions"><i class="fa fa-check"></i><b>4.2</b> Subset using multiple conditions</a></li>
+<li class="chapter" data-level="4.3" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#saving-as-a-new-dataframe"><i class="fa fa-check"></i><b>4.3</b> Saving as a new dataframe</a></li>
+<li class="chapter" data-level="4.4" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#subset-using-select"><i class="fa fa-check"></i><b>4.4</b> Subset using select</a></li>
+<li class="chapter" data-level="4.5" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#order-using-arrange"><i class="fa fa-check"></i><b>4.5</b> Order using arrange</a></li>
+<li class="chapter" data-level="4.6" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#grouped-filter"><i class="fa fa-check"></i><b>4.6</b> Grouped Filter</a></li>
+<li class="chapter" data-level="4.7" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#new-variables-using-mutate"><i class="fa fa-check"></i><b>4.7</b> New Variables Using Mutate</a></li>
+<li class="chapter" data-level="4.8" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#missing-values"><i class="fa fa-check"></i><b>4.8</b> Missing Values</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html"><i class="fa fa-check"></i><b>5</b> Univariate Graphical Displays</a><ul>
+<li class="chapter" data-level="5.1" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html#a-quantitative-variable"><i class="fa fa-check"></i><b>5.1</b> A Quantitative Variable</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html#dotplot"><i class="fa fa-check"></i><b>5.1.1</b> Dotplot</a></li>
+<li class="chapter" data-level="5.1.2" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html#histogram"><i class="fa fa-check"></i><b>5.1.2</b> Histogram</a></li>
+<li class="chapter" data-level="5.1.3" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html#density-plot"><i class="fa fa-check"></i><b>5.1.3</b> Density Plot</a></li>
+<li class="chapter" data-level="5.1.4" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html#boxplot"><i class="fa fa-check"></i><b>5.1.4</b> Boxplot</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html#displays-of-a-categorical-variable"><i class="fa fa-check"></i><b>5.2</b> Displays of a Categorical Variable</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html#bar-graph"><i class="fa fa-check"></i><b>5.2.1</b> Bar Graph</a></li>
+<li class="chapter" data-level="5.2.2" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html#pie-graph"><i class="fa fa-check"></i><b>5.2.2</b> Pie Graph</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html"><i class="fa fa-check"></i><b>6</b> Summary Statistics For One Variable</a><ul>
+<li class="chapter" data-level="6.1" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#one-quantitative-variable"><i class="fa fa-check"></i><b>6.1</b> One Quantitative Variable</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#using-base-r-summary-function"><i class="fa fa-check"></i><b>6.1.1</b> Using base R summary function</a></li>
+<li class="chapter" data-level="6.1.2" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#using-dplyr-summarise-function"><i class="fa fa-check"></i><b>6.1.2</b> Using dplyr summarise function</a></li>
+<li class="chapter" data-level="6.1.3" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#summary-statistics-using-funmodeling-package"><i class="fa fa-check"></i><b>6.1.3</b> Summary Statistics Using funModeling package</a></li>
+<li class="chapter" data-level="6.1.4" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#summary-statistics-skimr-package"><i class="fa fa-check"></i><b>6.1.4</b> Summary Statistics: skimr package</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#one-categorical-variable"><i class="fa fa-check"></i><b>6.2</b> One Categorical Variable</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#counting-values"><i class="fa fa-check"></i><b>6.2.1</b> Counting Values</a></li>
+<li class="chapter" data-level="6.2.2" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#categorical-variable-skimr-package"><i class="fa fa-check"></i><b>6.2.2</b> Categorical variable: skimr package</a></li>
+<li class="chapter" data-level="6.2.3" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#categorical-variable-funmodeling-package"><i class="fa fa-check"></i><b>6.2.3</b> Categorical variable: funModeling package</a></li>
+<li class="chapter" data-level="6.2.4" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#categorical-variable-janitor-package"><i class="fa fa-check"></i><b>6.2.4</b> Categorical variable: janitor package</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><i class="fa fa-check"></i><b>7</b> Exploratory Data Analysis For One Quantitative Variable: by Groups</a><ul>
+<li class="chapter" data-level="7.1" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#summary-statistics-dplyr"><i class="fa fa-check"></i><b>7.1</b> Summary Statistics: dplyr</a></li>
+<li class="chapter" data-level="7.2" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#summary-statistics-skimr"><i class="fa fa-check"></i><b>7.2</b> Summary Statistics: skimr</a></li>
+<li class="chapter" data-level="7.3" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#graphical-displays-of-a-quantitative-variable-separated-by-groups"><i class="fa fa-check"></i><b>7.3</b> Graphical Displays of a quantitative variable, separated by groups</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#dotplots"><i class="fa fa-check"></i><b>7.3.1</b> Dotplots</a></li>
+<li class="chapter" data-level="7.3.2" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#histograms"><i class="fa fa-check"></i><b>7.3.2</b> Histograms</a></li>
+<li class="chapter" data-level="7.3.3" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#density-plots-in-facets"><i class="fa fa-check"></i><b>7.3.3</b> Density Plots in Facets</a></li>
+<li class="chapter" data-level="7.3.4" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#overlaid-density-plots"><i class="fa fa-check"></i><b>7.3.4</b> Overlaid Density Plots</a></li>
+<li class="chapter" data-level="7.3.5" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#boxplots-grouped-data"><i class="fa fa-check"></i><b>7.3.5</b> Boxplots, Grouped Data</a></li>
+<li class="chapter" data-level="7.3.6" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#boxplots-overlay-points-on-the-boxplots-with-color-control"><i class="fa fa-check"></i><b>7.3.6</b> Boxplots, overlay points on the boxplots with color control</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="analysis-of-one-categorical-variable-by-another-categorical-variable.html"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html"><i class="fa fa-check"></i><b>8</b> Analysis of One Categorical Variable by another categorical variable</a><ul>
+<li class="chapter" data-level="8.1" data-path="analysis-of-one-categorical-variable-by-another-categorical-variable.html"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#tables"><i class="fa fa-check"></i><b>8.1</b> Tables</a></li>
+<li class="chapter" data-level="8.2" data-path="analysis-of-one-categorical-variable-by-another-categorical-variable.html"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#graphical-displays"><i class="fa fa-check"></i><b>8.2</b> Graphical Displays</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/jonander99/R-Essentials" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Essential R Skills</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="UnivariateGraphicalDisplays" class="section level1">
+<h1><span class="header-section-number">Chapter 5</span> Univariate Graphical Displays</h1>
+<p>In this section we will show examples of how to create graphical displays of a single variable - with examples for both quantitative and categorical variables. In each example, the first line creates the dataset to be graphed - followed by a command making the display. We will focus on graphical displays made by functions in the <em>ggplot</em> family - that is, the <em>ggplot</em> package which is also part of the <em>tidyverse</em> family of functions. If <em>tidyverse</em> is loaded, <em>ggplot</em> functions will work without explicitly loading the <em>ggplot</em> package.</p>
+<div id="a-quantitative-variable" class="section level2">
+<h2><span class="header-section-number">5.1</span> A Quantitative Variable</h2>
+<div id="dotplot" class="section level3">
+<h3><span class="header-section-number">5.1.1</span> Dotplot</h3>
+<p>The next block of code takes the gapminder dataframe and “pipes” (%&gt;%, a pipeline like plumbing) the data through a filter so that only data from year 1997 flows through to define the new dataset named <code>ds</code>. The <code>ggplot</code> command uses dataset ds, and variable x life expectancy. The next example shows what using only the <code>ggplot</code> command produces an empty graphical region that is awaiting further instructions:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ds &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) 
+<span class="co">#</span>
+<span class="kw">ggplot</span>(<span class="dt">data=</span>ds, <span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span>lifeExp)) </code></pre></div>
+<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+<p>Now we use additional code to place the dotplot in the existing graphical region. In ggplot graphics we make graphical objects with a <code>geom</code> function - here a dotplot so we use <code>geom_dotplot()</code> to produce the dotplot specified using the variable mappings in the aesthetics command <code>aes</code> in the ggplot command.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ds &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) 
+<span class="co">#</span>
+<span class="kw">ggplot</span>(<span class="dt">data=</span>ds, <span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span>lifeExp)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_dotplot</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Life Expectancy (years)&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Frequency&quot;</span>)</code></pre></div>
+<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+<p>Here we change the default size for the dots.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ds &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) 
+<span class="co">#</span>
+<span class="kw">ggplot</span>(<span class="dt">data=</span>ds, <span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span>lifeExp)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_dotplot</span>(<span class="dt">dotsize=</span><span class="fl">0.70</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Life Expectancy (years)&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Frequency&quot;</span>)</code></pre></div>
+<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+<div id="dotplot-with-observations-identified-and-ordered" class="section level4">
+<h4><span class="header-section-number">5.1.1.1</span> Dotplot with observations identified and ordered</h4>
+<p>Here we produce a display so that life expectancy is displayed for each country in Asia, and the values are ordered.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ds &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(continent<span class="op">==</span><span class="st">&quot;Asia&quot;</span>,year<span class="op">==</span><span class="dv">1997</span>) 
+<span class="co">#  </span>
+<span class="kw">ggplot</span>(<span class="dt">data=</span>ds, <span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span>lifeExp, <span class="dt">y=</span> <span class="kw">reorder</span>(country,lifeExp))) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Life Expectancy (years) in 1997&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Asian Countries&quot;</span>)</code></pre></div>
+<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+<p>Notice that in the next example we simply pipe the modified dataset into the first argument of the <code>ggplot</code> command so that there is no need to save the modified dataset to make the display.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(continent<span class="op">==</span><span class="st">&quot;Asia&quot;</span>,year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span>
+<span class="kw">ggplot</span>( <span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span>lifeExp, <span class="dt">y=</span> <span class="kw">reorder</span>(country,lifeExp))) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Life Expectancy (years) in 1997&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Asian Countries&quot;</span>)</code></pre></div>
+<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
+</div>
+</div>
+<div id="histogram" class="section level3">
+<h3><span class="header-section-number">5.1.2</span> Histogram</h3>
+<p>This code block is similar to the dotplot commands, but the geom_histogram function controls the bin width in units of the x variable - in this case 5 years.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span>
+<span class="kw">ggplot</span>(<span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span>lifeExp)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth=</span><span class="dv">5</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Life Expectancy (years)&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Relative Frequency&quot;</span>)</code></pre></div>
+<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
+<p>Here we change the binwidth:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span>
+<span class="kw">ggplot</span>(<span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span>lifeExp)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth=</span><span class="fl">2.5</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Life Expectancy (years)&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Relative Frequency&quot;</span>)</code></pre></div>
+<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
+</div>
+<div id="density-plot" class="section level3">
+<h3><span class="header-section-number">5.1.3</span> Density Plot</h3>
+<p>Density plots produces a smoothing of a histogram to display the distribution.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ds &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>)
+<span class="co">#</span>
+<span class="kw">ggplot</span>(<span class="dt">data=</span>ds, <span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span>lifeExp)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_density</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Life Expectancy (years)&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Density&quot;</span>)</code></pre></div>
+<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
+<p>The <code>adjust</code> option controls the amount of smoothing relative to a default value of 1. A smaller value gives less smoothing (more responsive line to small changes in the data distribution), and larger values will make a smoother curve that is less sensitive to the data pattern.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ds &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>)
+<span class="co">#</span>
+<span class="kw">ggplot</span>(<span class="dt">data=</span>ds, <span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span>lifeExp)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">adjust=</span><span class="fl">0.75</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Life Expectancy (years)&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Density&quot;</span>)</code></pre></div>
+<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
+</div>
+<div id="boxplot" class="section level3">
+<h3><span class="header-section-number">5.1.4</span> Boxplot</h3>
+<p>The boxplot display really needs only a single quantitative variable (here life expectancy) for the numeric axis. However, the other axis looks better with some sort of factor variable - so here we supply the year for the display, where the quantitative variable <code>year</code> has temporarily being used as a category/factor variable by being processed by the <code>factor</code> function before used in the graphic:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ds &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) 
+<span class="co">#</span>
+<span class="kw">ggplot</span>(<span class="dt">data=</span>ds, <span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span><span class="kw">factor</span>(year),<span class="dt">y=</span>lifeExp)) <span class="op">+</span>
+<span class="st"> </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Year&quot;</span>,<span class="dt">y=</span><span class="st">&quot;Life Expectancy (years)&quot;</span>)</code></pre></div>
+<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Change orientation</span>
+<span class="kw">ggplot</span>(<span class="dt">data=</span>ds, <span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span><span class="kw">factor</span>(year),<span class="dt">y=</span>lifeExp)) <span class="op">+</span>
+<span class="st"> </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Year&quot;</span>,<span class="dt">y=</span><span class="st">&quot;Life Expectancy (years)&quot;</span>)</code></pre></div>
+<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-45-2.png" width="672" /></p>
+<p>Now we overlay points on top of the boxplot display. Note the <code>geom_jitter</code> that overlays the points has an argument <code>alpha=0.5</code> signifying a slightly transparent plot symbol. An alpha value of 1 means the plot symbol is opaque, and a value of 0 is comletely transparent. Careful use of alpha in large datasets will enable the analyst to correctly perceive point density. Without using a smaller value of <code>alpha</code> the plot may be one large blob of ink - making it difficult to judge the density of points in the display.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ds &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) 
+<span class="co">#</span>
+<span class="kw">ggplot</span>(<span class="dt">data=</span>ds, <span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span><span class="kw">factor</span>(year),<span class="dt">y=</span>lifeExp)) <span class="op">+</span>
+<span class="st"> </span><span class="kw">geom_boxplot</span>(<span class="dt">outlier.shape =</span> <span class="ot">NA</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st"> </span><span class="kw">geom_jitter</span>(<span class="dt">alpha=</span><span class="fl">0.5</span>, <span class="dt">width=</span><span class="fl">0.35</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Year&quot;</span>,<span class="dt">y=</span><span class="st">&quot;Life Expectancy (years)&quot;</span>)</code></pre></div>
+<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
+<p>If the dataframe has only one quantitative variable, we can make a character variable called “sample”, then this code will produce an acceptable display.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ds &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sample=</span><span class="st">&quot;Sample&quot;</span>)
+<span class="co">#</span>
+<span class="kw">ggplot</span>(<span class="dt">data=</span>ds, <span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span>sample,<span class="dt">y=</span>lifeExp)) <span class="op">+</span>
+<span class="st"> </span><span class="kw">geom_boxplot</span>(<span class="dt">outlier.shape =</span> <span class="ot">NA</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st"> </span><span class="kw">geom_jitter</span>(<span class="dt">alpha=</span><span class="fl">0.5</span>, <span class="dt">width=</span><span class="fl">0.35</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;&quot;</span>,<span class="dt">y=</span><span class="st">&quot;Life Expectancy (years)&quot;</span>)</code></pre></div>
+<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-47-1.png" width="672" /></p>
+</div>
+</div>
+<div id="displays-of-a-categorical-variable" class="section level2">
+<h2><span class="header-section-number">5.2</span> Displays of a Categorical Variable</h2>
+<div id="bar-graph" class="section level3">
+<h3><span class="header-section-number">5.2.1</span> Bar Graph</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ds &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(continent) 
+<span class="co"># Frequency of countries in each continent in 1997.</span>
+<span class="kw">ggplot</span>(<span class="dt">data=</span>ds, <span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span>continent)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_bar</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Continent&quot;</span>, <span class="dt">y=</span><span class="st">&quot;Frequency&quot;</span>)</code></pre></div>
+<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-48-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#</span>
+<span class="kw">ggplot</span>(<span class="dt">data=</span>ds, <span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span>continent)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">width=</span><span class="fl">0.5</span>,<span class="dt">fill=</span><span class="st">&quot;blue&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Countries in Each Continent&quot;</span>,
+       <span class="dt">subtitle =</span> <span class="st">&quot;Year = 1997&quot;</span>,
+       <span class="dt">caption =</span> <span class="st">&quot;Gapminder data&quot;</span>,
+       <span class="dt">x=</span><span class="st">&quot;Continent&quot;</span>, 
+       <span class="dt">y=</span><span class="st">&quot;Frequency&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle=</span><span class="dv">45</span>,<span class="dt">vjust =</span> <span class="fl">0.6</span>))</code></pre></div>
+<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-48-2.png" width="672" /></p>
+<p>Bar graph with percentages on vertical axis.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ds &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(continent)  <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span> (<span class="dt">n =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">pct =</span> <span class="dv">100</span><span class="op">*</span>n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n)) 
+<span class="co">#</span>
+<span class="kw">ggplot</span>(<span class="dt">data=</span>ds, <span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x =</span> continent, <span class="dt">y =</span> pct)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Continent&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Percentage&quot;</span>)</code></pre></div>
+<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-49-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># change order of continents in decreasing frequency order</span>
+<span class="kw">ggplot</span>(<span class="dt">data=</span>ds, <span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">reorder</span>(continent, <span class="op">-</span>pct), <span class="dt">y =</span> pct)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Continent&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Percentage&quot;</span>)</code></pre></div>
+<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-49-2.png" width="672" /></p>
+<p>Sometimes it is more convenient to have the bars oriented horizontally. Notice we set up the aesthetic mappings as usual and then flip the axes with the <code>coord_flip</code> command.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ds &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(continent)  <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span> (<span class="dt">n =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">pct =</span> <span class="dv">100</span><span class="op">*</span>n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n)) 
+<span class="co">#</span>
+<span class="kw">ggplot</span>(<span class="dt">data=</span>ds, <span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">reorder</span>(continent, pct), <span class="dt">y =</span> pct)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Continent&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Percentage&quot;</span>)</code></pre></div>
+<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-50-1.png" width="672" /></p>
+</div>
+<div id="pie-graph" class="section level3">
+<h3><span class="header-section-number">5.2.2</span> Pie Graph</h3>
+<p>Pie graphs are not recommended, but the code needed to make one is given here.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">contin.prop&lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(continent) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span> (<span class="dt">n =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">freq =</span> n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n))
+<span class="co">#</span>
+<span class="kw">ggplot</span>(<span class="dt">data=</span>contin.prop, <span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span><span class="st">&quot;&quot;</span>,<span class="dt">y=</span>freq,<span class="dt">fill=</span>continent)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">width=</span><span class="dv">1</span>,<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">coord_polar</span>(<span class="st">&quot;y&quot;</span>,<span class="dt">start=</span><span class="dv">0</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Country Frequency by Continent&quot;</span>)</code></pre></div>
+<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-51-1.png" width="672" /></p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="IntroDataWrangling.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="summary-statistics-for-one-variable.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/jonander99/R-Essentials/edit/master/04-univariateGraphics.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown-R-Essentials.pdf", "bookdown-R-Essentials.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
