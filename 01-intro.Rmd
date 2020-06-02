@@ -1,0 +1,61 @@
+# Getting Started {#GettingStarted}
+
+## Packages
+
+When you start R studio, basic functionality is initially available.  However, in most projects we will want to use some special code and functions contained in packages that are not initially available whe R starts.  Before packages can be used in our analyses, they must be installed in our R workspace.  We presume that the R Studio development environment is being used by our students.  Any package can be installed by clicking the "Packages" tab in the lower right panel of the R Studio workspace.  Then click "Install" to produce an entry bar where you type the name of the desired package.  
+
+Once a package is installed into your R Studio environment, you make it available by loading with the `library()` command.  For this document, some additional packages are needed, and are loaded in the next code block.  The *knitr* and *tidyverse* packages have been previously installed.  If you attempt to load a package (in this case zelig) that has not been installed, you will get an error message similar to this:
+
+`Error in library(zelig) : there is no package called ‘zelig’`
+
+
+```{r , echo=TRUE,warning=FALSE,message=FALSE}
+# this block loads R packages that may be needed for the analysis.
+library(knitr)
+library(tidyverse)
+```
+
+
+## The tidyverse Package
+
+The tidyverse package is very special - it is a package of other packages. The tidyverse website [tidyverse](http://tidyverse.org "Title") describes the tidyverse as: *The tidyverse is an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures.*
+
+The most important packages inside the tidyverse package for this document are:  dplyr, magrittr, and ggplot.
+
+
+## Gapminder Data:
+
+This dataset (named gapminder) is contained in an R package called *gapminder*, and needs to be loaded before the dataset can be used.
+
+```{r}
+library(gapminder)
+```
+
+## Set Working Directory
+
+In the "Files" tab in the lower right portion of the R Studio work area, you can choose where you want to store files and conduct your work by navigating to a suitable folder by making folders and sub-folders and then clicking to navigate to a suitable work area.
+
+You should notify R Studio and the R software to this location called the working directory.  Once you have navigated to where you want files, data, and results to reside, you notify R Studio by clicking the blue "More" gear and choose "set working directory."   This will help R understand where to expect files and dat to be located.
+
+One of the most common problems students experience is that they work on files in a location not specified as the "working directory."
+
+## Reading Data From a CSV File
+
+The most common way to read data into R is from an excel spreadsheet that has been saved into a comma-separated-values (csv) file.  This means that data elements are separated from each other by commas ",".
+
+We consider a data file named (file.csv) that contains variable names in the first row of the file. Place this file in your working directory and read,
+
+```{r,eval=FALSE}
+dataframe <- read.csv("file.csv",header=TRUE)
+```
+
+The *readr* package inside the *tidyverse* family of packages has a slightly nicer read csv function you should know about.  We use the `readr::` prefix to inform readers that the `read_csv` function resides in the *readr* package.
+
+```{r,eval=FALSE}
+dataframe <- readr::read_csv("file.csv",col_names = TRUE)
+```
+
+
+Reading data directly from excel spreadsheets is more complex and you should read documentation for the *readxl* package.
+
+

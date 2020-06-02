@@ -1,0 +1,139 @@
+# Analysis of One Categorical Variable by another categorical variable
+
+```{r,echo=FALSE,message=FALSE,warning=FALSE}
+library(gapminder)
+library(tidyverse)
+library(fivethirtyeight)
+```
+
+To demonstrate graphical displays of two categorical variables, we need a new dataset with two categorical variables.  We use the `congress_age` dataframe from the *fivethirtyeight* package.  In these displays we will use categorical variables:
+
+* party affiliation (party) with values: D, I, R.
+* congressional chamber (chamber) with values: house, senate
+
+We will restrict ourselves to the 113th congress, a meeting of the legislative branch of the United States federal government, from January 3, 2013, to January 3, 2015, during the fifth and sixth years of Barack Obama's presidency.
+
+## Tables
+
+```{r}
+congage <- fivethirtyeight::congress_age
+ds1 <- congage %>% filter(congress > 112) %>% select(congress,chamber,state,party,incumbent,age) 
+#  We declare party and chamber as factor/categorical variables, and control their levels.
+ds1 <- ds1 %>% mutate(party = factor(party,levels=c("D","I","R")),
+                    chamber = factor(chamber))
+ds1 <- ds1 %>% na.omit()
+ds <- ds1  
+#
+table(ds$chamber,ds$party)
+#
+mytable <- table(ds$chamber,ds$party)
+#
+prop.table(mytable) # cell percentages
+prop.table(mytable, 1) # row percentages
+prop.table(mytable, 2) # column percentages
+```
+
+```{r}
+ds %>%  janitor::tabyl(chamber, party)
+#
+t2 <- ds %>%  janitor::tabyl(chamber, party)
+t2 %>%
+  janitor::adorn_percentages("row") %>%
+  janitor::adorn_pct_formatting(digits = 2) %>%
+  janitor::adorn_ns()
+# column percentages
+t2 %>%
+  janitor::adorn_percentages("col") %>%
+  janitor::adorn_pct_formatting(digits = 2) %>%
+  janitor::adorn_ns()
+# both row and column percentages
+t2 %>%
+  janitor::adorn_percentages("all") %>%
+  janitor::adorn_pct_formatting(digits = 2) %>%
+  janitor::adorn_ns()
+```
+
+```{r,tidy=FALSE}
+congage <- fivethirtyeight::congress_age
+ds1 <- congage %>% filter(congress > 112) %>% select(congress,chamber,state,party,incumbent,age) 
+#  We declare party and chamber as factor/categorical variables, and control their levels.
+ds1 <- ds1 %>% mutate(party = factor(party,levels=c("D","I","R")),
+                    chamber = factor(chamber))
+ds1 <- ds1 %>% na.omit()
+ds <- ds1  
+ds %>% group_by(chamber,party) %>% 
+  dplyr::count() %>% 
+  tidyr::pivot_wider(names_from = party, values_from = n)
+```
+
+
+## Graphical Displays
+
+```{r}
+# basic bar plot of party affiliation
+ggplot(data=ds, aes(x=party)) + geom_bar() +
+  labs(x="Party", y="Count")
+```
+
+
+```{r, tidy=FALSE}
+ds <- ds1 %>% group_by(party,chamber)
+#
+ggplot(data=ds, aes(x=chamber)) + geom_bar(aes(fill=party),position="dodge") +
+  labs(x="Chamber", y="Count")
+#
+ggplot(data=ds, aes(x=party)) + 
+  geom_bar(aes(fill=party)) +
+  facet_wrap( ~ chamber) +
+  labs(x="Party", y="Count")
+```
+
+
+
+```{r}
+#  The next display attempts to use percentages on the vertical axis defined within chamber.
+# This means the next command must list chamber as the FIRST group_by variable.
+ds <- ds1 %>% group_by(chamber,party)  %>%
+   summarise (n = n()) %>%
+  mutate(pct = 100*n / sum(n)) 
+#
+ds
+#
+ggplot(data=ds, aes(x=party, y=pct)) + geom_bar(aes(fill=party),stat="identity") +
+  facet_wrap( ~ chamber) +
+  labs(x="Party", y="Percent")
+```
+
+
+
+
+```{r}
+ds1 <- congage %>% filter(congress > 112) %>% select(congress,chamber,state,party,incumbent,age) %>%
+ mutate(party = factor(party,levels=c("D","I","R")),
+                    chamber = factor(chamber)) %>% 
+  na.omit()
+#
+ds <- ds1 %>% group_by(chamber,party)  %>%
+   summarise (n = n()) %>%
+  mutate(pct = 100*n / sum(n)) 
+#
+ggplot(data=ds, mapping=aes(x=chamber,y=pct,fill=party)) + 
+  geom_col() +
+  labs(x="Chamber", y="Percent")
+```
+
+```{r}
+ds1 <- congage %>% filter(congress > 112) %>% select(congress,chamber,state,party,incumbent,age) %>%
+ mutate(party = factor(party,levels=c("D","I","R")),
+                    chamber = factor(chamber)) %>% 
+  na.omit()
+#
+ds1 %>% group_by(chamber,party)  %>%
+   summarise (n = n()) %>%
+  mutate(pct = 100*n / sum(n)) %>%
+ggplot( mapping=aes(x=chamber,y=pct,fill=party)) + 
+  geom_col() +
+  coord_flip() +
+  labs(x="Chamber", y="Percent")
+```
+

@@ -1,0 +1,179 @@
+# Exploratory Data Analysis For One Quantitative Variable: by Groups
+
+It is often helpful to create data summaries of a quantitative variable for each level of a grouping variable.
+
+```{r,echo=FALSE,message=FALSE,warning=FALSE}
+library(gapminder)
+library(tidyverse)
+```
+
+## Summary Statistics: dplyr
+
+Using *dplyr* and *tidyverse* for summary statistics across the levels of a group variable (of type factor/categorical) requires the use of the verb `group_by`.  Here we produce summary statistics of life expectancy across the levels of continent.
+
+```{r,tidy=FALSE}
+# Output presented in initial continent order (alphabetic)
+gapminder %>% filter(year==1997) %>% 
+  filter(continent != "Oceania") %>% 
+  group_by(continent) %>% 
+  summarise(meanLE=mean(lifeExp,na.rm=TRUE),
+            medLE=median(lifeExp,na.rm=TRUE),
+            sd=sd(lifeExp,na.rm=TRUE),
+            iqr=IQR(lifeExp,na.rm=TRUE),
+            Q1=quantile(lifeExp, probs=0.25,na.rm=TRUE),
+            Q3=quantile(lifeExp,probs=0.75),
+            n=n())
+#
+# Output rows ordered by decreasing values of a statistic (mean Life Expectancy):
+gapminder %>% filter(year==1997) %>% 
+  filter(continent != "Oceania") %>% 
+  group_by(continent) %>%
+  summarise(meanLE=mean(lifeExp,na.rm=TRUE),
+            medLE=median(lifeExp,na.rm=TRUE),
+            sd=sd(lifeExp,na.rm=TRUE),
+            iqr=IQR(lifeExp,na.rm=TRUE),
+            min=min(lifeExp),
+            max=max(lifeExp),
+            n=n())  %>%
+  arrange(desc(meanLE))
+```
+
+
+Next, we save the statistics table to an object called statstable, then we use the `kable` function for display.
+
+```{r,tidy=FALSE}
+statstable <- gapminder %>% filter(year==1997) %>% 
+  filter(continent != "Oceania") %>% 
+  group_by(continent) %>% 
+  summarise(meanLE=mean(lifeExp,na.rm=TRUE),
+            medLE=median(lifeExp,na.rm=TRUE),
+            sd=sd(lifeExp,na.rm=TRUE),
+            iqr=IQR(lifeExp,na.rm=TRUE),
+            min=min(lifeExp),
+            max=max(lifeExp),
+            n=n())  %>% 
+  arrange(desc(meanLE))
+#
+knitr::kable(statstable)
+```
+
+
+## Summary Statistics:  skimr
+
+Here we implement the `group_by` function to display descriptive statistics for numeric variables by continent, for two quantitative variables using functions from the *skimr* package.
+```{r}
+gapminder %>% filter(year==1997) %>% 
+  filter(continent != "Oceania") %>% 
+  group_by(continent) %>% 
+  skimr::skim_without_charts() %>%
+  skimr::yank("numeric") %>%
+  dplyr::filter(skim_variable %in% c("lifeExp","gdpPercap")) %>%
+  knitr::kable()
+```
+
+## Graphical Displays of a quantitative variable, separated by groups
+
+In each example, the first lines create the dataset to be graphed - followed by a `ggplot` command making the display.  Several of the examples make use of the principle of "small-multiples" so that each level of the factor variable has a separarate panel for the quantitative variable display.
+
+### Dotplots
+
+```{r,message=FALSE,tidy=FALSE}
+ds <- gapminder %>% filter(year==1997) 
+#
+ggplot(data=ds,mapping=aes(x=lifeExp)) + 
+  geom_dotplot() + 
+  facet_wrap( ~ continent,ncol=2) + 
+  xlab("Life Expectancy (years)") +
+  ylab("Frequency")
+```
+
+
+### Histograms
+
+```{r,eval=TRUE,tidy= FALSE}
+ds <- gapminder %>% 
+  filter(year==1997) %>% 
+  filter(continent != "Oceania") %>% 
+  group_by(continent) 
+#
+ggplot(data=ds, mapping=aes(x=lifeExp)) + 
+  geom_histogram(binwidth=5) + 
+  facet_wrap( ~ continent,ncol=2) + 
+  xlab("Life Expectancy (years)") +
+  ylab("Frequency")
+```
+
+
+### Density Plots in Facets
+
+The code given here shows how to produce a density plot in separate panels for each continent.
+
+```{r,eval=TRUE,tidy=FALSE}
+ds <- gapminder %>% 
+  filter(year==1997) %>% 
+  filter(continent != "Oceania") %>% 
+  group_by(continent) 
+#
+ggplot(data=ds, mapping=aes(x=lifeExp, colour=continent, fill=continent)) + 
+  geom_density(alpha = 0.35) + 
+  xlab("Life Expectancy (years)") +
+  ylab("Density") +
+  facet_wrap( ~ continent, ncol = 2) +  
+  theme(legend.position = "none")
+```
+
+### Overlaid Density Plots
+
+The initial command below takes the gapminder data and consider only observations (rows) from 1997, but exclude all observations from Oceania.  The `alpha` setting controls the amount of transparency in the densities for each continent - smaller values of `alpha` (between 0 and 1) are more transparent.
+```{r,eval=TRUE,tidy=FALSE}
+gapminder %>% 
+  filter(year==1997) %>% 
+  filter(continent != "Oceania") %>% 
+  group_by(continent) %>%
+ggplot(mapping=aes(x=lifeExp, colour=continent, fill=continent)) + 
+  geom_density(alpha = 0.35) + 
+  xlab("Life Expectancy (years)") +
+  ylab("Density")
+```
+
+
+### Boxplots, Grouped Data
+
+In the code below, the `alpha` value again controls the transparency of the points alpha=1 means opaque, alpha=0 means completely see-through.  When there is a lot of data, use a smaller value of alpha.
+
+```{r,tidy=FALSE}
+ds <- gapminder %>% 
+  filter(year==1997) %>% 
+  filter(continent != "Oceania") %>% 
+  group_by(continent) 
+#
+ggplot(data=ds, mapping=aes(x=continent,y=lifeExp)) +
+ geom_boxplot() + 
+  labs(x="Continent",y="Life Expectancy (years)")
+#
+ggplot(data=ds, mapping=aes(x=continent,y=lifeExp)) +  
+ geom_boxplot(outlier.colour = NA) + 
+ geom_point(position = position_jitter(width = 0.15, height = 0.15),alpha=.50) +
+  labs(x="Continent",y="Life Expectancy (years)")
+```
+
+### Boxplots, overlay points on the boxplots with color control
+
+In the code below, the alpha value controls the transparency of the points alpha=1 means opaque, alpha=0 means completely see-through. 
+
+```{r oztempbox2, tidy=FALSE}
+ds <- gapminder %>% 
+  filter(year==1997) %>% 
+  filter(continent != "Oceania") %>% 
+  group_by(continent) 
+# 
+ggplot(data=ds, mapping=aes(x=continent,y=lifeExp, colour=continent)) + 
+  geom_point(position = position_jitter(width = 0.2, height = 0.2),alpha=.25) +
+ geom_boxplot(outlier.colour = NA, fill = NA) + 
+  labs(x="Continent",y="Life Expectancy (years)")
+# 
+ggplot(data=ds, mapping=aes(x=continent,y=lifeExp, colour=continent)) + 
+  geom_point(position = position_jitter(width = 0.2, height = 0.2),alpha=.80) +
+ geom_boxplot(outlier.colour = NA, fill = NA) + 
+  labs(x="Continent",y="Life Expectancy (years)")
+```
