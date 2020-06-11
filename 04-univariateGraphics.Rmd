@@ -7,7 +7,13 @@ library(tidyverse)
 
 
 In this section we will show examples of how to create graphical displays of a single variable - with examples for both quantitative and categorical variables. 
-In each example, the first line creates the dataset to be graphed - followed by a command making the display.  We will focus on graphical displays made by functions in the *ggplot* family - that is, the *ggplot* package which is also part of the *tidyverse* family of functions.  If *tidyverse* is loaded, *ggplot* functions will work without explicitly loading the *ggplot* package.
+In each example, the first line creates the dataset to be graphed - followed by a command making the display.  We will focus on graphical displays made by functions in the *ggplot2* family - that is, the *ggplot2* package which is also part of the *tidyverse* family of functions.  If *tidyverse* is loaded, *ggplot2* functions will work without explicitly loading the *ggplot2* package.
+
+## Overview of ggplot
+
+The *ggplot2* package uses the `ggplot` command - and builds a graphical display in steps and layers.  We always start with the `ggplot` command which typically has two basic elements:  a dataset to be used, and a list of mappings `aes` that is used to connect dataset variables to aspects of the plot like the vertical axis, horizontal axis, or perhaps the size of a point.
+
+The kind of object being displayed is called a `geom`, and a plot can have several `geom`s, and they are added to a display in layers - connected by a `+` sign.
 
 
 ## A Quantitative Variable

@@ -20,7 +20,7 @@ library(tidyverse)
 
 The tidyverse package is very special - it is a package of other packages. The tidyverse website [tidyverse](http://tidyverse.org "Title") describes the tidyverse as: *The tidyverse is an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures.*
 
-The most important packages inside the tidyverse package for this document are:  dplyr, magrittr, and ggplot.
+The most important packages inside the tidyverse package for this document are:  dplyr, magrittr, and ggplot2.
 
 
 ## Gapminder Data:
@@ -49,7 +49,13 @@ We consider a data file named (file.csv) that contains variable names in the fir
 dataframe <- read.csv("file.csv",header=TRUE)
 ```
 
-The *readr* package inside the *tidyverse* family of packages has a slightly nicer read csv function you should know about.  We use the `readr::` prefix to inform readers that the `read_csv` function resides in the *readr* package.
+A frequent issue with `read.csv` is that character variables are automatically converted to factor/categorical variables.  This may not be a good choice in many instances.  To gain full control of how this is handled, you can prevent this kind of auto-conversion by using the `stringsAsFactors` option.
+
+```{r,eval=FALSE}
+cardata <- read.csv(file = 'carspeeds.csv', stringsAsFactors = FALSE)
+```
+
+The *readr* package inside the *tidyverse* family of packages has a slightly nicer read csv function you should know about.  We use the `readr::` prefix to inform readers that the `read_csv` function resides in the *readr* package.  This read function will not auto-convert character variables to category/factor variables.
 
 ```{r,eval=FALSE}
 dataframe <- readr::read_csv("file.csv",col_names = TRUE)

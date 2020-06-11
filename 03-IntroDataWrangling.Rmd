@@ -8,6 +8,16 @@ library(gapminder)
 
 In this chapter we present some very basic data handling and processing functions (data wrangline) that will be necessary for doing basic analyses, comparisons, and graphics.  Most of the commands presented in this section stress the functions and R packages in the *tidyverse* - a set or family of packages that have similar syntax and behaviors.
 
+## Tidy Data
+
+What is tidy data? Tidy data is a standard way of mapping the meaning of a dataset to its structure. A dataset is messy or tidy depending on how rows, columns and tables are matched up with observations, variables and types. In tidy data:
+
+* Each variable forms a column.
+
+* Each observation forms a row.
+
+* Each type of observational unit forms a table.
+
 ## Subset using filter
 
 Suppose we wish to examine a subset of data for only one country, Jon's favorite country, Australia!!  The following code starts by taking the gapminder dataset and then "pipes" it into the filtering (selecting rows) action so that only dataset rows from Australia are selected.  The pipe function is %>% and is similar to a plumbing pipe that goes one direction:  from left to right.  After the "Australia" rows are selected, the result is "piped" into the head function for display.  The head function says show the top 12 rows.  When no rows are specified in the head function, the default is 6 rows.  Note that the filter function resides in the *dplyr* package within the *tidyverse* family.
@@ -69,6 +79,16 @@ dplyr::glimpse(gap97)
 ```{r,echo=FALSE}
 rm(gap97)
 ```
+
+## Subset using top_n
+
+Let's make a dataset based on the countries in 1997 with highest gdp.
+```{r}
+gapminder %>% filter(year==1997) %>%
+  top_n(n = 10, wt = gdpPercap) %>%
+  head(n=10)
+```
+
 
 
 ## Subset using select
@@ -227,14 +247,34 @@ tempdf %>%
 # count rows with missing y
 tempdf %>%
   dplyr::tally(is.na(y))
+
+```
+
+```{r}
 # subset of rows with complete data for specified columns
 tempdf %>%
   dplyr::select(y,z) %>%
   tidyr::drop_na() %>%
   head()
-#  
+#   drop rows with missing values in all variables
 tempdf %>%
   tidyr::drop_na() %>%
+  head()
+```
+
+Use base `is.na` function
+```{r}
+tempdf %>%
+  filter(!is.na(x),           # remove obs with missing x
+         !is.na(y),  # remove obs with missing y
+         !is.na(z))                # remove obs with missing z
+```
+
+Some code that will execute a filter that will permit only rows with entirely complete data in x to pass through to the dataset,
+
+```{r}
+tempdf %>%
+  filter(x %>% is.na() %>% magrittr::not()) %>%
   head()
 ```
 
