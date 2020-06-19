@@ -39,6 +39,14 @@ gapminder %>%
   head()
 ```
 
+Notice that two `filter` statements produce the same result.
+```{r,tidy=FALSE}
+gapminder %>% 
+  dplyr::filter(continent=="Oceania") %>% 
+  dplyr::filter(year==1997) %>%
+  head()
+```
+
 The next example uses an "or" condition to specify the desired rows in the first `filter` expression - the next `filter` permits only observations from 1997.
 ```{r,tidy=FALSE}
 gapminder %>% 
@@ -229,6 +237,52 @@ gapminder %>%
   dplyr::glimpse() %>%
   head()
 ```
+## Simple Counting Using tally() and count()
+We frequently wish to know how many observations/rows satisfy a set of conditions.  We will filter the observations for the given conditions, then count them using the `tally()` or `count()` functions from *dplyr*.
+
+Essentially, `count()` is a short-hand for `group_by() + tally()`.
+
+For example, what if we want to know how many observations are from continent 'Americas' in 1997.
+
+These examples have no grouping, no `group_by` is being used.
+```{r,tidy=FALSE}
+gapminder %>% dplyr::filter(year==1997) %>%
+  dplyr::filter(continent=="Americas") %>%
+  dplyr::tally()
+```
+
+```{r,tidy=FALSE}
+gapminder %>% dplyr::filter(year==1997) %>%
+  dplyr::filter(continent=="Americas") %>%
+  dplyr::count()
+```
+
+Now we group by continent.
+
+```{r,tidy=FALSE}
+gapminder %>% dplyr::filter(year==1997) %>%
+  dplyr::group_by(continent) %>%
+  dplyr::filter(continent=="Americas") %>%
+  dplyr::tally()
+#
+gapminder %>% dplyr::filter(year==1997) %>%
+  dplyr::group_by(continent) %>%
+  dplyr::tally()
+```
+
+
+
+```{r,tidy=FALSE}
+gapminder %>% dplyr::filter(year==1997) %>%
+  dplyr::group_by(continent) %>%
+  dplyr::filter(continent=="Americas") %>%
+  dplyr::count()
+#
+gapminder %>% dplyr::filter(year==1997) %>%
+  dplyr::count(continent)
+```
+
+
 
 ## Missing Values
 

@@ -24,7 +24,7 @@
 <meta name="author" content="UMN-Morris Statistics Discipline" />
 
 
-<meta name="date" content="2020-06-11" />
+<meta name="date" content="2020-06-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -132,7 +132,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.7" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#order-using-arrange"><i class="fa fa-check"></i><b>4.7</b> Order using arrange</a></li>
 <li class="chapter" data-level="4.8" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#grouped-filter"><i class="fa fa-check"></i><b>4.8</b> Grouped Filter</a></li>
 <li class="chapter" data-level="4.9" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#new-variables-using-mutate"><i class="fa fa-check"></i><b>4.9</b> New Variables Using Mutate</a></li>
-<li class="chapter" data-level="4.10" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#missing-values"><i class="fa fa-check"></i><b>4.10</b> Missing Values</a></li>
+<li class="chapter" data-level="4.10" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#simple-counting-using-tally-and-count"><i class="fa fa-check"></i><b>4.10</b> Simple Counting Using tally() and count()</a></li>
+<li class="chapter" data-level="4.11" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#missing-values"><i class="fa fa-check"></i><b>4.11</b> Missing Values</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html"><i class="fa fa-check"></i><b>5</b> Univariate Graphical Displays</a><ul>
 <li class="chapter" data-level="5.1" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html#overview-of-ggplot"><i class="fa fa-check"></i><b>5.1</b> Overview of ggplot</a></li>
@@ -236,6 +237,16 @@ gapminder <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span clas
 <p>Let’s select by contintent and year. The head function will then show some of the rows selected. Here the gapminder dataframe is piped to the <code>filter</code> function to select rows to be further piped to the <code>head()</code> function for display. The logical condtion inside <code>filter</code> restricts continent to “Oceania” AND (AND condition is “&amp;”) year to be 1997. Both of these conditions must be TRUE for the row to enter the dataframe to displayed by the <code>head()</code> function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(continent<span class="op">==</span><span class="st">&quot;Oceania&quot;</span> <span class="op">&amp;</span><span class="st"> </span>year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">head</span>()</code></pre></div>
+<pre><code>## # A tibble: 2 x 6
+##   country     continent  year lifeExp      pop gdpPercap
+##   &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+## 1 Australia   Oceania    1997    78.8 18565243    26998.
+## 2 New Zealand Oceania    1997    77.6  3676187    21050.</code></pre>
+<p>Notice that two <code>filter</code> statements produce the same result.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(continent<span class="op">==</span><span class="st">&quot;Oceania&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">head</span>()</code></pre></div>
 <pre><code>## # A tibble: 2 x 6
 ##   country     continent  year lifeExp      pop gdpPercap
@@ -809,8 +820,70 @@ gapminder <span class="op">%&gt;%</span><span class="st"> </span>
 ## 5 Afghanistan Asia       1972    36.1 13079460      740. NotOceania NotOceania
 ## 6 Afghanistan Asia       1977    38.4 14880372      786. NotOceania NotOceania</code></pre>
 </div>
+<div id="simple-counting-using-tally-and-count" class="section level2">
+<h2><span class="header-section-number">4.10</span> Simple Counting Using tally() and count()</h2>
+<p>We frequently wish to know how many observations/rows satisfy a set of conditions. We will filter the observations for the given conditions, then count them using the <code>tally()</code> or <code>count()</code> functions from <em>dplyr</em>.</p>
+<p>Essentially, <code>count()</code> is a short-hand for <code>group_by() + tally()</code>.</p>
+<p>For example, what if we want to know how many observations are from continent ‘Americas’ in 1997.</p>
+<p>These examples have no grouping, no <code>group_by</code> is being used.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(continent<span class="op">==</span><span class="st">&quot;Americas&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">tally</span>()</code></pre></div>
+<pre><code>## # A tibble: 1 x 1
+##       n
+##   &lt;int&gt;
+## 1    25</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(continent<span class="op">==</span><span class="st">&quot;Americas&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">count</span>()</code></pre></div>
+<pre><code>## # A tibble: 1 x 1
+##       n
+##   &lt;int&gt;
+## 1    25</code></pre>
+<p>Now we group by continent.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(continent) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(continent<span class="op">==</span><span class="st">&quot;Americas&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">tally</span>()</code></pre></div>
+<pre><code>## # A tibble: 1 x 2
+##   continent     n
+##   &lt;fct&gt;     &lt;int&gt;
+## 1 Americas     25</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#</span>
+gapminder <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(continent) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">tally</span>()</code></pre></div>
+<pre><code>## # A tibble: 5 x 2
+##   continent     n
+##   &lt;fct&gt;     &lt;int&gt;
+## 1 Africa       52
+## 2 Americas     25
+## 3 Asia         33
+## 4 Europe       30
+## 5 Oceania       2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(continent) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(continent<span class="op">==</span><span class="st">&quot;Americas&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">count</span>()</code></pre></div>
+<pre><code>## # A tibble: 1 x 2
+## # Groups:   continent [1]
+##   continent     n
+##   &lt;fct&gt;     &lt;int&gt;
+## 1 Americas     25</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#</span>
+gapminder <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">count</span>(continent)</code></pre></div>
+<pre><code>## # A tibble: 5 x 2
+##   continent     n
+##   &lt;fct&gt;     &lt;int&gt;
+## 1 Africa       52
+## 2 Americas     25
+## 3 Asia         33
+## 4 Europe       30
+## 5 Oceania       2</code></pre>
+</div>
 <div id="missing-values" class="section level2">
-<h2><span class="header-section-number">4.10</span> Missing Values</h2>
+<h2><span class="header-section-number">4.11</span> Missing Values</h2>
 <p>If a variable is not complete and contains empty places, these are denoted in R as <code>NA</code>. We will often wish to create a dataframe without any missing values, or discover how many rows contain variables with missing values.</p>
 <p>First let’s create a small dataset with missing values:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="ot">NA</span>,<span class="dv">4</span>)
