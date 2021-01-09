@@ -1,36 +1,46 @@
-\documentclass[]{book}
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{book}
 \usepackage{lmodern}
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
-\usepackage{fixltx2e} % provides \textsubscript
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
-\else % if luatex or xelatex
-  \ifxetex
-    \usepackage{mathspec}
-  \else
-    \usepackage{fontspec}
-  \fi
-  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
 \fi
-% use upquote if available, for straight quotes in verbatim environments
+% Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-% use microtype if available
-\IfFileExists{microtype.sty}{%
-\usepackage[]{microtype}
-\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
-\PassOptionsToPackage{hyphens}{url} % url is loaded by hyperref
-\usepackage[unicode=true]{hyperref}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
-            pdftitle={Essential R Skills},
-            pdfauthor={UMN-Morris Statistics Discipline},
-            pdfborder={0 0 0},
-            breaklinks=true}
-\urlstyle{same}  % don't use monospace font for urls
-\usepackage{natbib}
-\bibliographystyle{apalike}
+  pdftitle={Essential R Skills},
+  pdfauthor={UMN-Morris Statistics Discipline},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
 \usepackage{color}
 \usepackage{fancyvrb}
 \newcommand{\VerbBar}{|}
@@ -40,40 +50,46 @@
 \usepackage{framed}
 \definecolor{shadecolor}{RGB}{248,248,248}
 \newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
-\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
 \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
 \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
-\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
-\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\ImportTok}[1]{#1}
-\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
 \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
-\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
-\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
-\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
-\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
-\newcommand{\BuiltInTok}[1]{#1}
-\newcommand{\ExtensionTok}[1]{#1}
-\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
-\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
-\newcommand{\RegionMarkerTok}[1]{#1}
-\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
 \newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
 \newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \usepackage{longtable,booktabs}
-% Fix footnotes in tables (requires footnote package)
-\IfFileExists{footnote.sty}{\usepackage{footnote}\makesavenoteenv{long table}}{}
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
 \usepackage{graphicx,grffile}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -83,31 +99,14 @@
 % margins by default, and it is still possible to overwrite the defaults
 % using explicit options in \includegraphics[width, height, ...]{}
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
-\IfFileExists{parskip.sty}{%
-\usepackage{parskip}
-}{% else
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{6pt plus 2pt minus 1pt}
-}
-\setlength{\emergencystretch}{3em}  % prevent overfull lines
-\providecommand{\tightlist}{%
-  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-\setcounter{secnumdepth}{5}
-% Redefines (sub)paragraphs to behave more like sections
-\ifx\paragraph\undefined\else
-\let\oldparagraph\paragraph
-\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
-\fi
-\ifx\subparagraph\undefined\else
-\let\oldsubparagraph\subparagraph
-\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
-\fi
-
-% set default figure placement to htbp
+% Set default figure placement to htbp
 \makeatletter
 \def\fps@figure{htbp}
 \makeatother
-
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
 \usepackage{booktabs}
 \usepackage{amsthm}
 \makeatletter
@@ -116,10 +115,12 @@
   \thm@postskip=\thm@preskip
 }
 \makeatother
+\usepackage[]{natbib}
+\bibliographystyle{apalike}
 
 \title{Essential R Skills}
 \author{UMN-Morris Statistics Discipline}
-\date{2020-06-19}
+\date{2021-01-08}
 
 \begin{document}
 \maketitle
@@ -128,38 +129,28 @@
 \setcounter{tocdepth}{1}
 \tableofcontents
 }
-\chapter{Motivation}\label{motivation}
+\hypertarget{motivation}{%
+\chapter{Motivation}\label{motivation}}
 
-We have found that students enter our courses with wide variation in
-experience and comfort using statistical software for computation and
-making graphical displays. This document represents our expectations for
-the basic R skills that students should know upon completing an
-introductory course in statistics. Analysis methods may appear at times
-in this document, but the emphasis here is upon basic R usage for data
-wrangling, and exploratory data analysis using numeric and graphical
-methods.
+We have found that students enter our courses with wide variation in experience and comfort using statistical software for computation and making graphical displays. This document represents our expectations for the basic R skills that students should know upon completing an introductory course in statistics. Analysis methods may appear at times in this document, but the emphasis here is upon basic R usage for data wrangling, and exploratory data analysis using numeric and graphical methods.
 
-\chapter{Getting Started}\label{GettingStarted}
+\hypertarget{GettingStarted}{%
+\chapter{Getting Started}\label{GettingStarted}}
 
-\section{Packages}\label{packages}
+\hypertarget{packages}{%
+\section{Packages}\label{packages}}
 
-When you start R studio, basic functionality is initially available.
-However, in most projects we will want to use some special code and
-functions contained in packages that are not initially available whe R
-starts. Before packages can be used in our analyses, they must be
-installed in our R workspace. We presume that the R Studio development
-environment is being used by our students. Any package can be installed
-by clicking the ``Packages'' tab in the lower right panel of the R
-Studio workspace. Then click ``Install'' to produce an entry bar where
-you type the name of the desired package.
+When you start R studio, basic functionality is initially available. However, in most projects we will want to use some special code and functions contained in packages that are not initially available whe R starts. Before packages can be used in our analyses, they must be installed in our R workspace. We presume that the R Studio development environment is being used by our students. Any package can be installed by clicking the ``Packages'' tab in the lower right panel of the R Studio workspace. Then click ``Install'' to produce an entry bar where you type the name of the desired package.
 
-Once a package is installed into your R Studio environment, you make it
-available by loading with the \texttt{library()} command. For this
-document, some additional packages are needed, and are loaded in the
-next code block. The \emph{knitr} and \emph{tidyverse} packages have
-been previously installed. If you attempt to load a package (in this
-case zelig) that has not been installed, you will get an error message
-similar to this:
+Or you can type a command to install a package:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{install.packages}\NormalTok{(}\StringTok{"alr4"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Once a package is installed into your R Studio environment, you make it available by loading with the \texttt{library()} command. For this document, some additional packages are needed, and are loaded in the next code block. The \emph{knitr} and \emph{tidyverse} packages have been previously installed. If you attempt to load a package (in this case zelig) that has not been installed, you will get an error message similar to this:
 
 \texttt{Error\ in\ library(zelig)\ :\ there\ is\ no\ package\ called\ ‘zelig’}
 
@@ -171,21 +162,17 @@ similar to this:
 \end{Highlighting}
 \end{Shaded}
 
-\section{The tidyverse Package}\label{the-tidyverse-package}
+\hypertarget{the-tidyverse-package}{%
+\section{The tidyverse Package}\label{the-tidyverse-package}}
 
-The tidyverse package is very special - it is a package of other
-packages. The tidyverse website \href{http://tidyverse.org}{tidyverse}
-describes the tidyverse as: \emph{The tidyverse is an opinionated
-collection of R packages designed for data science. All packages share
-an underlying design philosophy, grammar, and data structures.}
+The tidyverse package is very special - it is a package of other packages. The tidyverse website \href{http://tidyverse.org}{tidyverse} describes the tidyverse as: \emph{The tidyverse is an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures.}
 
-The most important packages inside the tidyverse package for this
-document are: dplyr, magrittr, and ggplot2.
+The most important packages inside the tidyverse package for this document are: dplyr, magrittr, and ggplot2.
 
-\section{Gapminder Data:}\label{gapminder-data}
+\hypertarget{gapminder-data}{%
+\section{Gapminder Data:}\label{gapminder-data}}
 
-This dataset (named gapminder) is contained in an R package called
-\emph{gapminder}, and needs to be loaded before the dataset can be used.
+This dataset (named gapminder) is contained in an R package called \emph{gapminder}, and needs to be loaded before the dataset can be used.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -193,32 +180,21 @@ This dataset (named gapminder) is contained in an R package called
 \end{Highlighting}
 \end{Shaded}
 
-\section{Set Working Directory}\label{set-working-directory}
+\hypertarget{set-working-directory}{%
+\section{Set Working Directory}\label{set-working-directory}}
 
-In the ``Files'' tab in the lower right portion of the R Studio work
-area, you can choose where you want to store files and conduct your work
-by navigating to a suitable folder by making folders and sub-folders and
-then clicking to navigate to a suitable work area.
+In the ``Files'' tab in the lower right portion of the R Studio work area, you can choose where you want to store files and conduct your work by navigating to a suitable folder by making folders and sub-folders and then clicking to navigate to a suitable work area.
 
-You should notify R Studio and the R software to this location called
-the working directory. Once you have navigated to where you want files,
-data, and results to reside, you notify R Studio by clicking the blue
-``More'' gear and choose ``set working directory.'' This will help R
-understand where to expect files and dat to be located.
+You should notify R Studio and the R software to this location called the working directory. Once you have navigated to where you want files, data, and results to reside, you notify R Studio by clicking the blue ``More'' gear and choose ``set working directory.'' This will help R understand where to expect files and dat to be located.
 
-One of the most common problems students experience is that they work on
-files in a location not specified as the ``working directory.''
+One of the most common problems students experience is that they work on files in a location not specified as the ``working directory.''
 
-\section{Reading Data From a CSV
-File}\label{reading-data-from-a-csv-file}
+\hypertarget{reading-data-from-a-csv-file}{%
+\section{Reading Data From a CSV File}\label{reading-data-from-a-csv-file}}
 
-The most common way to read data into R is from an excel spreadsheet
-that has been saved into a comma-separated-values (csv) file. This means
-that data elements are separated from each other by commas ``,''.
+The most common way to read data into R is from an excel spreadsheet that has been saved into a comma-separated-values (csv) file. This means that data elements are separated from each other by commas ``,''.
 
-We consider a data file named (file.csv) that contains variable names in
-the first row of the file. Place this file in your working directory and
-read,
+We consider a data file named (file.csv) that contains variable names in the first row of the file. Place this file in your working directory and read,
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -226,11 +202,7 @@ read,
 \end{Highlighting}
 \end{Shaded}
 
-A frequent issue with \texttt{read.csv} is that character variables are
-automatically converted to factor/categorical variables. This may not be
-a good choice in many instances. To gain full control of how this is
-handled, you can prevent this kind of auto-conversion by using the
-\texttt{stringsAsFactors} option.
+A frequent issue with \texttt{read.csv} is that character variables are automatically converted to factor/categorical variables. This may not be a good choice in many instances. To gain full control of how this is handled, you can prevent this kind of auto-conversion by using the \texttt{stringsAsFactors} option.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -238,11 +210,7 @@ handled, you can prevent this kind of auto-conversion by using the
 \end{Highlighting}
 \end{Shaded}
 
-The \emph{readr} package inside the \emph{tidyverse} family of packages
-has a slightly nicer read csv function you should know about. We use the
-\texttt{readr::} prefix to inform readers that the \texttt{read\_csv}
-function resides in the \emph{readr} package. This read function will
-not auto-convert character variables to category/factor variables.
+The \emph{readr} package inside the \emph{tidyverse} family of packages has a slightly nicer read csv function you should know about. We use the \texttt{readr::} prefix to inform readers that the \texttt{read\_csv} function resides in the \emph{readr} package. This read function will not auto-convert character variables to category/factor variables.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -250,23 +218,17 @@ not auto-convert character variables to category/factor variables.
 \end{Highlighting}
 \end{Shaded}
 
-Reading data directly from excel spreadsheets is more complex and you
-should read documentation for the \emph{readxl} package.
+Reading data directly from excel spreadsheets is more complex and you should read documentation for the \emph{readxl} package.
 
-\chapter{Overview of a Dataframe}\label{OverviewDataframe}
+\hypertarget{OverviewDataframe}{%
+\chapter{Overview of a Dataframe}\label{OverviewDataframe}}
 
-Datasets in R are usually called dataframes or tibbles. The distinction
-between these names is not important for our purposes - we will usually
-refer to a dataset as a dataframe.
+Datasets in R are usually called dataframes or tibbles. The distinction between these names is not important for our purposes - we will usually refer to a dataset as a dataframe.
 
-\section{glimpse}\label{glimpse}
+\hypertarget{glimpse}{%
+\section{glimpse}\label{glimpse}}
 
-Let's look at what is inside the gapminder dataset using the
-\texttt{glimpse} command from the \emph{dplyr} package. The \emph{dplyr}
-package is contained in the package ``tidyverse'' that was loaded
-previously. The \texttt{glimpse(gapminder)} command would have executed
-without any errors. We use the \texttt{dplyr::} prefix to inform readers
-that the glimpse function resides in the \emph{dplyr} package.
+Let's look at what is inside the gapminder dataset using the \texttt{glimpse} command from the \emph{dplyr} package. The \emph{dplyr} package is contained in the package ``tidyverse'' that was loaded previously. The \texttt{glimpse(gapminder)} command would have executed without any errors. We use the \texttt{dplyr::} prefix to inform readers that the glimpse function resides in the \emph{dplyr} package.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -278,19 +240,17 @@ that the glimpse function resides in the \emph{dplyr} package.
 \end{Shaded}
 
 \begin{verbatim}
-## Observations: 1,704
-## Variables: 6
-## $ country   <fct> Afghanistan, Afghanistan, Afghanistan, Afghanistan, Afghani…
-## $ continent <fct> Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia,…
-## $ year      <int> 1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992, 1997,…
-## $ lifeExp   <dbl> 28.801, 30.332, 31.997, 34.020, 36.088, 38.438, 39.854, 40.…
-## $ pop       <int> 8425333, 9240934, 10267083, 11537966, 13079460, 14880372, 1…
-## $ gdpPercap <dbl> 779.4453, 820.8530, 853.1007, 836.1971, 739.9811, 786.1134,…
+## Rows: 1,704
+## Columns: 6
+## $ country   <fct> Afghanistan, Afghanistan, Afghanistan, Afghanistan, Afgha...
+## $ continent <fct> Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asi...
+## $ year      <int> 1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992, 199...
+## $ lifeExp   <dbl> 28.801, 30.332, 31.997, 34.020, 36.088, 38.438, 39.854, 4...
+## $ pop       <int> 8425333, 9240934, 10267083, 11537966, 13079460, 14880372,...
+## $ gdpPercap <dbl> 779.4453, 820.8530, 853.1007, 836.1971, 739.9811, 786.113...
 \end{verbatim}
 
-This shows it contains economic and demographic information about
-different countries across years. There are 1704 rows (observations) and
-6 columns (variables).
+This shows it contains economic and demographic information about different countries across years. There are 1704 rows (observations) and 6 columns (variables).
 
 Each variable name is listed along with a variable type designation.
 
@@ -299,19 +259,15 @@ Each variable name is listed along with a variable type designation.
 \item
   fct: means a factor variable, also known as a categorical variable.
 \item
-  int: means a quantitative variable that takes only integer or whole
-  number values.
+  int: means a quantitative variable that takes only integer or whole number values.
 \item
-  dbl: means double precision, a quantitative variable that is
-  essentially continuous - taking decimal values.
+  dbl: means double precision, a quantitative variable that is essentially continuous - taking decimal values.
 \end{itemize}
 
-\section{head}\label{head}
+\hypertarget{head}{%
+\section{head}\label{head}}
 
-By default, the \texttt{head} command will show the first 6 rows of the
-dataset gapminder. Datasets in R are called ``dataframes.'' The
-gapminder dataframe is denoted as a ``tibble'' which is a type of
-dataframe.
+By default, the \texttt{head} command will show the first 6 rows of the dataset gapminder. Datasets in R are called ``dataframes.'' The gapminder dataframe is denoted as a ``tibble'' which is a type of dataframe.
 
 Options to the head command can change the rows displayed.
 
@@ -351,7 +307,8 @@ Options to the head command can change the rows displayed.
 ## 4 Afghanistan Asia       1967    34.0 11537966      836.
 \end{verbatim}
 
-\section{summary}\label{summary}
+\hypertarget{summary}{%
+\section{summary}\label{summary}}
 
 This command shows a basic summary of the values in each variable.
 
@@ -381,11 +338,9 @@ This command shows a basic summary of the values in each variable.
 ## 
 \end{verbatim}
 
-The next command illustrates a ``pipe'' - here the dataframe gapminder
-is ``piped'' into the summary function to be processed. Note the same
-output is produce as using \texttt{summary(gapminder)}. Note, the pipe
-operation \%\textgreater{}\% is contained in tidyverse package:
-\emph{magrittr} which is loaded when \emph{tidyverse} is loaded.
+The next command illustrates a ``pipe'' - here the dataframe gapminder is ``piped'' into
+the summary function to be processed. Note the same output is produce as using
+\texttt{summary(gapminder)}. Note, the pipe operation \%\textgreater\% is contained in tidyverse package: \emph{magrittr} which is loaded when \emph{tidyverse} is loaded.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -413,13 +368,12 @@ operation \%\textgreater{}\% is contained in tidyverse package:
 ## 
 \end{verbatim}
 
-\section{Dataframe Details: funModeling
-package}\label{dataframe-details-funmodeling-package}
+\hypertarget{dataframe-details-funmodeling-package}{%
+\section{Dataframe Details: funModeling package}\label{dataframe-details-funmodeling-package}}
 
-The \emph{funModeling} package contains the \texttt{df\_status} command
-which also summarizes a dataframe - showing different aspects like
-missing values, percentage of zero values, and also the number of unique
-values.
+The \emph{funModeling} package contains the \texttt{df\_status} command which also summarizes
+a dataframe - showing different aspects like missing values, percentage of zero
+values, and also the number of unique values.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -480,13 +434,10 @@ values.
 ## character(0)
 \end{verbatim}
 
-\section{Dataframe Details: skimr
-package}\label{dataframe-details-skimr-package}
+\hypertarget{dataframe-details-skimr-package}{%
+\section{Dataframe Details: skimr package}\label{dataframe-details-skimr-package}}
 
-The \emph{skimr} package contains many useful functions for summarizing
-a dataframe. When we supply a dataframe to the
-\texttt{skim\_without\_charts} function, dataframe details are separated
-by variable types.
+The \emph{skimr} package contains many useful functions for summarizing a dataframe. When we supply a dataframe to the \texttt{skim\_without\_charts} function, dataframe details are separated by variable types.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -496,7 +447,7 @@ by variable types.
 \end{Shaded}
 
 \begin{verbatim}
-## ── Data Summary ────────────────────────
+## -- Data Summary ------------------------
 ##                            Values    
 ## Name                       Piped data
 ## Number of rows             1704      
@@ -508,7 +459,7 @@ by variable types.
 ## ________________________             
 ## Group variables            None      
 ## 
-## ── Variable type: factor ───────────────────────────────────────────────────────
+## -- Variable type: factor -------------------------------------------------------
 ##   skim_variable n_missing complete_rate ordered n_unique
 ## 1 country               0             1 FALSE        142
 ## 2 continent             0             1 FALSE          5
@@ -516,7 +467,7 @@ by variable types.
 ## 1 Afg: 12, Alb: 12, Alg: 12, Ang: 12    
 ## 2 Afr: 624, Asi: 396, Eur: 360, Ame: 300
 ## 
-## ── Variable type: numeric ──────────────────────────────────────────────────────
+## -- Variable type: numeric ------------------------------------------------------
 ##   skim_variable n_missing complete_rate       mean          sd      p0       p25
 ## 1 year                  0             1     1980.         17.3  1952      1966. 
 ## 2 lifeExp               0             1       59.5        12.9    23.6      48.2
@@ -529,10 +480,10 @@ by variable types.
 ## 4    3532.      9325.      113523.
 \end{verbatim}
 
-\section{describe: Hmisc package}\label{describe-hmisc-package}
+\hypertarget{describe-hmisc-package}{%
+\section{describe: Hmisc package}\label{describe-hmisc-package}}
 
-The \emph{Hmisc} package contains the \texttt{describe} function that
-gives a helpful overview of numeric and categorical variables.
+The \emph{Hmisc} package contains the \texttt{describe} function that gives a helpful overview of numeric and categorical variables.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -608,20 +559,15 @@ gives a helpful overview of numeric and categorical variables.
 ## --------------------------------------------------------------------------------
 \end{verbatim}
 
-\chapter{Introduction to Data Wrangling}\label{IntroDataWrangling}
+\hypertarget{IntroDataWrangling}{%
+\chapter{Introduction to Data Wrangling}\label{IntroDataWrangling}}
 
-In this chapter we present some very basic data handling and processing
-functions (data wrangline) that will be necessary for doing basic
-analyses, comparisons, and graphics. Most of the commands presented in
-this section stress the functions and R packages in the \emph{tidyverse}
-- a set or family of packages that have similar syntax and behaviors.
+In this chapter we present some very basic data handling and processing functions (data wrangling) that will be necessary for doing basic analyses, comparisons, and graphics. Most of the commands presented in this section stress the functions and R packages in the \emph{tidyverse} - a set or family of packages that have similar syntax and behaviors.
 
-\section{Tidy Data}\label{tidy-data}
+\hypertarget{tidy-data}{%
+\section{Tidy Data}\label{tidy-data}}
 
-What is tidy data? Tidy data is a standard way of mapping the meaning of
-a dataset to its structure. A dataset is messy or tidy depending on how
-rows, columns and tables are matched up with observations, variables and
-types. In tidy data:
+What is tidy data? Tidy data is a standard way of mapping the meaning of a dataset to its structure. A dataset is messy or tidy depending on how rows, columns and tables are matched up with observations, variables and types. In tidy data:
 
 \begin{itemize}
 \item
@@ -632,28 +578,19 @@ types. In tidy data:
   Each type of observational unit forms a table.
 \end{itemize}
 
-\section{Subset using filter}\label{subset-using-filter}
+\hypertarget{subset-using-filter}{%
+\section{Subset using filter}\label{subset-using-filter}}
 
-Suppose we wish to examine a subset of data for only one country, Jon's
-favorite country, Australia!! The following code starts by taking the
-gapminder dataset and then ``pipes'' it into the filtering (selecting
-rows) action so that only dataset rows from Australia are selected. The
-pipe function is \%\textgreater{}\% and is similar to a plumbing pipe
-that goes one direction: from left to right. After the ``Australia''
-rows are selected, the result is ``piped'' into the head function for
-display. The head function says show the top 12 rows. When no rows are
-specified in the head function, the default is 6 rows. Note that the
-filter function resides in the \emph{dplyr} package within the
-\emph{tidyverse} family.
+Suppose we wish to examine a subset of data for only one country, Jon's favorite country, Australia!! The following code starts by taking the gapminder dataset and then ``pipes'' it into the filtering (selecting rows) action so that only dataset rows from Australia are selected. The pipe function is \%\textgreater\% and is similar to a plumbing pipe that goes one direction: from left to right. After the ``Australia'' rows are selected, the result is ``piped'' into the head function for display. The head function says show the top 12 rows. When no rows are specified in the head function, the default is 6 rows. Note that the filter function resides in the \emph{dplyr} package within the \emph{tidyverse} family.
 
-If the \emph{tidyverse} or \emph{dplyr} packages have been loaded, you
-don't need to supply the \texttt{dplyr::} prefix to the \texttt{filter}
-command.
+If the \emph{tidyverse} or \emph{dplyr} packages have been loaded with a \texttt{library()} command, you don't need to supply the \texttt{dplyr::} prefix to the \texttt{filter} command.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{#gapminder %>% filter(country=="Australia") %>% head(n=12)}
-\NormalTok{gapminder }\OperatorTok{%>%}\StringTok{ }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{filter}\NormalTok{(country}\OperatorTok{==}\StringTok{"Australia"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{head}\NormalTok{(}\DataTypeTok{n=}\DecValTok{12}\NormalTok{)}
+\NormalTok{gapminder }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{filter}\NormalTok{(country}\OperatorTok{==}\StringTok{"Australia"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{head}\NormalTok{(}\DataTypeTok{n=}\DecValTok{12}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -675,16 +612,10 @@ command.
 ## 12 Australia Oceania    2007    81.2 20434176    34435.
 \end{verbatim}
 
-\section{Subset using multiple
-conditions}\label{subset-using-multiple-conditions}
+\hypertarget{subset-using-multiple-conditions}{%
+\section{Subset using multiple conditions}\label{subset-using-multiple-conditions}}
 
-Let's select by contintent and year. The head function will then show
-some of the rows selected. Here the gapminder dataframe is piped to the
-\texttt{filter} function to select rows to be further piped to the
-\texttt{head()} function for display. The logical condtion inside
-\texttt{filter} restricts continent to ``Oceania'' AND (AND condition is
-``\&'') year to be 1997. Both of these conditions must be TRUE for the
-row to enter the dataframe to displayed by the \texttt{head()} function.
+Let's select by continent and year. The head function will then show some of the rows selected. Here the gapminder dataframe is piped to the \texttt{filter} function to select rows to be further piped to the \texttt{head()} function for display. The logical condition inside \texttt{filter} restricts continent to ``Oceania'' AND (AND condition is ``\&'') year to be 1997. Both of these conditions must be TRUE for the row to enter the dataframe to displayed by the \texttt{head()} function.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -721,9 +652,7 @@ Notice that two \texttt{filter} statements produce the same result.
 ## 2 New Zealand Oceania    1997    77.6  3676187    21050.
 \end{verbatim}
 
-The next example uses an ``or'' condition to specify the desired rows in
-the first \texttt{filter} expression - the next \texttt{filter} permits
-only observations from 1997.
+The next example uses an ``or'' condition to specify the desired rows in the first \texttt{filter} expression - the next \texttt{filter} permits only observations from 1997.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -746,8 +675,7 @@ only observations from 1997.
 ## 6 Chile     Americas   1997    75.8  14599929    10118.
 \end{verbatim}
 
-The next example selects observations/rows from a list of countries and
-also restricts year to 1997.
+The next example selects observations/rows from a list of countries and also restricts year to 1997.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -766,13 +694,7 @@ also restricts year to 1997.
 ## 3 New Zealand Oceania    1997    77.6  3676187    21050.
 \end{verbatim}
 
-The next example selects observations by omitting one continent (Oceania
-is excluded) and then specifies a year. The code that causes ``omit'' is
-the ``!='' syntax. In the code \texttt{year==1997}, the double equal
-sign \texttt{==} means make a logical check if year is 1997. Only rows
-where both aspects of the filter conditions pass through to be displayed
-by \texttt{head}. Again, the logical operator ``AND'' is expressed by
-the \texttt{\&} expression.
+The next example selects observations by omitting one continent (Oceania is excluded) and then specifies a year. The code that causes ``omit'' is the ``!='' syntax. In the code \texttt{year==1997}, the double equal sign \texttt{==} means make a logical check if year is 1997. Only rows where both aspects of the filter conditions pass through to be displayed by \texttt{head}. Again, the logical operator ``AND'' is expressed by the \texttt{\&} expression.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -794,11 +716,10 @@ the \texttt{\&} expression.
 ## 6 Austria     Europe     1997    77.5  8069876    29096.
 \end{verbatim}
 
-Please note that in all the above examples, the \texttt{filter} function
-accepts/rejects rows or observations in a dataframe according to the
-logical conditions specified inside the filter function.
+Please note that in all the above examples, the \texttt{filter} function accepts/rejects rows or observations in a dataframe according to the logical conditions specified inside the filter function.
 
-\section{Saving as a new dataframe}\label{saving-as-a-new-dataframe}
+\hypertarget{saving-as-a-new-dataframe}{%
+\section{Saving as a new dataframe}\label{saving-as-a-new-dataframe}}
 
 Here we save the the modified dataset as a new dataframe called gap97.
 
@@ -812,17 +733,18 @@ Here we save the the modified dataset as a new dataframe called gap97.
 \end{Shaded}
 
 \begin{verbatim}
-## Observations: 140
-## Variables: 6
-## $ country   <fct> Afghanistan, Albania, Algeria, Angola, Argentina, Austria, …
-## $ continent <fct> Asia, Europe, Africa, Africa, Americas, Europe, Asia, Asia,…
-## $ year      <int> 1997, 1997, 1997, 1997, 1997, 1997, 1997, 1997, 1997, 1997,…
-## $ lifeExp   <dbl> 41.763, 72.950, 69.152, 40.963, 73.275, 77.510, 73.925, 59.…
-## $ pop       <int> 22227415, 3428038, 29072015, 9875024, 36203463, 8069876, 59…
-## $ gdpPercap <dbl> 635.3414, 3193.0546, 4797.2951, 2277.1409, 10967.2820, 2909…
+## Rows: 140
+## Columns: 6
+## $ country   <fct> Afghanistan, Albania, Algeria, Angola, Argentina, Austria...
+## $ continent <fct> Asia, Europe, Africa, Africa, Americas, Europe, Asia, Asi...
+## $ year      <int> 1997, 1997, 1997, 1997, 1997, 1997, 1997, 1997, 1997, 199...
+## $ lifeExp   <dbl> 41.763, 72.950, 69.152, 40.963, 73.275, 77.510, 73.925, 5...
+## $ pop       <int> 22227415, 3428038, 29072015, 9875024, 36203463, 8069876, ...
+## $ gdpPercap <dbl> 635.3414, 3193.0546, 4797.2951, 2277.1409, 10967.2820, 29...
 \end{verbatim}
 
-\section{Subset using top\_n}\label{subset-using-top_n}
+\hypertarget{subset-using-top_n}{%
+\section{Subset using top\_n}\label{subset-using-top_n}}
 
 Let's make a dataset based on the countries in 1997 with highest gdp.
 
@@ -850,13 +772,10 @@ Let's make a dataset based on the countries in 1997 with highest gdp.
 ## 10 United States Americas   1997    76.8 272911760    35767.
 \end{verbatim}
 
-\section{Subset using select}\label{subset-using-select}
+\hypertarget{subset-using-select}{%
+\section{Subset using select}\label{subset-using-select}}
 
-The \texttt{filter} function controls the rows of the dataframe.
-Sometimes we might want to include only a few of the variables (columns)
-in a dataset. We frequently want to create a data subset with only a few
-variables when the original dataset has hundreds of variables. The
-\texttt{select} function is used to select and rename variables.
+The \texttt{filter} function controls the rows of the dataframe. Sometimes we might want to include only a few of the variables (columns) in a dataset. We frequently want to create a data subset with only a few variables when the original dataset has hundreds of variables. The \texttt{select} function is used to select and rename variables.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -896,17 +815,10 @@ variables when the original dataset has hundreds of variables. The
 ## 6  1977 Afghanistan Asia         38.4 14880372      786.
 \end{verbatim}
 
-The \texttt{profiling\_num} command from the \emph{funModeling} package
-produces a lot of output, some we might not want. We will show how to
-modify the output of this command here. The command produces a dataframe
-which has many columns we might not wish to display or consider further.
+The \texttt{profiling\_num} command from the \emph{funModeling} package produces a lot of output, some we might not want. We will
+show how to modify the output of this command here. The command produces a dataframe which has many columns we might not wish to display or consider further.
 
-We begin by removing some columns of summary statistics that we wish to
-ignore. Selecting a list of column names with a ``minus'' - sign in
-front of the list will remove these items from the dataframe and keep
-the rest in place. The command below pipes the modified dataframe to the
-\texttt{kable} command in the \emph{knitr} package for a more pleasing
-tabular display.
+We begin by removing some columns of summary statistics that we wish to ignore. Selecting a list of column names with a ``minus'' - sign in front of the list will remove these items from the dataframe and keep the rest in place. The command below pipes the modified dataframe to the \texttt{kable} command in the \emph{knitr} package for a more pleasing tabular display.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -916,8 +828,8 @@ tabular display.
 \end{Shaded}
 
 \begin{verbatim}
-## Observations: 4
-## Variables: 16
+## Rows: 4
+## Columns: 16
 ## $ variable       <chr> "year", "lifeExp", "pop", "gdpPercap"
 ## $ mean           <dbl> 1.979500e+03, 5.947444e+01, 2.960121e+07, 7.215327e+03
 ## $ std_dev        <dbl> 1.726533e+01, 1.291711e+01, 1.061579e+08, 9.857455e+03
@@ -932,8 +844,8 @@ tabular display.
 ## $ skewness       <dbl> 0.0000000, -0.2524798, 8.3328742, 3.8468819
 ## $ kurtosis       <dbl> 1.783217, 1.873099, 80.716151, 30.431702
 ## $ iqr            <dbl> 2.750000e+01, 2.264750e+01, 1.679156e+07, 8.123402e+03
-## $ range_98       <chr> "[1952, 2007]", "[33.4926, 80.23892]", "[154117.92, 63…
-## $ range_80       <chr> "[1957, 2002]", "[41.5108, 75.097]", "[946367.1, 54801…
+## $ range_98       <chr> "[1952, 2007]", "[33.4926, 80.23892]", "[154117.92, ...
+## $ range_80       <chr> "[1957, 2002]", "[41.5108, 75.097]", "[946367.1, 548...
 \end{verbatim}
 
 \begin{Shaded}
@@ -959,9 +871,7 @@ gdpPercap & 7.215327e+03 & 9.857455e+03 & 547.9964 & 1202.060 & 3531.8470 & 9.32
 \hline
 \end{tabular}
 
-In the next command we take a different approach - we explicitly select
-the statistics (columns) we want to keep and display. The most commonly
-used summaries are chosen.
+In the next command we take a different approach - we explicitly select the statistics (columns) we want to keep and display. The most commonly used summaries are chosen.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -985,15 +895,10 @@ gdpPercap & 7.215327e+03 & 9.857455e+03 & 1202.060 & 3531.8470 & 9.325462e+03\\
 \hline
 \end{tabular}
 
-\section{Order using arrange}\label{order-using-arrange}
+\hypertarget{order-using-arrange}{%
+\section{Order using arrange}\label{order-using-arrange}}
 
-Sometimes we might want to know the countries with the largest or
-smallest values of some variables. In the following examples we
-sort/order by the values of life expectancy. In the code below, when we
-use the command \texttt{filter(year==1997)}, the double equal sign means
-make a logical check if year is 1997, and only allow dataframe rows
-where this is true to pass through to the next stage of the analysis
-pipeline.
+Sometimes we might want to know the countries with the largest or smallest values of some variables. In the following examples we sort/order by the values of life expectancy. In the code below, when we use the command \texttt{filter(year==1997)}, the double equal sign means make a logical check if year is 1997, and only allow dataframe rows where this is true to pass through to the next stage of the analysis pipeline.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1043,13 +948,9 @@ pipeline.
 ## 6 Liberia      Africa       42.2
 \end{verbatim}
 
-The \texttt{top\_n} function from the \emph{dplyr} package will select
-the n rows with the largest values of a variable. This is similar to the
-code above that orders the rows - then use \texttt{head} function to
-select the number of desired rows.
+The \texttt{top\_n} function from the \emph{dplyr} package will select the n rows with the largest values of a variable. This is similar to the code above that orders the rows - then use \texttt{head} function to select the number of desired rows.
 
-This first example uses the default alphabetical ordering of country
-name.
+This first example uses the default alphabetical ordering of country name.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1110,10 +1011,7 @@ Australia & Oceania & 78.83\\
 \hline
 \end{tabular}
 
-The countries with the largest life expectancy can then be ordered by
-another variable like population. Here we find the 6 countries in 1997
-with the highest life expectancy - then display them in order of
-population size.
+The countries with the largest life expectancy can then be ordered by another variable like population. Here we find the 6 countries in 1997 with the highest life expectancy - then display them in order of population size.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1144,11 +1042,10 @@ Iceland & Europe & 78.95 & 271192\\
 \hline
 \end{tabular}
 
-\section{Grouped Filter}\label{grouped-filter}
+\hypertarget{grouped-filter}{%
+\section{Grouped Filter}\label{grouped-filter}}
 
-Another useful verb in the \emph{tidyverse} is \texttt{group\_by}.
-Suppose we wanted to view the two countries with the highest life
-expectancy in 1997, in each continent.
+Another useful verb in the \emph{tidyverse} is \texttt{group\_by}. Suppose we wanted to view the two countries with the highest life expectancy in 1997, in each continent.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1188,12 +1085,10 @@ New Zealand & Oceania & 77.550 & 3676187\\
 \hline
 \end{tabular}
 
-\section{New Variables Using Mutate}\label{new-variables-using-mutate}
+\hypertarget{new-variables-using-mutate}{%
+\section{New Variables Using Mutate}\label{new-variables-using-mutate}}
 
-In many problems we may wish to create a new variable based on an
-existing variable. Here we illustrate by making a new variable - the
-natural logarithm of population - based on the original variable
-\texttt{pop}.
+In many problems we may wish to create a new variable based on an existing variable. Here we illustrate by making a new variable - the natural logarithm of population - based on the original variable \texttt{pop}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1204,25 +1099,21 @@ natural logarithm of population - based on the original variable
 \end{Shaded}
 
 \begin{verbatim}
-## Observations: 1,704
-## Variables: 7
-## $ country       <fct> Afghanistan, Afghanistan, Afghanistan, Afghanistan, Afg…
-## $ continent     <fct> Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, A…
-## $ year          <int> 1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992, 1…
-## $ lifeExp       <dbl> 28.801, 30.332, 31.997, 34.020, 36.088, 38.438, 39.854,…
-## $ pop           <int> 8425333, 9240934, 10267083, 11537966, 13079460, 1488037…
-## $ gdpPercap     <dbl> 779.4453, 820.8530, 853.1007, 836.1971, 739.9811, 786.1…
-## $ logpopulation <dbl> 15.94675, 16.03915, 16.14445, 16.26115, 16.38655, 16.51…
+## Rows: 1,704
+## Columns: 7
+## $ country       <fct> Afghanistan, Afghanistan, Afghanistan, Afghanistan, A...
+## $ continent     <fct> Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia,...
+## $ year          <int> 1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992,...
+## $ lifeExp       <dbl> 28.801, 30.332, 31.997, 34.020, 36.088, 38.438, 39.85...
+## $ pop           <int> 8425333, 9240934, 10267083, 11537966, 13079460, 14880...
+## $ gdpPercap     <dbl> 779.4453, 820.8530, 853.1007, 836.1971, 739.9811, 786...
+## $ logpopulation <dbl> 15.94675, 16.03915, 16.14445, 16.26115, 16.38655, 16....
 \end{verbatim}
 
-If I want to change the name of the new variable from
-\texttt{logpopulation} to something shorter like \texttt{logPop}, we
-could re-run the \texttt{mutate} command, or use a \texttt{rename}
-function.
+If I want to change the name of the new variable from \texttt{logpopulation} to something shorter like \texttt{logPop}, we could re-run the \texttt{mutate} command, or use a \texttt{rename} function.
 
-In addition we create a new version of the gapminder dataset that
-contains the new variable - called gapVers1. This dataframe is now
-available to be used in the ongoing analysis.
+In addition we create a new version of the gapminder dataset that contains the new variable - called gapVers1. This dataframe is now available to be used in
+the ongoing analysis.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1235,33 +1126,22 @@ available to be used in the ongoing analysis.
 \end{Shaded}
 
 \begin{verbatim}
-## Observations: 1,704
-## Variables: 7
-## $ country   <fct> Afghanistan, Afghanistan, Afghanistan, Afghanistan, Afghani…
-## $ continent <fct> Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia,…
-## $ year      <int> 1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992, 1997,…
-## $ lifeExp   <dbl> 28.801, 30.332, 31.997, 34.020, 36.088, 38.438, 39.854, 40.…
-## $ pop       <int> 8425333, 9240934, 10267083, 11537966, 13079460, 14880372, 1…
-## $ gdpPercap <dbl> 779.4453, 820.8530, 853.1007, 836.1971, 739.9811, 786.1134,…
-## $ logPop    <dbl> 15.94675, 16.03915, 16.14445, 16.26115, 16.38655, 16.51555,…
+## Rows: 1,704
+## Columns: 7
+## $ country   <fct> Afghanistan, Afghanistan, Afghanistan, Afghanistan, Afgha...
+## $ continent <fct> Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asi...
+## $ year      <int> 1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992, 199...
+## $ lifeExp   <dbl> 28.801, 30.332, 31.997, 34.020, 36.088, 38.438, 39.854, 4...
+## $ pop       <int> 8425333, 9240934, 10267083, 11537966, 13079460, 14880372,...
+## $ gdpPercap <dbl> 779.4453, 820.8530, 853.1007, 836.1971, 739.9811, 786.113...
+## $ logPop    <dbl> 15.94675, 16.03915, 16.14445, 16.26115, 16.38655, 16.5155...
 \end{verbatim}
 
-The next code uses a \texttt{mutate} command with logical conditions to
-make a new, two-level categorical variable region as a character
-variable. Then we use \texttt{mutate} again to convert \texttt{region}
-(character) to a factor variable named \texttt{regionf}. In statistical
-models, factor variables are preferred, but in data handling stages,
-character versions are probably easier to manipulate.
+The next code uses a \texttt{mutate} command with logical conditions to make a new, two-level categorical variable region as a character variable. Then we use \texttt{mutate} again to convert \texttt{region} (character) to a factor variable named \texttt{regionf}. In statistical models, factor variables are preferred, but in data handling stages, character versions are probably easier to manipulate.
 
-The \texttt{if\_else} function from \emph{dplyr} has the form
-`if\_else(logical condition,value if TRUE, value if FALSE).
+The \texttt{if\_else} function from \emph{dplyr} has the form `if\_else(logical condition,value if TRUE, value if FALSE).
 
-The next example uses the ``T-pipe'' function
-\texttt{\%T\textgreater{}\%} to break the piping so that the result of
-the second \texttt{mutate} flows to both \texttt{glimpse} and to
-\texttt{head} - in this construction, it is understood the output of
-\texttt{glimpse} does not pipe to \texttt{head}, but rather the original
-data flow from the second \texttt{mutate}.
+The next example uses the ``T-pipe'' function \texttt{\%T\textgreater{}\%} to break the piping so that the result of the second \texttt{mutate} flows to both \texttt{glimpse} and to \texttt{head} - in this construction, it is understood the output of \texttt{glimpse} does not pipe to \texttt{head}, but rather the original data flow from the second \texttt{mutate} which made a region factor variable.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1274,16 +1154,16 @@ data flow from the second \texttt{mutate}.
 \end{Shaded}
 
 \begin{verbatim}
-## Observations: 1,704
-## Variables: 8
-## $ country   <fct> Afghanistan, Afghanistan, Afghanistan, Afghanistan, Afghani…
-## $ continent <fct> Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia,…
-## $ year      <int> 1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992, 1997,…
-## $ lifeExp   <dbl> 28.801, 30.332, 31.997, 34.020, 36.088, 38.438, 39.854, 40.…
-## $ pop       <int> 8425333, 9240934, 10267083, 11537966, 13079460, 14880372, 1…
-## $ gdpPercap <dbl> 779.4453, 820.8530, 853.1007, 836.1971, 739.9811, 786.1134,…
-## $ region    <chr> "NotOceania", "NotOceania", "NotOceania", "NotOceania", "No…
-## $ regionf   <fct> NotOceania, NotOceania, NotOceania, NotOceania, NotOceania,…
+## Rows: 1,704
+## Columns: 8
+## $ country   <fct> Afghanistan, Afghanistan, Afghanistan, Afghanistan, Afgha...
+## $ continent <fct> Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asi...
+## $ year      <int> 1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992, 199...
+## $ lifeExp   <dbl> 28.801, 30.332, 31.997, 34.020, 36.088, 38.438, 39.854, 4...
+## $ pop       <int> 8425333, 9240934, 10267083, 11537966, 13079460, 14880372,...
+## $ gdpPercap <dbl> 779.4453, 820.8530, 853.1007, 836.1971, 739.9811, 786.113...
+## $ region    <chr> "NotOceania", "NotOceania", "NotOceania", "NotOceania", "...
+## $ regionf   <fct> NotOceania, NotOceania, NotOceania, NotOceania, NotOceani...
 \end{verbatim}
 
 \begin{verbatim}
@@ -1298,19 +1178,14 @@ data flow from the second \texttt{mutate}.
 ## 6 Afghanistan Asia       1977    38.4 14880372      786. NotOceania NotOceania
 \end{verbatim}
 
-\section{Simple Counting Using tally() and
-count()}\label{simple-counting-using-tally-and-count}
+\hypertarget{simple-counting-using-tally-and-count}{%
+\section{Simple Counting Using tally() and count()}\label{simple-counting-using-tally-and-count}}
 
-We frequently wish to know how many observations/rows satisfy a set of
-conditions. We will filter the observations for the given conditions,
-then count them using the \texttt{tally()} or \texttt{count()} functions
-from \emph{dplyr}.
+We frequently wish to know how many observations/rows satisfy a set of conditions. We will filter the observations for the given conditions, then count them using the \texttt{tally()} or \texttt{count()} functions from \emph{dplyr}.
 
-Essentially, \texttt{count()} is a short-hand for
-\texttt{group\_by()\ +\ tally()}.
+Essentially, \texttt{count()} is a short-hand for \texttt{group\_by()\ +\ tally()}.
 
-For example, what if we want to know how many observations are from
-continent `Americas' in 1997.
+For example, what if we want to know how many observations are from continent `Americas' in 1997.
 
 These examples have no grouping, no \texttt{group\_by} is being used.
 
@@ -1418,12 +1293,10 @@ Now we group by continent.
 ## 5 Oceania       2
 \end{verbatim}
 
-\section{Missing Values}\label{missing-values}
+\hypertarget{missing-values}{%
+\section{Missing Values}\label{missing-values}}
 
-If a variable is not complete and contains empty places, these are
-denoted in R as \texttt{NA}. We will often wish to create a dataframe
-without any missing values, or discover how many rows contain variables
-with missing values.
+If a variable is not complete and contains empty places, these are denoted in R as \texttt{NA}. We will often wish to create a dataframe without any missing values, or discover how many rows contain variables with missing values.
 
 First let's create a small dataset with missing values:
 
@@ -1520,8 +1393,7 @@ Use base \texttt{is.na} function
 ## 2 2 12 8
 \end{verbatim}
 
-Some code that will execute a filter that will permit only rows with
-entirely complete data in x to pass through to the dataset,
+Some code that will execute a filter that will permit only rows with entirely complete data in x to pass through to the dataset,
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1538,43 +1410,26 @@ entirely complete data in x to pass through to the dataset,
 ## 3 4 NA 10
 \end{verbatim}
 
-\chapter{Univariate Graphical
-Displays}\label{UnivariateGraphicalDisplays}
+\hypertarget{UnivariateGraphicalDisplays}{%
+\chapter{Univariate Graphical Displays}\label{UnivariateGraphicalDisplays}}
 
-In this section we will show examples of how to create graphical
-displays of a single variable - with examples for both quantitative and
-categorical variables. In each example, the first line creates the
-dataset to be graphed - followed by a command making the display. We
-will focus on graphical displays made by functions in the \emph{ggplot2}
-family - that is, the \emph{ggplot2} package which is also part of the
-\emph{tidyverse} family of functions. If \emph{tidyverse} is loaded,
-\emph{ggplot2} functions will work without explicitly loading the
-\emph{ggplot2} package.
+In this section we will show examples of how to create graphical displays of a single variable - with examples for both quantitative and categorical variables.
+In each example, the first line creates the dataset to be graphed - followed by a command making the display. We will focus on graphical displays made by functions in the \emph{ggplot2} family - that is, the \emph{ggplot2} package which is also part of the \emph{tidyverse} family of functions. If \emph{tidyverse} is loaded, \emph{ggplot2} functions will work without explicitly loading the \emph{ggplot2} package.
 
-\section{Overview of ggplot}\label{overview-of-ggplot}
+\hypertarget{overview-of-ggplot}{%
+\section{Overview of ggplot}\label{overview-of-ggplot}}
 
-The \emph{ggplot2} package uses the \texttt{ggplot} command - and builds
-a graphical display in steps and layers. We always start with the
-\texttt{ggplot} command which typically has two basic elements: a
-dataset to be used, and a list of mappings \texttt{aes} that is used to
-connect dataset variables to aspects of the plot like the vertical axis,
-horizontal axis, or perhaps the size of a point.
+The \emph{ggplot2} package uses the \texttt{ggplot} command - and builds a graphical display in steps and layers. We always start with the \texttt{ggplot} command which typically has two basic elements: a dataset to be used, and a list of mappings \texttt{aes} that is used to connect dataset variables to aspects of the plot like the vertical axis, horizontal axis, or perhaps the size of a point.
 
-The kind of object being displayed is called a \texttt{geom}, and a plot
-can have several \texttt{geom}s, and they are added to a display in
-layers - connected by a \texttt{+} sign.
+The kind of object being displayed is called a \texttt{geom}, and a plot can have several \texttt{geom}s, and they are added to a display in layers - connected by a \texttt{+} sign.
 
-\section{A Quantitative Variable}\label{a-quantitative-variable}
+\hypertarget{a-quantitative-variable}{%
+\section{A Quantitative Variable}\label{a-quantitative-variable}}
 
-\subsection{Dotplot}\label{dotplot}
+\hypertarget{dotplot}{%
+\subsection{Dotplot}\label{dotplot}}
 
-The next block of code takes the gapminder dataframe and ``pipes''
-(\%\textgreater{}\%, a pipeline like plumbing) the data through a filter
-so that only data from year 1997 flows through to define the new dataset
-named \texttt{ds}. The \texttt{ggplot} command uses dataset ds, and
-variable x life expectancy. The next example shows what using only the
-\texttt{ggplot} command produces an empty graphical region that is
-awaiting further instructions:
+The next block of code takes the gapminder dataframe and ``pipes'' (\%\textgreater\%, a pipeline like plumbing) the data through a filter so that only data from year 1997 flows through to define the new dataset named \texttt{ds}. The \texttt{ggplot} command uses dataset ds, and variable x life expectancy. The next example shows what using only the \texttt{ggplot} command produces an empty graphical region that is awaiting further instructions:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1584,14 +1439,9 @@ awaiting further instructions:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-46-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-47-1.pdf}
 
-Now we use additional code to place the dotplot in the existing
-graphical region. In ggplot graphics we make graphical objects with a
-\texttt{geom} function - here a dotplot so we use
-\texttt{geom\_dotplot()} to produce the dotplot specified using the
-variable mappings in the aesthetics command \texttt{aes} in the ggplot
-command.
+Now we use additional code to place the dotplot in the existing graphical region. In ggplot graphics we make graphical objects with a \texttt{geom} function - here a dotplot so we use \texttt{geom\_dotplot()} to produce the dotplot specified using the variable mappings in the aesthetics command \texttt{aes} in the ggplot command.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1603,7 +1453,7 @@ command.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-47-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-48-1.pdf}
 
 Here we change the default size for the dots.
 
@@ -1617,13 +1467,12 @@ Here we change the default size for the dots.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-48-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-49-1.pdf}
 
-\subsubsection{Dotplot with observations identified and
-ordered}\label{dotplot-with-observations-identified-and-ordered}
+\hypertarget{dotplot-with-observations-identified-and-ordered}{%
+\subsubsection{Dotplot with observations identified and ordered}\label{dotplot-with-observations-identified-and-ordered}}
 
-Here we produce a display so that life expectancy is displayed for each
-country in Asia, and the values are ordered.
+Here we produce a display so that life expectancy is displayed for each country in Asia, and the values are ordered.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1636,49 +1485,32 @@ country in Asia, and the values are ordered.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-49-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-50-1.pdf}
 
-Notice that in the next example we simply pipe the modified dataset into
-the first argument of the \texttt{ggplot} command so that there is no
-need to save the modified dataset to make the display.
+Notice that in the next example we simply pipe the modified dataset into the first argument of the \texttt{ggplot} command so that there is no need to save the modified dataset to make the display. In the next block we pipe the modified dataset directly inside the \texttt{ggplot} command to automatically replace the first argument.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{gapminder }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(continent}\OperatorTok{==}\StringTok{"Asia"}\NormalTok{,year}\OperatorTok{==}\DecValTok{1997}\NormalTok{) }\OperatorTok{%>%}
-\KeywordTok{ggplot}\NormalTok{( }\DataTypeTok{mapping=}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{lifeExp, }\DataTypeTok{y=} \KeywordTok{reorder}\NormalTok{(country,lifeExp))) }\OperatorTok{+}\StringTok{ }
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data=}\NormalTok{., }\DataTypeTok{mapping=}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{lifeExp, }\DataTypeTok{y=} \KeywordTok{reorder}\NormalTok{(country,lifeExp))) }\OperatorTok{+}\StringTok{ }
 \StringTok{  }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}\StringTok{ }
 \StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Life Expectancy (years) in 1997"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
 \StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Asian Countries"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-50-1.pdf}
-
-\subsection{Histogram}\label{histogram}
-
-This code block is similar to the dotplot commands, but the
-geom\_histogram function controls the bin width in units of the x
-variable - in this case 5 years.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{gapminder }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(year}\OperatorTok{==}\DecValTok{1997}\NormalTok{) }\OperatorTok{%>%}
-\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{mapping=}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{lifeExp)) }\OperatorTok{+}\StringTok{ }
-\StringTok{  }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{binwidth=}\DecValTok{5}\NormalTok{) }\OperatorTok{+}\StringTok{ }
-\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Life Expectancy (years)"}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Relative Frequency"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
 \includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-51-1.pdf}
 
-Here we change the binwidth:
+\hypertarget{histogram}{%
+\subsection{Histogram}\label{histogram}}
+
+This code block is similar to the dotplot commands, but the geom\_histogram function controls the bin width in units of the x variable - in this case 5 years.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{gapminder }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(year}\OperatorTok{==}\DecValTok{1997}\NormalTok{) }\OperatorTok{%>%}
-\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{mapping=}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{lifeExp)) }\OperatorTok{+}\StringTok{ }
-\StringTok{  }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{binwidth=}\FloatTok{2.5}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data=}\NormalTok{.,}\DataTypeTok{mapping=}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{lifeExp)) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{binwidth=}\DecValTok{5}\NormalTok{) }\OperatorTok{+}\StringTok{ }
 \StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Life Expectancy (years)"}\NormalTok{) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Relative Frequency"}\NormalTok{)}
 \end{Highlighting}
@@ -1686,10 +1518,38 @@ Here we change the binwidth:
 
 \includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-52-1.pdf}
 
-\subsection{Density Plot}\label{density-plot}
+Here we change the binwidth:
 
-Density plots produces a smoothing of a histogram to display the
-distribution.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gapminder }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(year}\OperatorTok{==}\DecValTok{1997}\NormalTok{) }\OperatorTok{%>%}
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data=}\NormalTok{.,}\DataTypeTok{mapping=}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{lifeExp)) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{binwidth=}\FloatTok{2.5}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Life Expectancy (years)"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Relative Frequency"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-53-1.pdf}
+
+Here we change the number of bins, notice the data argument is replaced by the piped data:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gapminder }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(year}\OperatorTok{==}\DecValTok{1997}\NormalTok{) }\OperatorTok{%>%}
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{mapping=}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{lifeExp)) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{bins=}\DecValTok{12}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Life Expectancy (years)"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Relative Frequency"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-54-1.pdf}
+
+\hypertarget{density-plot}{%
+\subsection{Density Plot}\label{density-plot}}
+
+Density plots produces a smoothing of a histogram to display the distribution.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1702,13 +1562,9 @@ distribution.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-53-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-55-1.pdf}
 
-The \texttt{adjust} option controls the amount of smoothing relative to
-a default value of 1. A smaller value gives less smoothing (more
-responsive line to small changes in the data distribution), and larger
-values will make a smoother curve that is less sensitive to the data
-pattern.
+The \texttt{adjust} option controls the amount of smoothing relative to a default value of 1. A smaller value gives less smoothing (more responsive line to small changes in the data distribution), and larger values will make a smoother curve that is less sensitive to the data pattern.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1721,16 +1577,13 @@ pattern.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-54-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-56-1.pdf}
 
-\subsection{Boxplot}\label{boxplot}
+\hypertarget{boxplot}{%
+\subsection{Boxplot}\label{boxplot}}
 
-The boxplot display really needs only a single quantitative variable
-(here life expectancy) for the numeric axis. However, the other axis
-looks better with some sort of factor variable - so here we supply the
-year for the display, where the quantitative variable \texttt{year} has
-temporarily being used as a category/factor variable by being processed
-by the \texttt{factor} function before used in the graphic:
+The boxplot display really needs only a single quantitative variable (here life expectancy) for the numeric axis. However, the other axis looks better with some
+sort of factor variable - so here we supply the year for the display, where the quantitative variable \texttt{year} has temporarily being used as a category/factor variable by being processed by the \texttt{factor} function before used in the graphic:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1742,7 +1595,7 @@ by the \texttt{factor} function before used in the graphic:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-55-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-57-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1754,16 +1607,9 @@ by the \texttt{factor} function before used in the graphic:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-55-2.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-57-2.pdf}
 
-Now we overlay points on top of the boxplot display. Note the
-\texttt{geom\_jitter} that overlays the points has an argument
-\texttt{alpha=0.5} signifying a slightly transparent plot symbol. An
-alpha value of 1 means the plot symbol is opaque, and a value of 0 is
-comletely transparent. Careful use of alpha in large datasets will
-enable the analyst to correctly perceive point density. Without using a
-smaller value of \texttt{alpha} the plot may be one large blob of ink -
-making it difficult to judge the density of points in the display.
+Now we overlay points on top of the boxplot display. Note the \texttt{geom\_jitter} that overlays the points has an argument \texttt{alpha=0.5} signifying a slightly transparent plot symbol. An alpha value of 1 means the plot symbol is opaque, and a value of 0 is completely transparent. Careful use of alpha in large datasets will enable the analyst to correctly perceive point density. Without using a smaller value of \texttt{alpha} the plot may be one large blob of ink - making it difficult to judge the density of points in the display.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1776,11 +1622,9 @@ making it difficult to judge the density of points in the display.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-56-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-58-1.pdf}
 
-If the dataframe has only one quantitative variable, we can make a
-character variable called ``sample'', then this code will produce an
-acceptable display.
+If the dataframe has only one quantitative variable, we can make a character variable called ``sample'', then this code will produce an acceptable display.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1794,12 +1638,13 @@ acceptable display.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-57-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-59-1.pdf}
 
-\section{Displays of a Categorical
-Variable}\label{displays-of-a-categorical-variable}
+\hypertarget{displays-of-a-categorical-variable}{%
+\section{Displays of a Categorical Variable}\label{displays-of-a-categorical-variable}}
 
-\subsection{Bar Graph}\label{bar-graph}
+\hypertarget{bar-graph}{%
+\subsection{Bar Graph}\label{bar-graph}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1813,7 +1658,7 @@ Variable}\label{displays-of-a-categorical-variable}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-58-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-60-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1829,7 +1674,7 @@ Variable}\label{displays-of-a-categorical-variable}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-58-2.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-60-2.pdf}
 
 Bar graph with percentages on vertical axis.
 
@@ -1841,13 +1686,31 @@ Bar graph with percentages on vertical axis.
 \StringTok{  }\KeywordTok{summarise}\NormalTok{ (}\DataTypeTok{n =} \KeywordTok{n}\NormalTok{()) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{pct =} \DecValTok{100}\OperatorTok{*}\NormalTok{n }\OperatorTok{/}\StringTok{ }\KeywordTok{sum}\NormalTok{(n)) }
 \CommentTok{#}
+\KeywordTok{head}\NormalTok{(ds)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 5 x 3
+##   continent     n   pct
+##   <fct>     <int> <dbl>
+## 1 Africa       52 36.6 
+## 2 Americas     25 17.6 
+## 3 Asia         33 23.2 
+## 4 Europe       30 21.1 
+## 5 Oceania       2  1.41
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#}
 \KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data=}\NormalTok{ds, }\DataTypeTok{mapping=}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ continent, }\DataTypeTok{y =}\NormalTok{ pct)) }\OperatorTok{+}\StringTok{ }
 \StringTok{  }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{stat =} \StringTok{"identity"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
 \StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Continent"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Percentage"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-59-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-61-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1858,11 +1721,9 @@ Bar graph with percentages on vertical axis.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-59-2.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-61-2.pdf}
 
-Sometimes it is more convenient to have the bars oriented horizontally.
-Notice we set up the aesthetic mappings as usual and then flip the axes
-with the \texttt{coord\_flip} command.
+Sometimes it is more convenient to have the bars oriented horizontally. Notice we set up the aesthetic mappings as usual and then flip the axes with the \texttt{coord\_flip} command.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1879,12 +1740,24 @@ with the \texttt{coord\_flip} command.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-60-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-62-1.pdf}
 
-\subsection{Pie Graph}\label{pie-graph}
+You can produce a similar display using \texttt{geom\_col} on the summarized data tibble.
 
-Pie graphs are not recommended, but the code needed to make one is given
-here.
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ ds, }\DataTypeTok{mapping =} \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ continent, }\DataTypeTok{y =}\NormalTok{ n)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_col}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Frequency"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-63-1.pdf}
+
+\hypertarget{pie-graph}{%
+\subsection{Pie Graph}\label{pie-graph}}
+
+Pie graphs are not recommended, but the code needed to make one is given here.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1900,15 +1773,16 @@ here.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-61-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-64-1.pdf}
 
-\chapter{Summary Statistics For One
-Variable}\label{summary-statistics-for-one-variable}
+\hypertarget{summary-statistics-for-one-variable}{%
+\chapter{Summary Statistics For One Variable}\label{summary-statistics-for-one-variable}}
 
-\section{One Quantitative Variable}\label{one-quantitative-variable}
+\hypertarget{one-quantitative-variable}{%
+\section{One Quantitative Variable}\label{one-quantitative-variable}}
 
-\subsection{Using base R summary
-function}\label{using-base-r-summary-function}
+\hypertarget{using-base-r-summary-function}{%
+\subsection{Using base R summary function}\label{using-base-r-summary-function}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1926,12 +1800,10 @@ function}\label{using-base-r-summary-function}
 ##  Max.   :80.69
 \end{verbatim}
 
-\subsection{Using dplyr summarise
-function}\label{using-dplyr-summarise-function}
+\hypertarget{using-dplyr-summarise-function}{%
+\subsection{Using dplyr summarise function}\label{using-dplyr-summarise-function}}
 
-It is often helpful to create data summaries during preliminary phases
-of examination. Here is how to use the summarise command in the analysis
-pipeline system.
+It is often helpful to create data summaries during preliminary phases of examination. Here is how to use the summarise command in the analysis pipeline system.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1953,12 +1825,12 @@ pipeline system.
 ## 1   65.0  69.4  11.6  18.5  55.6  74.2   142
 \end{verbatim}
 
-\subsection{Summary Statistics Using funModeling
-package}\label{summary-statistics-using-funmodeling-package}
+\hypertarget{summary-statistics-using-funmodeling-package}{%
+\subsection{Summary Statistics Using funModeling package}\label{summary-statistics-using-funmodeling-package}}
 
-The \texttt{profiling\_num} and \texttt{plot\_num} functions from the
-\emph{funModeling} package help give a concise numeric and visual
-overview of the numeric variables in the dataframe.
+The \texttt{profiling\_num} and \texttt{plot\_num} functions from the \emph{funModeling} package help
+give a concise numeric and visual overview of the numeric variables in the
+dataframe.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1995,10 +1867,9 @@ overview of the numeric variables in the dataframe.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-65-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-68-1.pdf}
 
-This example shows summary statistics for two quantitative variables.
-For only one variable, simply use \texttt{select} for only one variable.
+This example shows summary statistics for two quantitative variables. For only one variable, simply use \texttt{select} for only one variable.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2031,20 +1902,14 @@ For only one variable, simply use \texttt{select} for only one variable.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-66-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-69-1.pdf}
 
-\subsection{Summary Statistics: skimr
-package}\label{summary-statistics-skimr-package}
+\hypertarget{summary-statistics-skimr-package}{%
+\subsection{Summary Statistics: skimr package}\label{summary-statistics-skimr-package}}
 
-The \emph{skimr} package produces summary statistics about variables and
-overviews for dataframes. It is easy to manipulate and use pipes,
-select, and filter from the tidyverse family of packages.
+The \emph{skimr} package produces summary statistics about variables and overviews for dataframes. It is easy to manipulate and use pipes, select, and filter from the tidyverse family of packages.
 
-The next code supplies a dataframe that contains both categorical
-variables (continent), and numeric variables (lifeExp, gdpPercap).
-Numeric variables are chosen with the \texttt{yank} function, then some
-attributes are omitted from the display (n\_missing, complete\_rate)
-using the \texttt{select} function from dplyr.
+The next code supplies a dataframe that contains both categorical variables (continent), and numeric variables (lifeExp, gdpPercap). Numeric variables are chosen with the \texttt{yank} function, then some attributes are omitted from the display (n\_missing, complete\_rate) using the \texttt{select} function from \emph{dplyr} with the \texttt{-all\_of} function meaning everything in the dataframe except \texttt{varlist} list will be shown.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2053,7 +1918,7 @@ using the \texttt{select} function from dplyr.
 \StringTok{  }\KeywordTok{select}\NormalTok{(}\OperatorTok{-}\NormalTok{year, }\OperatorTok{-}\NormalTok{country, }\OperatorTok{-}\NormalTok{pop) }\OperatorTok{%>%}\StringTok{ }
 \StringTok{  }\NormalTok{skimr}\OperatorTok{::}\KeywordTok{skim_without_charts}\NormalTok{() }\OperatorTok{%>%}
 \StringTok{  }\NormalTok{skimr}\OperatorTok{::}\KeywordTok{yank}\NormalTok{(}\StringTok{"numeric"}\NormalTok{) }\OperatorTok{%>%}
-\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(}\OperatorTok{-}\KeywordTok{one_of}\NormalTok{(varlist))}
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(}\OperatorTok{-}\KeywordTok{all_of}\NormalTok{(varlist))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2069,13 +1934,13 @@ gdpPercap & 9090.18 & 10171.49 & 312.19 & 1366.84 & 4781.83 & 12022.87 & 41283.1
 \hline
 \end{tabular}
 
-\section{One Categorical Variable}\label{one-categorical-variable}
+\hypertarget{one-categorical-variable}{%
+\section{One Categorical Variable}\label{one-categorical-variable}}
 
-\subsection{Counting Values}\label{counting-values}
+\hypertarget{counting-values}{%
+\subsection{Counting Values}\label{counting-values}}
 
-The next command counts the number of rows in the dataset for each
-continent - then we show a variant which pipes the output into the kable
-function for a more attractive table.
+The next command counts the number of rows in the dataset for each continent - then we show a variant which pipes the output into the kable function for a more attractive table.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2140,8 +2005,7 @@ Oceania & 24\\
 \hline
 \end{tabular}
 
-The previous code tells us how many lines (rows) for each continent, but
-many rows are repeated for each country - just different years.
+The previous code tells us how many lines (rows) for each continent, but many rows are repeated for each country - just different years.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2150,6 +2014,10 @@ many rows are repeated for each country - just different years.
 \StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{n =} \KeywordTok{n}\NormalTok{(), }\DataTypeTok{n_countries =} \KeywordTok{n_distinct}\NormalTok{(country)) }\OperatorTok{%>%}\StringTok{ }\NormalTok{knitr}\OperatorTok{::}\KeywordTok{kable}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+## `summarise()` ungrouping output (override with `.groups` argument)
+\end{verbatim}
 
 \begin{tabular}{l|r|r}
 \hline
@@ -2167,11 +2035,10 @@ Oceania & 4 & 2\\
 \hline
 \end{tabular}
 
-\subsection{Categorical variable: skimr
-package}\label{categorical-variable-skimr-package}
+\hypertarget{categorical-variable-skimr-package}{%
+\subsection{Categorical variable: skimr package}\label{categorical-variable-skimr-package}}
 
-Here we summarize a categorical variable (continent), and observe it has
-5 unique values (levels) and the most frequent values are displayed.
+Here we summarize a categorical variable (continent), and observe it has 5 unique values (levels) and the most frequent values are displayed.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2193,14 +2060,12 @@ continent & 5 & Afr: 52, Asi: 33, Eur: 30, Ame: 25\\
 \hline
 \end{tabular}
 
-\subsection{Categorical variable: funModeling
-package}\label{categorical-variable-funmodeling-package}
+\hypertarget{categorical-variable-funmodeling-package}{%
+\subsection{Categorical variable: funModeling package}\label{categorical-variable-funmodeling-package}}
 
-The \emph{funModeling} package gives an easy way to learn about
-categorical variables of types: character and factor. There are two
-categorical variables in the gapminder dataframe: country and continent.
-There are a lot of countries, so we demonstrate this command for only
-the continent variable.
+The \emph{funModeling} package gives an easy way to learn about categorical variables of types: character and factor. There are two categorical variables in the gapminder
+dataframe: country and continent. There are a lot of countries, so we demonstrate
+this command for only the continent variable.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2212,7 +2077,7 @@ the continent variable.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-71-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-74-1.pdf}
 
 \begin{verbatim}
 ##        var frequency percentage cumulative_perc
@@ -2223,11 +2088,10 @@ the continent variable.
 ## 5  Oceania        24       1.41          100.00
 \end{verbatim}
 
-There are a lot of observations (rows) for Africa and very few for
-Oceania (Australia, New Zealand, etc).
+There are a lot of observations (rows) for Africa and very few for Oceania (Australia, New Zealand, etc).
 
-\subsection{Categorical variable: janitor
-package}\label{categorical-variable-janitor-package}
+\hypertarget{categorical-variable-janitor-package}{%
+\subsection{Categorical variable: janitor package}\label{categorical-variable-janitor-package}}
 
 Let's begin with the base R function \texttt{table}:
 
@@ -2246,8 +2110,7 @@ Let's begin with the base R function \texttt{table}:
 ##       52       25       33       30        2
 \end{verbatim}
 
-Now contrast with the \texttt{tabyl} function from the \emph{janitor}
-package:
+Now contrast with the \texttt{tabyl} function from the \emph{janitor} package:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2301,18 +2164,15 @@ Oceania & 2 & 1.41\%\\
 \hline
 \end{tabular}
 
-\chapter{Exploratory Data Analysis For One Quantitative Variable: by
-Groups}\label{exploratory-data-analysis-for-one-quantitative-variable-by-groups}
+\hypertarget{exploratory-data-analysis-for-one-quantitative-variable-by-groups}{%
+\chapter{Exploratory Data Analysis For One Quantitative Variable: by Groups}\label{exploratory-data-analysis-for-one-quantitative-variable-by-groups}}
 
-It is often helpful to create data summaries of a quantitative variable
-for each level of a grouping variable.
+It is often helpful to create data summaries of a quantitative variable for each level of a grouping variable.
 
-\section{Summary Statistics: dplyr}\label{summary-statistics-dplyr}
+\hypertarget{summary-statistics-dplyr}{%
+\section{Summary Statistics: dplyr}\label{summary-statistics-dplyr}}
 
-Using \emph{dplyr} and \emph{tidyverse} for summary statistics across
-the levels of a group variable (of type factor/categorical) requires the
-use of the verb \texttt{group\_by}. Here we produce summary statistics
-of life expectancy across the levels of continent.
+Using \emph{dplyr} and \emph{tidyverse} for summary statistics across the levels of a group variable (of type factor/categorical) requires the use of the verb \texttt{group\_by}. Here we produce summary statistics of life expectancy across the levels of continent.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2368,8 +2228,7 @@ of life expectancy across the levels of continent.
 ## 4 Africa      53.6  52.8  9.10 11.9   36.1  74.8    52
 \end{verbatim}
 
-Next, we save the statistics table to an object called statstable, then
-we use the \texttt{kable} function for display.
+Next, we save the statistics table to an object called statstable, then we use the \texttt{kable} function for display.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2403,11 +2262,10 @@ Africa & 53.59827 & 52.759 & 9.103387 & 11.92825 & 36.087 & 74.772 & 52\\
 \hline
 \end{tabular}
 
-\section{Summary Statistics: skimr}\label{summary-statistics-skimr}
+\hypertarget{summary-statistics-skimr}{%
+\section{Summary Statistics: skimr}\label{summary-statistics-skimr}}
 
-Here we implement the \texttt{group\_by} function to display descriptive
-statistics for numeric variables by continent, for two quantitative
-variables using functions from the \emph{skimr} package.
+Here we implement the \texttt{group\_by} function to display descriptive statistics for numeric variables by continent, for two quantitative variables using functions from the \emph{skimr} package.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2443,16 +2301,13 @@ gdpPercap & Europe & 0 & 1 & 19076.78180 & 10065.457716 & 3193.0546 & 9946.59931
 \hline
 \end{tabular}
 
-\section{Graphical Displays of a quantitative variable, separated by
-groups}\label{graphical-displays-of-a-quantitative-variable-separated-by-groups}
+\hypertarget{graphical-displays-of-a-quantitative-variable-separated-by-groups}{%
+\section{Graphical Displays of a quantitative variable, separated by groups}\label{graphical-displays-of-a-quantitative-variable-separated-by-groups}}
 
-In each example, the first lines create the dataset to be graphed -
-followed by a \texttt{ggplot} command making the display. Several of the
-examples make use of the principle of ``small-multiples'' so that each
-level of the factor variable has a separarate panel for the quantitative
-variable display.
+In each example, the first lines create the dataset to be graphed - followed by a \texttt{ggplot} command making the display. Several of the examples make use of the principle of ``small-multiples'' so that each level of the factor variable has a separarate panel for the quantitative variable display.
 
-\subsection{Dotplots}\label{dotplots}
+\hypertarget{dotplots}{%
+\subsection{Dotplots}\label{dotplots}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2466,9 +2321,10 @@ variable display.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-78-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-81-1.pdf}
 
-\subsection{Histograms}\label{histograms}
+\hypertarget{histograms}{%
+\subsection{Histograms}\label{histograms}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2485,12 +2341,12 @@ variable display.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-79-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-82-1.pdf}
 
-\subsection{Density Plots in Facets}\label{density-plots-in-facets}
+\hypertarget{density-plots-in-facets}{%
+\subsection{Density Plots in Facets}\label{density-plots-in-facets}}
 
-The code given here shows how to produce a density plot in separate
-panels for each continent.
+The code given here shows how to produce a density plot in separate panels for each continent.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2508,15 +2364,12 @@ panels for each continent.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-80-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-83-1.pdf}
 
-\subsection{Overlaid Density Plots}\label{overlaid-density-plots}
+\hypertarget{overlaid-density-plots}{%
+\subsection{Overlaid Density Plots}\label{overlaid-density-plots}}
 
-The initial command below takes the gapminder data and consider only
-observations (rows) from 1997, but exclude all observations from
-Oceania. The \texttt{alpha} setting controls the amount of transparency
-in the densities for each continent - smaller values of \texttt{alpha}
-(between 0 and 1) are more transparent.
+The initial command below takes the gapminder data and consider only observations (rows) from 1997, but exclude all observations from Oceania. The \texttt{alpha} setting controls the amount of transparency in the densities for each continent - smaller values of \texttt{alpha} (between 0 and 1) are more transparent.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2531,14 +2384,12 @@ in the densities for each continent - smaller values of \texttt{alpha}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-81-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-84-1.pdf}
 
-\subsection{Boxplots, Grouped Data}\label{boxplots-grouped-data}
+\hypertarget{boxplots-grouped-data}{%
+\subsection{Boxplots, Grouped Data}\label{boxplots-grouped-data}}
 
-In the code below, the \texttt{alpha} value again controls the
-transparency of the points alpha=1 means opaque, alpha=0 means
-completely see-through. When there is a lot of data, use a smaller value
-of alpha.
+In the code below, the \texttt{alpha} value again controls the transparency of the points alpha=1 means opaque, alpha=0 means completely see-through. When there is a lot of data, use a smaller value of alpha.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2553,7 +2404,7 @@ of alpha.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-82-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-85-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2565,13 +2416,12 @@ of alpha.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-82-2.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-85-2.pdf}
 
-\subsection{Boxplots, overlay points on the boxplots with color
-control}\label{boxplots-overlay-points-on-the-boxplots-with-color-control}
+\hypertarget{boxplots-overlay-points-on-the-boxplots-with-color-control}{%
+\subsection{Boxplots, overlay points on the boxplots with color control}\label{boxplots-overlay-points-on-the-boxplots-with-color-control}}
 
-In the code below, the alpha value controls the transparency of the
-points alpha=1 means opaque, alpha=0 means completely see-through.
+In the code below, the alpha value controls the transparency of the points alpha=1 means opaque, alpha=0 means completely see-through.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2601,13 +2451,10 @@ points alpha=1 means opaque, alpha=0 means completely see-through.
 
 \includegraphics{bookdown-R-Essentials_files/figure-latex/oztempbox2-2.pdf}
 
-\chapter{Analysis of One Categorical Variable by another categorical
-variable}\label{analysis-of-one-categorical-variable-by-another-categorical-variable}
+\hypertarget{analysis-of-one-categorical-variable-by-another-categorical-variable}{%
+\chapter{Analysis of One Categorical Variable by another categorical variable}\label{analysis-of-one-categorical-variable-by-another-categorical-variable}}
 
-To demonstrate graphical displays of two categorical variables, we need
-a new dataset with two categorical variables. We use the
-\texttt{congress\_age} dataframe from the \emph{fivethirtyeight}
-package. In these displays we will use categorical variables:
+To demonstrate graphical displays of two categorical variables, we need a new dataset with two categorical variables. We use the \texttt{congress\_age} dataframe from the \emph{fivethirtyeight} package. In these displays we will use categorical variables:
 
 \begin{itemize}
 \tightlist
@@ -2617,12 +2464,10 @@ package. In these displays we will use categorical variables:
   congressional chamber (chamber) with values: house, senate
 \end{itemize}
 
-We will restrict ourselves to the 113th congress, a meeting of the
-legislative branch of the United States federal government, from January
-3, 2013, to January 3, 2015, during the fifth and sixth years of Barack
-Obama's presidency.
+We will restrict ourselves to the 113th congress, a meeting of the legislative branch of the United States federal government, from January 3, 2013, to January 3, 2015, during the fifth and sixth years of Barack Obama's presidency.
 
-\section{Tables}\label{tables}
+\hypertarget{tables}{%
+\section{Tables}\label{tables}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2772,28 +2617,31 @@ Obama's presidency.
 ## 2 senate     57    46     2
 \end{verbatim}
 
-\section{Graphical Displays}\label{graphical-displays}
+\hypertarget{graphical-displays}{%
+\section{Graphical Displays}\label{graphical-displays}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# basic bar plot of party affiliation}
-\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data=}\NormalTok{ds, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{party)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_bar}\NormalTok{() }\OperatorTok{+}
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data=}\NormalTok{ds, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{party)) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_bar}\NormalTok{() }\OperatorTok{+}
 \StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x=}\StringTok{"Party"}\NormalTok{, }\DataTypeTok{y=}\StringTok{"Count"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-87-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-90-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{ds <-}\StringTok{ }\NormalTok{ds1 }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(party,chamber)}
 \CommentTok{#}
-\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data=}\NormalTok{ds, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{chamber)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_bar}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill=}\NormalTok{party),}\DataTypeTok{position=}\StringTok{"dodge"}\NormalTok{) }\OperatorTok{+}
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data=}\NormalTok{ds, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{chamber)) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_bar}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill=}\NormalTok{party),}\DataTypeTok{position=}\StringTok{"dodge"}\NormalTok{) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x=}\StringTok{"Chamber"}\NormalTok{, }\DataTypeTok{y=}\StringTok{"Count"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-88-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-91-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2805,7 +2653,7 @@ Obama's presidency.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-88-2.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-91-2.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2840,7 +2688,7 @@ Obama's presidency.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-89-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-92-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2859,7 +2707,7 @@ Obama's presidency.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-90-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-93-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2878,8 +2726,12 @@ Obama's presidency.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-91-1.pdf}
+\begin{verbatim}
+## `summarise()` regrouping output by 'chamber' (override with `.groups` argument)
+\end{verbatim}
 
-\bibliography{book.bib,packages.bib}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-94-1.pdf}
+
+  \bibliography{book.bib,packages.bib}
 
 \end{document}

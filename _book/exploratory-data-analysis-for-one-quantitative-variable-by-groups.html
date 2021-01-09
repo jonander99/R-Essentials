@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 7 Exploratory Data Analysis For One Quantitative Variable: by Groups | Essential R Skills</title>
   <meta name="description" content="This book provides R code examples expected in all UMN-Morris Statistics courses." />
-  <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 7 Exploratory Data Analysis For One Quantitative Variable: by Groups | Essential R Skills" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="UMN-Morris Statistics Discipline" />
 
 
-<meta name="date" content="2020-06-19" />
+<meta name="date" content="2021-01-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -50,44 +50,72 @@
 
 
 
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -204,17 +232,17 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="summary-statistics-dplyr" class="section level2">
 <h2><span class="header-section-number">7.1</span> Summary Statistics: dplyr</h2>
 <p>Using <em>dplyr</em> and <em>tidyverse</em> for summary statistics across the levels of a group variable (of type factor/categorical) requires the use of the verb <code>group_by</code>. Here we produce summary statistics of life expectancy across the levels of continent.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Output presented in initial continent order (alphabetic)</span>
-gapminder <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">filter</span>(continent <span class="op">!=</span><span class="st"> &quot;Oceania&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">group_by</span>(continent) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">meanLE=</span><span class="kw">mean</span>(lifeExp,<span class="dt">na.rm=</span><span class="ot">TRUE</span>),
-            <span class="dt">medLE=</span><span class="kw">median</span>(lifeExp,<span class="dt">na.rm=</span><span class="ot">TRUE</span>),
-            <span class="dt">sd=</span><span class="kw">sd</span>(lifeExp,<span class="dt">na.rm=</span><span class="ot">TRUE</span>),
-            <span class="dt">iqr=</span><span class="kw">IQR</span>(lifeExp,<span class="dt">na.rm=</span><span class="ot">TRUE</span>),
-            <span class="dt">Q1=</span><span class="kw">quantile</span>(lifeExp, <span class="dt">probs=</span><span class="fl">0.25</span>,<span class="dt">na.rm=</span><span class="ot">TRUE</span>),
-            <span class="dt">Q3=</span><span class="kw">quantile</span>(lifeExp,<span class="dt">probs=</span><span class="fl">0.75</span>),
-            <span class="dt">n=</span><span class="kw">n</span>())</code></pre></div>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb137-1"></a><span class="co"># Output presented in initial continent order (alphabetic)</span></span>
+<span id="cb137-2"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb137-2"></a>gapminder <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb137-3"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb137-3"></a><span class="st">  </span><span class="kw">filter</span>(continent <span class="op">!=</span><span class="st"> &quot;Oceania&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb137-4"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb137-4"></a><span class="st">  </span><span class="kw">group_by</span>(continent) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb137-5"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb137-5"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">meanLE=</span><span class="kw">mean</span>(lifeExp,<span class="dt">na.rm=</span><span class="ot">TRUE</span>),</span>
+<span id="cb137-6"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb137-6"></a>            <span class="dt">medLE=</span><span class="kw">median</span>(lifeExp,<span class="dt">na.rm=</span><span class="ot">TRUE</span>),</span>
+<span id="cb137-7"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb137-7"></a>            <span class="dt">sd=</span><span class="kw">sd</span>(lifeExp,<span class="dt">na.rm=</span><span class="ot">TRUE</span>),</span>
+<span id="cb137-8"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb137-8"></a>            <span class="dt">iqr=</span><span class="kw">IQR</span>(lifeExp,<span class="dt">na.rm=</span><span class="ot">TRUE</span>),</span>
+<span id="cb137-9"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb137-9"></a>            <span class="dt">Q1=</span><span class="kw">quantile</span>(lifeExp, <span class="dt">probs=</span><span class="fl">0.25</span>,<span class="dt">na.rm=</span><span class="ot">TRUE</span>),</span>
+<span id="cb137-10"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb137-10"></a>            <span class="dt">Q3=</span><span class="kw">quantile</span>(lifeExp,<span class="dt">probs=</span><span class="fl">0.75</span>),</span>
+<span id="cb137-11"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb137-11"></a>            <span class="dt">n=</span><span class="kw">n</span>())</span></code></pre></div>
 <pre><code>## # A tibble: 4 x 8
 ##   continent meanLE medLE    sd   iqr    Q1    Q3     n
 ##   &lt;fct&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;
@@ -222,19 +250,19 @@ gapminder <span class="op">%&gt;%</span><span class="st"> </span><span class="kw
 ## 2 Americas    71.2  72.1  4.89  4.83  69.4  74.2    25
 ## 3 Asia        68.0  70.3  8.09 10.7   61.8  72.5    33
 ## 4 Europe      75.5  76.1  3.10  4.97  73.0  78.0    30</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#</span>
-<span class="co"># Output rows ordered by decreasing values of a statistic (mean Life Expectancy):</span>
-gapminder <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">filter</span>(continent <span class="op">!=</span><span class="st"> &quot;Oceania&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">group_by</span>(continent) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">meanLE=</span><span class="kw">mean</span>(lifeExp,<span class="dt">na.rm=</span><span class="ot">TRUE</span>),
-            <span class="dt">medLE=</span><span class="kw">median</span>(lifeExp,<span class="dt">na.rm=</span><span class="ot">TRUE</span>),
-            <span class="dt">sd=</span><span class="kw">sd</span>(lifeExp,<span class="dt">na.rm=</span><span class="ot">TRUE</span>),
-            <span class="dt">iqr=</span><span class="kw">IQR</span>(lifeExp,<span class="dt">na.rm=</span><span class="ot">TRUE</span>),
-            <span class="dt">min=</span><span class="kw">min</span>(lifeExp),
-            <span class="dt">max=</span><span class="kw">max</span>(lifeExp),
-            <span class="dt">n=</span><span class="kw">n</span>())  <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(meanLE))</code></pre></div>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb139-1"></a><span class="co">#</span></span>
+<span id="cb139-2"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb139-2"></a><span class="co"># Output rows ordered by decreasing values of a statistic (mean Life Expectancy):</span></span>
+<span id="cb139-3"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb139-3"></a>gapminder <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb139-4"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb139-4"></a><span class="st">  </span><span class="kw">filter</span>(continent <span class="op">!=</span><span class="st"> &quot;Oceania&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb139-5"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb139-5"></a><span class="st">  </span><span class="kw">group_by</span>(continent) <span class="op">%&gt;%</span></span>
+<span id="cb139-6"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb139-6"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">meanLE=</span><span class="kw">mean</span>(lifeExp,<span class="dt">na.rm=</span><span class="ot">TRUE</span>),</span>
+<span id="cb139-7"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb139-7"></a>            <span class="dt">medLE=</span><span class="kw">median</span>(lifeExp,<span class="dt">na.rm=</span><span class="ot">TRUE</span>),</span>
+<span id="cb139-8"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb139-8"></a>            <span class="dt">sd=</span><span class="kw">sd</span>(lifeExp,<span class="dt">na.rm=</span><span class="ot">TRUE</span>),</span>
+<span id="cb139-9"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb139-9"></a>            <span class="dt">iqr=</span><span class="kw">IQR</span>(lifeExp,<span class="dt">na.rm=</span><span class="ot">TRUE</span>),</span>
+<span id="cb139-10"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb139-10"></a>            <span class="dt">min=</span><span class="kw">min</span>(lifeExp),</span>
+<span id="cb139-11"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb139-11"></a>            <span class="dt">max=</span><span class="kw">max</span>(lifeExp),</span>
+<span id="cb139-12"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb139-12"></a>            <span class="dt">n=</span><span class="kw">n</span>())  <span class="op">%&gt;%</span></span>
+<span id="cb139-13"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb139-13"></a><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(meanLE))</span></code></pre></div>
 <pre><code>## # A tibble: 4 x 8
 ##   continent meanLE medLE    sd   iqr   min   max     n
 ##   &lt;fct&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;
@@ -243,19 +271,19 @@ gapminder <span class="op">%&gt;%</span><span class="st"> </span><span class="kw
 ## 3 Asia        68.0  70.3  8.09 10.7   41.8  80.7    33
 ## 4 Africa      53.6  52.8  9.10 11.9   36.1  74.8    52</code></pre>
 <p>Next, we save the statistics table to an object called statstable, then we use the <code>kable</code> function for display.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">statstable &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">filter</span>(continent <span class="op">!=</span><span class="st"> &quot;Oceania&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">group_by</span>(continent) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">meanLE=</span><span class="kw">mean</span>(lifeExp,<span class="dt">na.rm=</span><span class="ot">TRUE</span>),
-            <span class="dt">medLE=</span><span class="kw">median</span>(lifeExp,<span class="dt">na.rm=</span><span class="ot">TRUE</span>),
-            <span class="dt">sd=</span><span class="kw">sd</span>(lifeExp,<span class="dt">na.rm=</span><span class="ot">TRUE</span>),
-            <span class="dt">iqr=</span><span class="kw">IQR</span>(lifeExp,<span class="dt">na.rm=</span><span class="ot">TRUE</span>),
-            <span class="dt">min=</span><span class="kw">min</span>(lifeExp),
-            <span class="dt">max=</span><span class="kw">max</span>(lifeExp),
-            <span class="dt">n=</span><span class="kw">n</span>())  <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(meanLE))
-<span class="co">#</span>
-knitr<span class="op">::</span><span class="kw">kable</span>(statstable)</code></pre></div>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb141-1"></a>statstable &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb141-2"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb141-2"></a><span class="st">  </span><span class="kw">filter</span>(continent <span class="op">!=</span><span class="st"> &quot;Oceania&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb141-3"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb141-3"></a><span class="st">  </span><span class="kw">group_by</span>(continent) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb141-4"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb141-4"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">meanLE=</span><span class="kw">mean</span>(lifeExp,<span class="dt">na.rm=</span><span class="ot">TRUE</span>),</span>
+<span id="cb141-5"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb141-5"></a>            <span class="dt">medLE=</span><span class="kw">median</span>(lifeExp,<span class="dt">na.rm=</span><span class="ot">TRUE</span>),</span>
+<span id="cb141-6"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb141-6"></a>            <span class="dt">sd=</span><span class="kw">sd</span>(lifeExp,<span class="dt">na.rm=</span><span class="ot">TRUE</span>),</span>
+<span id="cb141-7"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb141-7"></a>            <span class="dt">iqr=</span><span class="kw">IQR</span>(lifeExp,<span class="dt">na.rm=</span><span class="ot">TRUE</span>),</span>
+<span id="cb141-8"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb141-8"></a>            <span class="dt">min=</span><span class="kw">min</span>(lifeExp),</span>
+<span id="cb141-9"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb141-9"></a>            <span class="dt">max=</span><span class="kw">max</span>(lifeExp),</span>
+<span id="cb141-10"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb141-10"></a>            <span class="dt">n=</span><span class="kw">n</span>())  <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb141-11"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb141-11"></a><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(meanLE))</span>
+<span id="cb141-12"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb141-12"></a><span class="co">#</span></span>
+<span id="cb141-13"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb141-13"></a>knitr<span class="op">::</span><span class="kw">kable</span>(statstable)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -316,14 +344,27 @@ knitr<span class="op">::</span><span class="kw">kable</span>(statstable)</code><
 <div id="summary-statistics-skimr" class="section level2">
 <h2><span class="header-section-number">7.2</span> Summary Statistics: skimr</h2>
 <p>Here we implement the <code>group_by</code> function to display descriptive statistics for numeric variables by continent, for two quantitative variables using functions from the <em>skimr</em> package.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">filter</span>(continent <span class="op">!=</span><span class="st"> &quot;Oceania&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">group_by</span>(continent) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span>skimr<span class="op">::</span><span class="kw">skim_without_charts</span>() <span class="op">%&gt;%</span>
-<span class="st">  </span>skimr<span class="op">::</span><span class="kw">yank</span>(<span class="st">&quot;numeric&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(skim_variable <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;lifeExp&quot;</span>,<span class="st">&quot;gdpPercap&quot;</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</code></pre></div>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb142-1"></a>gapminder <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb142-2"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb142-2"></a><span class="st">  </span><span class="kw">filter</span>(continent <span class="op">!=</span><span class="st"> &quot;Oceania&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb142-3"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb142-3"></a><span class="st">  </span><span class="kw">group_by</span>(continent) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb142-4"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb142-4"></a><span class="st">  </span>skimr<span class="op">::</span><span class="kw">skim_without_charts</span>() <span class="op">%&gt;%</span></span>
+<span id="cb142-5"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb142-5"></a><span class="st">  </span>skimr<span class="op">::</span><span class="kw">yank</span>(<span class="st">&quot;numeric&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb142-6"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb142-6"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(skim_variable <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;lifeExp&quot;</span>,<span class="st">&quot;gdpPercap&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb142-7"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb142-7"></a><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</span></code></pre></div>
 <table>
+<colgroup>
+<col width="11%" />
+<col width="7%" />
+<col width="7%" />
+<col width="11%" />
+<col width="9%" />
+<col width="10%" />
+<col width="7%" />
+<col width="8%" />
+<col width="7%" />
+<col width="9%" />
+<col width="7%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th align="left">skim_variable</th>
@@ -452,95 +493,95 @@ knitr<span class="op">::</span><span class="kw">kable</span>(statstable)</code><
 <p>In each example, the first lines create the dataset to be graphed - followed by a <code>ggplot</code> command making the display. Several of the examples make use of the principle of “small-multiples” so that each level of the factor variable has a separarate panel for the quantitative variable display.</p>
 <div id="dotplots" class="section level3">
 <h3><span class="header-section-number">7.3.1</span> Dotplots</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ds &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) 
-<span class="co">#</span>
-<span class="kw">ggplot</span>(<span class="dt">data=</span>ds,<span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span>lifeExp)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_dotplot</span>() <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>continent,<span class="dt">ncol=</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Life Expectancy (years)&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Frequency&quot;</span>)</code></pre></div>
-<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-78-1.png" width="672" /></p>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb143-1"></a>ds &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) </span>
+<span id="cb143-2"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb143-2"></a><span class="co">#</span></span>
+<span id="cb143-3"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb143-3"></a><span class="kw">ggplot</span>(<span class="dt">data=</span>ds,<span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span>lifeExp)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb143-4"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb143-4"></a><span class="st">  </span><span class="kw">geom_dotplot</span>() <span class="op">+</span><span class="st"> </span></span>
+<span id="cb143-5"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb143-5"></a><span class="st">  </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>continent,<span class="dt">ncol=</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb143-6"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb143-6"></a><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Life Expectancy (years)&quot;</span>) <span class="op">+</span></span>
+<span id="cb143-7"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb143-7"></a><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Frequency&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-81-1.png" width="672" /></p>
 </div>
 <div id="histograms" class="section level3">
 <h3><span class="header-section-number">7.3.2</span> Histograms</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ds &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">filter</span>(continent <span class="op">!=</span><span class="st"> &quot;Oceania&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">group_by</span>(continent) 
-<span class="co">#</span>
-<span class="kw">ggplot</span>(<span class="dt">data=</span>ds, <span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span>lifeExp)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth=</span><span class="dv">5</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>continent,<span class="dt">ncol=</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Life Expectancy (years)&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Frequency&quot;</span>)</code></pre></div>
-<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-79-1.png" width="672" /></p>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb144-1"></a>ds &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb144-2"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb144-2"></a><span class="st">  </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb144-3"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb144-3"></a><span class="st">  </span><span class="kw">filter</span>(continent <span class="op">!=</span><span class="st"> &quot;Oceania&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb144-4"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb144-4"></a><span class="st">  </span><span class="kw">group_by</span>(continent) </span>
+<span id="cb144-5"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb144-5"></a><span class="co">#</span></span>
+<span id="cb144-6"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb144-6"></a><span class="kw">ggplot</span>(<span class="dt">data=</span>ds, <span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span>lifeExp)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb144-7"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb144-7"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth=</span><span class="dv">5</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb144-8"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb144-8"></a><span class="st">  </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>continent,<span class="dt">ncol=</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb144-9"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb144-9"></a><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Life Expectancy (years)&quot;</span>) <span class="op">+</span></span>
+<span id="cb144-10"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb144-10"></a><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Frequency&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-82-1.png" width="672" /></p>
 </div>
 <div id="density-plots-in-facets" class="section level3">
 <h3><span class="header-section-number">7.3.3</span> Density Plots in Facets</h3>
 <p>The code given here shows how to produce a density plot in separate panels for each continent.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ds &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">filter</span>(continent <span class="op">!=</span><span class="st"> &quot;Oceania&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">group_by</span>(continent) 
-<span class="co">#</span>
-<span class="kw">ggplot</span>(<span class="dt">data=</span>ds, <span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span>lifeExp, <span class="dt">colour=</span>continent, <span class="dt">fill=</span>continent)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">alpha =</span> <span class="fl">0.35</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Life Expectancy (years)&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Density&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>continent, <span class="dt">ncol =</span> <span class="dv">2</span>) <span class="op">+</span><span class="st">  </span>
-<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>)</code></pre></div>
-<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-80-1.png" width="672" /></p>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb145-1"></a>ds &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb145-2"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb145-2"></a><span class="st">  </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb145-3"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb145-3"></a><span class="st">  </span><span class="kw">filter</span>(continent <span class="op">!=</span><span class="st"> &quot;Oceania&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb145-4"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb145-4"></a><span class="st">  </span><span class="kw">group_by</span>(continent) </span>
+<span id="cb145-5"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb145-5"></a><span class="co">#</span></span>
+<span id="cb145-6"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb145-6"></a><span class="kw">ggplot</span>(<span class="dt">data=</span>ds, <span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span>lifeExp, <span class="dt">colour=</span>continent, <span class="dt">fill=</span>continent)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb145-7"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb145-7"></a><span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">alpha =</span> <span class="fl">0.35</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb145-8"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb145-8"></a><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Life Expectancy (years)&quot;</span>) <span class="op">+</span></span>
+<span id="cb145-9"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb145-9"></a><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Density&quot;</span>) <span class="op">+</span></span>
+<span id="cb145-10"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb145-10"></a><span class="st">  </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>continent, <span class="dt">ncol =</span> <span class="dv">2</span>) <span class="op">+</span><span class="st">  </span></span>
+<span id="cb145-11"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb145-11"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-83-1.png" width="672" /></p>
 </div>
 <div id="overlaid-density-plots" class="section level3">
 <h3><span class="header-section-number">7.3.4</span> Overlaid Density Plots</h3>
 <p>The initial command below takes the gapminder data and consider only observations (rows) from 1997, but exclude all observations from Oceania. The <code>alpha</code> setting controls the amount of transparency in the densities for each continent - smaller values of <code>alpha</code> (between 0 and 1) are more transparent.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">filter</span>(continent <span class="op">!=</span><span class="st"> &quot;Oceania&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">group_by</span>(continent) <span class="op">%&gt;%</span>
-<span class="kw">ggplot</span>(<span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span>lifeExp, <span class="dt">colour=</span>continent, <span class="dt">fill=</span>continent)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">alpha =</span> <span class="fl">0.35</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Life Expectancy (years)&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Density&quot;</span>)</code></pre></div>
-<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-81-1.png" width="672" /></p>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb146-1"></a>gapminder <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb146-2"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb146-2"></a><span class="st">  </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb146-3"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb146-3"></a><span class="st">  </span><span class="kw">filter</span>(continent <span class="op">!=</span><span class="st"> &quot;Oceania&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb146-4"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb146-4"></a><span class="st">  </span><span class="kw">group_by</span>(continent) <span class="op">%&gt;%</span></span>
+<span id="cb146-5"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb146-5"></a><span class="kw">ggplot</span>(<span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span>lifeExp, <span class="dt">colour=</span>continent, <span class="dt">fill=</span>continent)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb146-6"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb146-6"></a><span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">alpha =</span> <span class="fl">0.35</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb146-7"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb146-7"></a><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Life Expectancy (years)&quot;</span>) <span class="op">+</span></span>
+<span id="cb146-8"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb146-8"></a><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Density&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-84-1.png" width="672" /></p>
 </div>
 <div id="boxplots-grouped-data" class="section level3">
 <h3><span class="header-section-number">7.3.5</span> Boxplots, Grouped Data</h3>
 <p>In the code below, the <code>alpha</code> value again controls the transparency of the points alpha=1 means opaque, alpha=0 means completely see-through. When there is a lot of data, use a smaller value of alpha.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ds &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">filter</span>(continent <span class="op">!=</span><span class="st"> &quot;Oceania&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">group_by</span>(continent) 
-<span class="co">#</span>
-<span class="kw">ggplot</span>(<span class="dt">data=</span>ds, <span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span>continent,<span class="dt">y=</span>lifeExp)) <span class="op">+</span>
-<span class="st"> </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Continent&quot;</span>,<span class="dt">y=</span><span class="st">&quot;Life Expectancy (years)&quot;</span>)</code></pre></div>
-<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-82-1.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#</span>
-<span class="kw">ggplot</span>(<span class="dt">data=</span>ds, <span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span>continent,<span class="dt">y=</span>lifeExp)) <span class="op">+</span><span class="st">  </span>
-<span class="st"> </span><span class="kw">geom_boxplot</span>(<span class="dt">outlier.colour =</span> <span class="ot">NA</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">position =</span> <span class="kw">position_jitter</span>(<span class="dt">width =</span> <span class="fl">0.15</span>, <span class="dt">height =</span> <span class="fl">0.15</span>),<span class="dt">alpha=</span>.<span class="dv">50</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Continent&quot;</span>,<span class="dt">y=</span><span class="st">&quot;Life Expectancy (years)&quot;</span>)</code></pre></div>
-<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-82-2.png" width="672" /></p>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb147-1"></a>ds &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb147-2"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb147-2"></a><span class="st">  </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb147-3"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb147-3"></a><span class="st">  </span><span class="kw">filter</span>(continent <span class="op">!=</span><span class="st"> &quot;Oceania&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb147-4"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb147-4"></a><span class="st">  </span><span class="kw">group_by</span>(continent) </span>
+<span id="cb147-5"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb147-5"></a><span class="co">#</span></span>
+<span id="cb147-6"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb147-6"></a><span class="kw">ggplot</span>(<span class="dt">data=</span>ds, <span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span>continent,<span class="dt">y=</span>lifeExp)) <span class="op">+</span></span>
+<span id="cb147-7"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb147-7"></a><span class="st"> </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span></span>
+<span id="cb147-8"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb147-8"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Continent&quot;</span>,<span class="dt">y=</span><span class="st">&quot;Life Expectancy (years)&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-85-1.png" width="672" /></p>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb148-1"></a><span class="co">#</span></span>
+<span id="cb148-2"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb148-2"></a><span class="kw">ggplot</span>(<span class="dt">data=</span>ds, <span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span>continent,<span class="dt">y=</span>lifeExp)) <span class="op">+</span><span class="st">  </span></span>
+<span id="cb148-3"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb148-3"></a><span class="st"> </span><span class="kw">geom_boxplot</span>(<span class="dt">outlier.colour =</span> <span class="ot">NA</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb148-4"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb148-4"></a><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">position =</span> <span class="kw">position_jitter</span>(<span class="dt">width =</span> <span class="fl">0.15</span>, <span class="dt">height =</span> <span class="fl">0.15</span>),<span class="dt">alpha=</span>.<span class="dv">50</span>) <span class="op">+</span></span>
+<span id="cb148-5"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb148-5"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Continent&quot;</span>,<span class="dt">y=</span><span class="st">&quot;Life Expectancy (years)&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-85-2.png" width="672" /></p>
 </div>
 <div id="boxplots-overlay-points-on-the-boxplots-with-color-control" class="section level3">
 <h3><span class="header-section-number">7.3.6</span> Boxplots, overlay points on the boxplots with color control</h3>
 <p>In the code below, the alpha value controls the transparency of the points alpha=1 means opaque, alpha=0 means completely see-through.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ds &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">filter</span>(continent <span class="op">!=</span><span class="st"> &quot;Oceania&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">group_by</span>(continent) 
-<span class="co"># </span>
-<span class="kw">ggplot</span>(<span class="dt">data=</span>ds, <span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span>continent,<span class="dt">y=</span>lifeExp, <span class="dt">colour=</span>continent)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">position =</span> <span class="kw">position_jitter</span>(<span class="dt">width =</span> <span class="fl">0.2</span>, <span class="dt">height =</span> <span class="fl">0.2</span>),<span class="dt">alpha=</span>.<span class="dv">25</span>) <span class="op">+</span>
-<span class="st"> </span><span class="kw">geom_boxplot</span>(<span class="dt">outlier.colour =</span> <span class="ot">NA</span>, <span class="dt">fill =</span> <span class="ot">NA</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Continent&quot;</span>,<span class="dt">y=</span><span class="st">&quot;Life Expectancy (years)&quot;</span>)</code></pre></div>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb149-1"></a>ds &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb149-2"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb149-2"></a><span class="st">  </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb149-3"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb149-3"></a><span class="st">  </span><span class="kw">filter</span>(continent <span class="op">!=</span><span class="st"> &quot;Oceania&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb149-4"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb149-4"></a><span class="st">  </span><span class="kw">group_by</span>(continent) </span>
+<span id="cb149-5"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb149-5"></a><span class="co"># </span></span>
+<span id="cb149-6"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb149-6"></a><span class="kw">ggplot</span>(<span class="dt">data=</span>ds, <span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span>continent,<span class="dt">y=</span>lifeExp, <span class="dt">colour=</span>continent)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb149-7"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb149-7"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">position =</span> <span class="kw">position_jitter</span>(<span class="dt">width =</span> <span class="fl">0.2</span>, <span class="dt">height =</span> <span class="fl">0.2</span>),<span class="dt">alpha=</span>.<span class="dv">25</span>) <span class="op">+</span></span>
+<span id="cb149-8"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb149-8"></a><span class="st"> </span><span class="kw">geom_boxplot</span>(<span class="dt">outlier.colour =</span> <span class="ot">NA</span>, <span class="dt">fill =</span> <span class="ot">NA</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb149-9"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb149-9"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Continent&quot;</span>,<span class="dt">y=</span><span class="st">&quot;Life Expectancy (years)&quot;</span>)</span></code></pre></div>
 <p><img src="bookdown-R-Essentials_files/figure-html/oztempbox2-1.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># </span>
-<span class="kw">ggplot</span>(<span class="dt">data=</span>ds, <span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span>continent,<span class="dt">y=</span>lifeExp, <span class="dt">colour=</span>continent)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">position =</span> <span class="kw">position_jitter</span>(<span class="dt">width =</span> <span class="fl">0.2</span>, <span class="dt">height =</span> <span class="fl">0.2</span>),<span class="dt">alpha=</span>.<span class="dv">80</span>) <span class="op">+</span>
-<span class="st"> </span><span class="kw">geom_boxplot</span>(<span class="dt">outlier.colour =</span> <span class="ot">NA</span>, <span class="dt">fill =</span> <span class="ot">NA</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Continent&quot;</span>,<span class="dt">y=</span><span class="st">&quot;Life Expectancy (years)&quot;</span>)</code></pre></div>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb150-1"></a><span class="co"># </span></span>
+<span id="cb150-2"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb150-2"></a><span class="kw">ggplot</span>(<span class="dt">data=</span>ds, <span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span>continent,<span class="dt">y=</span>lifeExp, <span class="dt">colour=</span>continent)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb150-3"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb150-3"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">position =</span> <span class="kw">position_jitter</span>(<span class="dt">width =</span> <span class="fl">0.2</span>, <span class="dt">height =</span> <span class="fl">0.2</span>),<span class="dt">alpha=</span>.<span class="dv">80</span>) <span class="op">+</span></span>
+<span id="cb150-4"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb150-4"></a><span class="st"> </span><span class="kw">geom_boxplot</span>(<span class="dt">outlier.colour =</span> <span class="ot">NA</span>, <span class="dt">fill =</span> <span class="ot">NA</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb150-5"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#cb150-5"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Continent&quot;</span>,<span class="dt">y=</span><span class="st">&quot;Life Expectancy (years)&quot;</span>)</span></code></pre></div>
 <p><img src="bookdown-R-Essentials_files/figure-html/oztempbox2-2.png" width="672" /></p>
 
 </div>

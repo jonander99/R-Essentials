@@ -11,7 +11,7 @@ library(tidyverse)
 
 Using *dplyr* and *tidyverse* for summary statistics across the levels of a group variable (of type factor/categorical) requires the use of the verb `group_by`.  Here we produce summary statistics of life expectancy across the levels of continent.
 
-```{r,tidy=FALSE}
+```{r,tidy=FALSE,message=FALSE,warning=FALSE}
 # Output presented in initial continent order (alphabetic)
 gapminder %>% filter(year==1997) %>% 
   filter(continent != "Oceania") %>% 
@@ -41,7 +41,7 @@ gapminder %>% filter(year==1997) %>%
 
 Next, we save the statistics table to an object called statstable, then we use the `kable` function for display.
 
-```{r,tidy=FALSE}
+```{r,tidy=FALSE,message=FALSE,warning=FALSE}
 statstable <- gapminder %>% filter(year==1997) %>% 
   filter(continent != "Oceania") %>% 
   group_by(continent) %>% 

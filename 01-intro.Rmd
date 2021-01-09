@@ -4,6 +4,13 @@
 
 When you start R studio, basic functionality is initially available.  However, in most projects we will want to use some special code and functions contained in packages that are not initially available whe R starts.  Before packages can be used in our analyses, they must be installed in our R workspace.  We presume that the R Studio development environment is being used by our students.  Any package can be installed by clicking the "Packages" tab in the lower right panel of the R Studio workspace.  Then click "Install" to produce an entry bar where you type the name of the desired package.  
 
+Or you can type a command to install a package:
+
+```{r,eval=FALSE,echo=TRUE}
+install.packages("alr4")
+```
+
+
 Once a package is installed into your R Studio environment, you make it available by loading with the `library()` command.  For this document, some additional packages are needed, and are loaded in the next code block.  The *knitr* and *tidyverse* packages have been previously installed.  If you attempt to load a package (in this case zelig) that has not been installed, you will get an error message similar to this:
 
 `Error in library(zelig) : there is no package called ‘zelig’`
