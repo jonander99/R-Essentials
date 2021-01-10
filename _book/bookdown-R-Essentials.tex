@@ -120,7 +120,7 @@
 
 \title{Essential R Skills}
 \author{UMN-Morris Statistics Discipline}
-\date{2021-01-08}
+\date{2021-01-10}
 
 \begin{document}
 \maketitle
@@ -2682,7 +2682,8 @@ We will restrict ourselves to the 113th congress, a meeting of the legislative b
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{#}
-\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data=}\NormalTok{ds, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{party, }\DataTypeTok{y=}\NormalTok{pct)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_bar}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill=}\NormalTok{party),}\DataTypeTok{stat=}\StringTok{"identity"}\NormalTok{) }\OperatorTok{+}
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data=}\NormalTok{ds, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{party, }\DataTypeTok{y=}\NormalTok{pct)) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_bar}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill=}\NormalTok{party),}\DataTypeTok{stat=}\StringTok{"identity"}\NormalTok{) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{facet_wrap}\NormalTok{( }\OperatorTok{~}\StringTok{ }\NormalTok{chamber) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x=}\StringTok{"Party"}\NormalTok{, }\DataTypeTok{y=}\StringTok{"Percent"}\NormalTok{)}
 \end{Highlighting}
@@ -2725,10 +2726,6 @@ We will restrict ourselves to the 113th congress, a meeting of the legislative b
 \StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x=}\StringTok{"Chamber"}\NormalTok{, }\DataTypeTok{y=}\StringTok{"Percent"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## `summarise()` regrouping output by 'chamber' (override with `.groups` argument)
-\end{verbatim}
 
 \includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-94-1.pdf}
 

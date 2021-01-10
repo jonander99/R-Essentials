@@ -101,7 +101,8 @@ ds <- ds1 %>% group_by(chamber,party)  %>%
 #
 ds
 #
-ggplot(data=ds, aes(x=party, y=pct)) + geom_bar(aes(fill=party),stat="identity") +
+ggplot(data=ds, aes(x=party, y=pct)) + 
+  geom_bar(aes(fill=party),stat="identity") +
   facet_wrap( ~ chamber) +
   labs(x="Party", y="Percent")
 ```
@@ -124,7 +125,7 @@ ggplot(data=ds, mapping=aes(x=chamber,y=pct,fill=party)) +
   labs(x="Chamber", y="Percent")
 ```
 
-```{r,tidy=FALSE}
+```{r,tidy=FALSE,message=FALSE,warning=FALSE}
 ds1 <- congage %>% filter(congress > 112) %>% select(congress,chamber,state,party,incumbent,age) %>%
  mutate(party = factor(party,levels=c("D","I","R")),
                     chamber = factor(chamber)) %>% 
@@ -138,4 +139,6 @@ ggplot( mapping=aes(x=chamber,y=pct,fill=party)) +
   coord_flip() +
   labs(x="Chamber", y="Percent")
 ```
+
+
 
