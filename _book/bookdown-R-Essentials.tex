@@ -120,7 +120,7 @@
 
 \title{Essential R Skills}
 \author{UMN-Morris Statistics Discipline}
-\date{2021-01-10}
+\date{2021-01-11}
 
 \begin{document}
 \maketitle
@@ -2015,10 +2015,6 @@ The previous code tells us how many lines (rows) for each continent, but many ro
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## `summarise()` ungrouping output (override with `.groups` argument)
-\end{verbatim}
-
 \begin{tabular}{l|r|r}
 \hline
 continent & n & n\_countries\\
@@ -2720,7 +2716,7 @@ We will restrict ourselves to the 113th congress, a meeting of the legislative b
 \NormalTok{ds1 }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(chamber,party)  }\OperatorTok{%>%}
 \StringTok{   }\KeywordTok{summarise}\NormalTok{ (}\DataTypeTok{n =} \KeywordTok{n}\NormalTok{()) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{pct =} \DecValTok{100}\OperatorTok{*}\NormalTok{n }\OperatorTok{/}\StringTok{ }\KeywordTok{sum}\NormalTok{(n)) }\OperatorTok{%>%}
-\KeywordTok{ggplot}\NormalTok{( }\DataTypeTok{mapping=}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{chamber,}\DataTypeTok{y=}\NormalTok{pct,}\DataTypeTok{fill=}\NormalTok{party)) }\OperatorTok{+}\StringTok{ }
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data=}\NormalTok{., }\DataTypeTok{mapping=}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{chamber,}\DataTypeTok{y=}\NormalTok{pct,}\DataTypeTok{fill=}\NormalTok{party)) }\OperatorTok{+}\StringTok{ }
 \StringTok{  }\KeywordTok{geom_col}\NormalTok{() }\OperatorTok{+}
 \StringTok{  }\KeywordTok{coord_flip}\NormalTok{() }\OperatorTok{+}
 \StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x=}\StringTok{"Chamber"}\NormalTok{, }\DataTypeTok{y=}\StringTok{"Percent"}\NormalTok{)}

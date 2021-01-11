@@ -90,7 +90,7 @@ gapminder %>%  count(continent, sort=TRUE) %>% knitr::kable()
 
 The previous code tells us how many lines (rows) for each continent, but many rows are repeated for each country - just different years.
 
-```{r,tidy=FALSE}
+```{r,tidy=FALSE,message=FALSE,warning=FALSE}
 gapminder %>% filter(year==1997 | year==1967) %>%
   dplyr::group_by(continent) %>%
   dplyr::summarise(n = n(), n_countries = n_distinct(country)) %>% knitr::kable()

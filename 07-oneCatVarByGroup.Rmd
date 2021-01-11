@@ -134,7 +134,7 @@ ds1 <- congage %>% filter(congress > 112) %>% select(congress,chamber,state,part
 ds1 %>% group_by(chamber,party)  %>%
    summarise (n = n()) %>%
   mutate(pct = 100*n / sum(n)) %>%
-ggplot( mapping=aes(x=chamber,y=pct,fill=party)) + 
+ggplot(data=., mapping=aes(x=chamber,y=pct,fill=party)) + 
   geom_col() +
   coord_flip() +
   labs(x="Chamber", y="Percent")
