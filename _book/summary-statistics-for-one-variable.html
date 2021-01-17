@@ -233,26 +233,21 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h3><span class="header-section-number">6.1.3</span> Summary Statistics Using funModeling package</h3>
 <p>The <code>profiling_num</code> and <code>plot_num</code> functions from the <em>funModeling</em> package help give a concise numeric and visual overview of the numeric variables in the dataframe.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">funModeling<span class="op">::</span><span class="kw">profiling_num</span>(gapminder)</code></pre></div>
-<pre><code>##    variable         mean      std_dev variation_coef        p_01        p_05
-## 1      year 1.979500e+03 1.726533e+01    0.008722066   1952.0000   1952.0000
-## 2   lifeExp 5.947444e+01 1.291711e+01    0.217187544     33.4926     38.4924
-## 3       pop 2.960121e+07 1.061579e+08    3.586268548 154117.9200 475458.9000
-## 4 gdpPercap 7.215327e+03 9.857455e+03    1.366182632    369.2201    547.9964
-##          p_25         p_50         p_75         p_95         p_99   skewness
-## 1    1965.750    1979.5000 1.993250e+03     2007.000 2.007000e+03  0.0000000
-## 2      48.198      60.7125 7.084550e+01       77.437 8.023892e+01 -0.2524798
-## 3 2793664.000 7023595.5000 1.958522e+07 89822054.500 6.319900e+08  8.3328742
-## 4    1202.060    3531.8470 9.325462e+03    26608.333 3.678357e+04  3.8468819
-##    kurtosis          iqr                       range_98
-## 1  1.783217 2.750000e+01                   [1952, 2007]
-## 2  1.873099 2.264750e+01            [33.4926, 80.23892]
-## 3 80.716151 1.679156e+07  [154117.92, 631990000.000002]
-## 4 30.431702 8.123402e+03 [369.220127794, 36783.5723707]
-##                       range_80
-## 1                 [1957, 2002]
-## 2            [41.5108, 75.097]
-## 3       [946367.1, 54801369.5]
-## 4 [687.71836128, 19449.138209]</code></pre>
+<pre><code>##    variable         mean      std_dev variation_coef        p_01        p_05        p_25
+## 1      year 1.979500e+03 1.726533e+01    0.008722066   1952.0000   1952.0000    1965.750
+## 2   lifeExp 5.947444e+01 1.291711e+01    0.217187544     33.4926     38.4924      48.198
+## 3       pop 2.960121e+07 1.061579e+08    3.586268548 154117.9200 475458.9000 2793664.000
+## 4 gdpPercap 7.215327e+03 9.857455e+03    1.366182632    369.2201    547.9964    1202.060
+##           p_50         p_75         p_95         p_99   skewness  kurtosis          iqr
+## 1    1979.5000 1.993250e+03     2007.000 2.007000e+03  0.0000000  1.783217 2.750000e+01
+## 2      60.7125 7.084550e+01       77.437 8.023892e+01 -0.2524798  1.873099 2.264750e+01
+## 3 7023595.5000 1.958522e+07 89822054.500 6.319900e+08  8.3328742 80.716151 1.679156e+07
+## 4    3531.8470 9.325462e+03    26608.333 3.678357e+04  3.8468819 30.431702 8.123402e+03
+##                         range_98                     range_80
+## 1                   [1952, 2007]                 [1957, 2002]
+## 2            [33.4926, 80.23892]            [41.5108, 75.097]
+## 3  [154117.92, 631990000.000002]       [946367.1, 54801369.5]
+## 4 [369.220127794, 36783.5723707] [687.71836128, 19449.138209]</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">funModeling<span class="op">::</span><span class="kw">plot_num</span>(gapminder)</code></pre></div>
 <p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-65-1.png" width="672" /></p>
 <p>This example shows summary statistics for two quantitative variables. For only one variable, simply use <code>select</code> for only one variable.</p>
@@ -260,15 +255,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="st">  </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(lifeExp,gdpPercap) <span class="op">%&gt;%</span>
 funModeling<span class="op">::</span><span class="kw">profiling_num</span>() </code></pre></div>
-<pre><code>##    variable       mean     std_dev variation_coef      p_01      p_05
-## 1   lifeExp   65.01468    11.55944      0.1777974  40.03681  43.83415
-## 2 gdpPercap 9090.17536 10171.49326      1.1189546 434.72721 590.90598
-##         p_25     p_50        p_75       p_95       p_99   skewness kurtosis
-## 1   55.63375   69.394    74.16975    78.7635    79.7499 -0.6427906 2.218599
-## 2 1366.83796 4781.825 12022.86719 29088.8709 38442.0133  1.2979366 3.604446
-##         iqr                       range_98                     range_80
-## 1    18.536            [40.03681, 79.7499]            [47.4671, 77.548]
-## 2 10656.029 [434.727210598, 38442.0133187] [789.29339925, 26905.596049]</code></pre>
+<pre><code>##    variable       mean     std_dev variation_coef      p_01      p_05       p_25
+## 1   lifeExp   65.01468    11.55944      0.1777974  40.03681  43.83415   55.63375
+## 2 gdpPercap 9090.17536 10171.49326      1.1189546 434.72721 590.90598 1366.83796
+##       p_50        p_75       p_95       p_99   skewness kurtosis       iqr
+## 1   69.394    74.16975    78.7635    79.7499 -0.6427906 2.218599    18.536
+## 2 4781.825 12022.86719 29088.8709 38442.0133  1.2979366 3.604446 10656.029
+##                         range_98                     range_80
+## 1            [40.03681, 79.7499]            [47.4671, 77.548]
+## 2 [434.727210598, 38442.0133187] [789.29339925, 26905.596049]</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#</span>
 gapminder <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">1997</span>) <span class="op">%&gt;%</span>
