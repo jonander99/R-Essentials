@@ -69,9 +69,10 @@ ds %>% group_by(chamber,party) %>%
 
 ## Graphical Displays
 
-```{r}
+```{r,tidy=FALSE}
 # basic bar plot of party affiliation
-ggplot(data=ds, aes(x=party)) + geom_bar() +
+ggplot(data=ds, aes(x=party)) + 
+  geom_bar() +
   labs(x="Party", y="Count")
 ```
 
@@ -79,7 +80,8 @@ ggplot(data=ds, aes(x=party)) + geom_bar() +
 ```{r, tidy=FALSE}
 ds <- ds1 %>% group_by(party,chamber)
 #
-ggplot(data=ds, aes(x=chamber)) + geom_bar(aes(fill=party),position="dodge") +
+ggplot(data=ds, aes(x=chamber)) + 
+  geom_bar(aes(fill=party),position="dodge") +
   labs(x="Chamber", y="Count")
 #
 ggplot(data=ds, aes(x=party)) + 
@@ -90,7 +92,7 @@ ggplot(data=ds, aes(x=party)) +
 
 
 
-```{r}
+```{r,tidy=FALSE,message=FALSE,warning=FALSE}
 #  The next display attempts to use percentages on the vertical axis defined within chamber.
 # This means the next command must list chamber as the FIRST group_by variable.
 ds <- ds1 %>% group_by(chamber,party)  %>%
@@ -99,7 +101,8 @@ ds <- ds1 %>% group_by(chamber,party)  %>%
 #
 ds
 #
-ggplot(data=ds, aes(x=party, y=pct)) + geom_bar(aes(fill=party),stat="identity") +
+ggplot(data=ds, aes(x=party, y=pct)) + 
+  geom_bar(aes(fill=party),stat="identity") +
   facet_wrap( ~ chamber) +
   labs(x="Party", y="Percent")
 ```
@@ -107,7 +110,7 @@ ggplot(data=ds, aes(x=party, y=pct)) + geom_bar(aes(fill=party),stat="identity")
 
 
 
-```{r}
+```{r,tidy=FALSE,message=FALSE,warning=FALSE}
 ds1 <- congage %>% filter(congress > 112) %>% select(congress,chamber,state,party,incumbent,age) %>%
  mutate(party = factor(party,levels=c("D","I","R")),
                     chamber = factor(chamber)) %>% 
@@ -122,7 +125,7 @@ ggplot(data=ds, mapping=aes(x=chamber,y=pct,fill=party)) +
   labs(x="Chamber", y="Percent")
 ```
 
-```{r}
+```{r,tidy=FALSE,message=FALSE,warning=FALSE}
 ds1 <- congage %>% filter(congress > 112) %>% select(congress,chamber,state,party,incumbent,age) %>%
  mutate(party = factor(party,levels=c("D","I","R")),
                     chamber = factor(chamber)) %>% 
@@ -131,9 +134,11 @@ ds1 <- congage %>% filter(congress > 112) %>% select(congress,chamber,state,part
 ds1 %>% group_by(chamber,party)  %>%
    summarise (n = n()) %>%
   mutate(pct = 100*n / sum(n)) %>%
-ggplot( mapping=aes(x=chamber,y=pct,fill=party)) + 
+ggplot(data=., mapping=aes(x=chamber,y=pct,fill=party)) + 
   geom_col() +
   coord_flip() +
   labs(x="Chamber", y="Percent")
 ```
+
+
 

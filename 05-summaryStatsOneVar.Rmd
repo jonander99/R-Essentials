@@ -59,7 +59,7 @@ funModeling::plot_num()
 
 The *skimr* package produces summary statistics about variables and overviews for dataframes.  It is easy to manipulate and use pipes, select, and filter from the tidyverse family of packages.
 
-The next code supplies a dataframe that contains both categorical variables (continent), and numeric variables (lifeExp, gdpPercap).  Numeric variables are chosen with the `yank` function, then some attributes are omitted from the display (n_missing, complete_rate) using the `select` function from dplyr.
+The next code supplies a dataframe that contains both categorical variables (continent), and numeric variables (lifeExp, gdpPercap).  Numeric variables are chosen with the `yank` function, then some attributes are omitted from the display (n_missing, complete_rate) using the `select` function from *dplyr* with the `-all_of` function meaning everything in the dataframe except `varlist` list will be shown.
 
 ```{r}
 varlist <- c("n_missing","complete_rate")
@@ -67,7 +67,7 @@ gapminder %>% filter(year==1997) %>%
   select(-year, -country, -pop) %>% 
   skimr::skim_without_charts() %>%
   skimr::yank("numeric") %>%
-  dplyr::select(-one_of(varlist))
+  dplyr::select(-all_of(varlist))
   
 ```
 
@@ -90,7 +90,7 @@ gapminder %>%  count(continent, sort=TRUE) %>% knitr::kable()
 
 The previous code tells us how many lines (rows) for each continent, but many rows are repeated for each country - just different years.
 
-```{r}
+```{r,tidy=FALSE,message=FALSE,warning=FALSE}
 gapminder %>% filter(year==1997 | year==1967) %>%
   dplyr::group_by(continent) %>%
   dplyr::summarise(n = n(), n_countries = n_distinct(country)) %>% knitr::kable()
@@ -100,7 +100,7 @@ gapminder %>% filter(year==1997 | year==1967) %>%
 ### Categorical variable:  skimr package
 
 Here we summarize a categorical variable (continent), and observe it has 5 unique values (levels) and the most frequent values are displayed.
-```{r}
+```{r,tidy=FALSE}
 gapminder %>% filter(year==1997) %>% 
   select(lifeExp,continent) %>% 
   skimr::skim_without_charts() %>%

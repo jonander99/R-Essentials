@@ -60,10 +60,10 @@ ggplot(data=ds, mapping=aes(x=lifeExp, y= reorder(country,lifeExp))) +
   ylab("Asian Countries")
 ```
 
-Notice that in the next example we simply pipe the modified dataset into the first argument of the `ggplot` command so that there is no need to save the modified dataset to make the display.
+Notice that in the next example we simply pipe the modified dataset into the first argument of the `ggplot` command so that there is no need to save the modified dataset to make the display.  In the next block we pipe the modified dataset directly inside the `ggplot` command to automatically replace the first argument.
 ```{r}
 gapminder %>% filter(continent=="Asia",year==1997) %>%
-ggplot( mapping=aes(x=lifeExp, y= reorder(country,lifeExp))) + 
+ggplot(data=., mapping=aes(x=lifeExp, y= reorder(country,lifeExp))) + 
   geom_point() + 
   xlab("Life Expectancy (years) in 1997") + 
   ylab("Asian Countries")
@@ -75,7 +75,7 @@ ggplot( mapping=aes(x=lifeExp, y= reorder(country,lifeExp))) +
 This code block is similar to the dotplot commands, but the geom_histogram function controls the bin width in units of the x variable - in this case 5 years.
 ```{r,eval=TRUE,tidy=FALSE}
 gapminder %>% filter(year==1997) %>%
-ggplot(mapping=aes(x=lifeExp)) + 
+ggplot(data=.,mapping=aes(x=lifeExp)) + 
   geom_histogram(binwidth=5) + 
   xlab("Life Expectancy (years)") +
   ylab("Relative Frequency")
@@ -84,8 +84,17 @@ ggplot(mapping=aes(x=lifeExp)) +
 Here we change the binwidth:
 ```{r,eval=TRUE,tidy=FALSE}
 gapminder %>% filter(year==1997) %>%
-ggplot(mapping=aes(x=lifeExp)) + 
+ggplot(data=.,mapping=aes(x=lifeExp)) + 
   geom_histogram(binwidth=2.5) + 
+  xlab("Life Expectancy (years)") +
+  ylab("Relative Frequency")
+```
+
+Here we change the number of bins, notice the data argument is replaced by the piped data:
+```{r,eval=TRUE,tidy=FALSE}
+gapminder %>% filter(year==1997) %>%
+ggplot(mapping=aes(x=lifeExp)) + 
+  geom_histogram(bins=12) + 
   xlab("Life Expectancy (years)") +
   ylab("Relative Frequency")
 ```
@@ -130,7 +139,7 @@ ggplot(data=ds, mapping=aes(x=factor(year),y=lifeExp)) +
   labs(x="Year",y="Life Expectancy (years)")
 ```
 
-Now we overlay points on top of the boxplot display.  Note the `geom_jitter` that overlays the points has an argument `alpha=0.5` signifying a slightly transparent plot symbol.  An alpha value of 1 means the plot symbol is opaque, and a value of 0 is comletely transparent.  Careful use of alpha in large datasets will enable the analyst to correctly perceive point density.  Without using a smaller value of `alpha` the plot may be one large blob of ink - making it difficult to judge the density of points in the display.
+Now we overlay points on top of the boxplot display.  Note the `geom_jitter` that overlays the points has an argument `alpha=0.5` signifying a slightly transparent plot symbol.  An alpha value of 1 means the plot symbol is opaque, and a value of 0 is completely transparent.  Careful use of alpha in large datasets will enable the analyst to correctly perceive point density.  Without using a smaller value of `alpha` the plot may be one large blob of ink - making it difficult to judge the density of points in the display.
 
 ```{r,tidy=FALSE}
 ds <- gapminder %>% filter(year==1997) 
@@ -179,12 +188,14 @@ ggplot(data=ds, mapping=aes(x=continent)) +
 
 Bar graph with percentages on vertical axis.
 
-```{r,tidy=FALSE}
+```{r,tidy=FALSE,message=FALSE,warning=FALSE}
 ds <- gapminder %>% 
   filter(year==1997) %>% 
   group_by(continent)  %>%
   summarise (n = n()) %>%
   mutate(pct = 100*n / sum(n)) 
+#
+head(ds)
 #
 ggplot(data=ds, mapping=aes(x = continent, y = pct)) + 
   geom_bar(stat = "identity") + 
@@ -197,7 +208,7 @@ ggplot(data=ds, mapping=aes(x = reorder(continent, -pct), y = pct)) +
 
 Sometimes it is more convenient to have the bars oriented horizontally.  Notice we set up the aesthetic mappings as usual and then flip the axes with the `coord_flip` command.
 
-```{r,tidy=FALSE}
+```{r,tidy=FALSE,message=FALSE,warning=FALSE}
 ds <- gapminder %>% 
   filter(year==1997) %>% 
   group_by(continent)  %>%
@@ -210,10 +221,18 @@ ggplot(data=ds, mapping=aes(x = reorder(continent, pct), y = pct)) +
   xlab("Continent") + ylab("Percentage")
 ```
 
+You can produce a similar display using `geom_col` on the summarized data tibble.
+```{r}
+ggplot(data = ds, mapping = aes(x = continent, y = n)) +
+  geom_col() +
+  ylab("Frequency")
+```
+
+
 ### Pie Graph
 
 Pie graphs are not recommended, but the code needed to make one is given here.
-```{r,tidy=FALSE}
+```{r,tidy=FALSE,message=FALSE,warning=FALSE}
 contin.prop<- gapminder %>% 
   group_by(continent) %>%
   summarise (n = n()) %>%
