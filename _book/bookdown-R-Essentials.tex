@@ -6,8 +6,8 @@
 ]{book}
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{ifxetex,ifluatex}
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\usepackage{iftex}
+\ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
@@ -33,14 +33,7 @@
   \KOMAoptions{parskip=half}}
 \makeatother
 \usepackage{xcolor}
-\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
-\hypersetup{
-  pdftitle={Essential R Skills},
-  pdfauthor={UMN-Morris Statistics Discipline},
-  hidelinks,
-  pdfcreator={LaTeX via pandoc}}
-\urlstyle{same} % disable monospaced font for URLs
+\usepackage[left=2.0cm, right=2.75cm, top=2.25cm, bottom=2.25cm]{geometry}
 \usepackage{color}
 \usepackage{fancyvrb}
 \newcommand{\VerbBar}{|}
@@ -116,15 +109,23 @@
   \thm@postskip=\thm@preskip
 }
 \makeatother
-\ifluatex
+\ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Essential R Skills},
+  pdfauthor={UMN-Morris Statistics Discipline},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
 
 \title{Essential R Skills}
 \author{UMN-Morris Statistics Discipline}
-\date{2022-08-06}
+\date{2023-06-22}
 
 \begin{document}
 \maketitle
@@ -144,7 +145,7 @@ We have found that students enter our courses with wide variation in experience 
 \hypertarget{packages}{%
 \section{Packages}\label{packages}}
 
-When you start R studio, basic functionality is initially available. However, in most projects we will want to use some special code and functions contained in packages that are not initially available whe R starts. Before packages can be used in our analyses, they must be installed in our R workspace. We presume that the R Studio development environment is being used by our students. Any package can be installed by clicking the ``Packages'' tab in the lower right panel of the R Studio workspace. Then click ``Install'' to produce an entry bar where you type the name of the desired package.
+When you start R studio, basic functionality is initially available. However, in most projects we will want to use some special code and functions contained in packages that are not initially available when R starts. Before packages can be used in our analyses, they must be installed in our R workspace. We presume that the R Studio development environment is being used by our students. Any package can be installed by clicking the ``Packages'' tab in the lower right panel of the R Studio workspace. Then click ``Install'' to produce an entry bar where you type the name of the desired package. You can also instruct R Studio to install a package directly by typing ``install.packages(''tidyverse'')'' in the ``Console'' window in the lower left area of R Studio. This command will execute and install the \emph{tidyverse} package.
 
 Once a package is installed into your R Studio environment, you make it available by loading with the \texttt{library()} command. For this document, some additional packages are needed, and are loaded in the next code block. The \emph{knitr} and \emph{tidyverse} packages have been previously installed. If you attempt to load a package (in this case zelig) that has not been installed, you will get an error message similar to this:
 
@@ -190,6 +191,9 @@ One of the most common problems students experience is that they work on files i
 
 The most common way to read data into R is from an excel spreadsheet that has been saved into a comma-separated-values (csv) file. This means that data elements are separated from each other by commas ``,''.
 
+\hypertarget{csv-file-located-in-working-directory}{%
+\subsection{CSV File Located in Working Directory}\label{csv-file-located-in-working-directory}}
+
 We consider a data file named (file.csv) that contains variable names in the first row of the file. Place this file in your working directory and read,
 
 \begin{Shaded}
@@ -206,7 +210,7 @@ A frequent issue with \texttt{read.csv} is that character variables are automati
 \end{Highlighting}
 \end{Shaded}
 
-The \emph{readr} package inside the \emph{tidyverse} family of packages has a slightly nicer read csv function you should know about. We use the \texttt{readr::} prefix to inform readers that the \texttt{read\_csv} function resides in the \emph{readr} package. This read function will not auto-convert character variables to category/factor variables.
+The \emph{readr} package inside the \emph{tidyverse} family of packages has a slightly nicer read function you should know about. We use the \texttt{readr::} prefix to inform readers that the \texttt{read\_csv} function resides in the \emph{readr} package. This read function will not auto-convert character variables to category/factor variables.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -214,7 +218,66 @@ The \emph{readr} package inside the \emph{tidyverse} family of packages has a sl
 \end{Highlighting}
 \end{Shaded}
 
-Reading data directly from excel spreadsheets is more complex and you should read documentation for the \emph{readxl} package.
+\hypertarget{read-data-from-a-url-web-location}{%
+\subsection{Read Data From a URL Web Location}\label{read-data-from-a-url-web-location}}
+
+If data is located in an accessible location on the internet, you can simply add the location pathway or URL address to the \emph{read.csv} command to access the data.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#import data from URL}
+\NormalTok{data }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{\textquotesingle{}https://raw.githubusercontent.com/Statology/Miscellaneous/main/basketball\_data.csv\textquotesingle{}}\NormalTok{)}
+
+\CommentTok{\#view first five rows}
+\FunctionTok{head}\NormalTok{(data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   player assists points
+## 1      A       6     12
+## 2      B       7     19
+## 3      C      14      7
+## 4      D       4      6
+## 5      E       5     10
+\end{verbatim}
+
+Here is a similar command using the \emph{readr} package.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#import data from URL}
+\NormalTok{data3 }\OtherTok{\textless{}{-}}\NormalTok{ data.table}\SpecialCharTok{::}\FunctionTok{fread}\NormalTok{(}\StringTok{\textquotesingle{}https://raw.githubusercontent.com/Statology/Miscellaneous/main/basketball\_data.csv\textquotesingle{}}\NormalTok{)}
+
+\CommentTok{\#view first five rows}
+\FunctionTok{head}\NormalTok{(data3)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    player assists points
+## 1:      A       6     12
+## 2:      B       7     19
+## 3:      C      14      7
+## 4:      D       4      6
+## 5:      E       5     10
+\end{verbatim}
+
+\hypertarget{reading-data-from-excel-files}{%
+\subsection{Reading Data From Excel Files}\label{reading-data-from-excel-files}}
+
+Reading data directly from excel spreadsheets is more complex and you should read documentation for the \emph{readxl} package. Here we illustrate the basic idea.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(readxl)}
+\CommentTok{\# Read sheet names \textquotesingle{}sheet\_name\textquotesingle{} from excel file}
+\NormalTok{df }\OtherTok{=} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"/Users/new\_file.xlsx"}\NormalTok{, }\AttributeTok{sheet=}\StringTok{\textquotesingle{}sheet\_name\textquotesingle{}}\NormalTok{)}
+\CommentTok{\#or}
+\CommentTok{\# Read sheet 3 from excel file}
+\NormalTok{df }\OtherTok{=} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"/Users/new\_file.xlsx"}\NormalTok{, }\AttributeTok{sheet=}\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{OverviewDataframe}{%
 \chapter{Overview of a Dataframe}\label{OverviewDataframe}}
@@ -260,6 +323,21 @@ Each variable name is listed along with a variable type designation.
 \item
   dbl: means double precision, a quantitative variable that is essentially continuous - taking decimal values.
 \end{itemize}
+
+\hypertarget{dim}{%
+\section{dim}\label{dim}}
+
+The dim command quickly tells us the number of rows (observations) and columns (variables) in a data frame.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{dim}\NormalTok{(gapminder)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1704    6
+\end{verbatim}
 
 \hypertarget{head}{%
 \section{head}\label{head}}
@@ -384,7 +462,7 @@ the summary function to be processed. Note the same output is produce as using
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Same idea, but using tidyverse pipe}
+\CommentTok{\# Same idea, as summary(gapminder) but using tidyverse pipe}
 \NormalTok{gapminder }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summary}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
@@ -547,9 +625,6 @@ The \emph{Hmisc} package contains the \texttt{describe} function that gives a he
 ## continent 
 ##        n  missing distinct 
 ##     1704        0        5 
-## 
-## lowest : Africa   Americas Asia     Europe   Oceania 
-## highest: Africa   Americas Asia     Europe   Oceania 
 ##                                                        
 ## Value        Africa Americas     Asia   Europe  Oceania
 ## Frequency       624      300      396      360       24
@@ -560,16 +635,16 @@ The \emph{Hmisc} package contains the \texttt{describe} function that gives a he
 ##     1704        0       12    0.993     1980    19.87     1952     1957 
 ##      .25      .50      .75      .90      .95 
 ##     1966     1980     1993     2002     2007 
+##                                                                           
+## Value      1952.00 1956.95 1961.90 1966.85 1971.80 1976.75 1981.70 1986.65
+## Frequency      142     142     142     142     142     142     142     142
+## Proportion   0.083   0.083   0.083   0.083   0.083   0.083   0.083   0.083
+##                                           
+## Value      1991.60 1996.55 2001.50 2007.00
+## Frequency      142     142     142     142
+## Proportion   0.083   0.083   0.083   0.083
 ## 
-## lowest : 1952 1957 1962 1967 1972, highest: 1987 1992 1997 2002 2007
-##                                                                             
-## Value       1952  1957  1962  1967  1972  1977  1982  1987  1992  1997  2002
-## Frequency    142   142   142   142   142   142   142   142   142   142   142
-## Proportion 0.083 0.083 0.083 0.083 0.083 0.083 0.083 0.083 0.083 0.083 0.083
-##                 
-## Value       2007
-## Frequency    142
-## Proportion 0.083
+## For the frequency table, variable is rounded to the nearest 0.55
 ## --------------------------------------------------------------------------------
 ## lifeExp 
 ##        n  missing distinct     Info     Mean      Gmd      .05      .10 
@@ -577,7 +652,7 @@ The \emph{Hmisc} package contains the \texttt{describe} function that gives a he
 ##      .25      .50      .75      .90      .95 
 ##    48.20    60.71    70.85    75.10    77.44 
 ## 
-## lowest : 23.599 28.801 30.000 30.015 30.331, highest: 81.701 81.757 82.000 82.208 82.603
+## lowest : 23.599 28.801 30     30.015 30.331, highest: 81.701 81.757 82     82.208 82.603
 ## --------------------------------------------------------------------------------
 ## pop 
 ##        n  missing distinct     Info     Mean      Gmd      .05      .10 
@@ -594,8 +669,8 @@ The \emph{Hmisc} package contains the \texttt{describe} function that gives a he
 ##      .25      .50      .75      .90      .95 
 ##   1202.1   3531.8   9325.5  19449.1  26608.3 
 ## 
-## lowest :    241.1659    277.5519    298.8462    299.8503    312.1884
-## highest:  80894.8833  95458.1118 108382.3529 109347.8670 113523.1329
+## lowest : 241.166 277.552 298.846 299.85  312.188
+## highest: 80894.9 95458.1 108382  109348  113523 
 ## --------------------------------------------------------------------------------
 \end{verbatim}
 
@@ -618,16 +693,17 @@ What is tidy data? Tidy data is a standard way of mapping the meaning of a datas
   Each type of observational unit forms a table.
 \end{itemize}
 
-\hypertarget{subset-using-filter}{%
-\section{Subset using filter}\label{subset-using-filter}}
+\hypertarget{subset-observations-using-filter}{%
+\section{Subset Observations using filter}\label{subset-observations-using-filter}}
 
-Suppose we wish to examine a subset of data for only one country, Jon's favorite country, Australia!! The following code starts by taking the gapminder dataset and then ``pipes'' it into the filtering (selecting rows) action so that only dataset rows from Australia are selected. The pipe function is \%\textgreater\% and is similar to a plumbing pipe that goes one direction: from left to right. After the ``Australia'' rows are selected, the result is ``piped'' into the head function for display. The head function says show the top 12 rows. When no rows are specified in the head function, the default is 6 rows. Note that the filter function resides in the \emph{dplyr} package within the \emph{tidyverse} family.
+The objective here is to examine a subset of observations, or rows of the dataset.
+
+Suppose we wish to examine a subset of the gapminder data for only one country, Jon's favorite country, Australia!! The following code starts by taking the gapminder dataset and then ``pipes'' it into the filtering (selecting rows) action so that only dataset rows from Australia are selected. The pipe function is \%\textgreater\% and is similar to a plumbing pipe that goes one direction: from left to right. After the ``Australia'' rows are selected, the result is ``piped'' into the head function for display. The head function says show the top 12 rows. When no rows are specified in the head function, the default is 6 rows. Note that the filter function resides in the \emph{dplyr} package within the \emph{tidyverse} family.
 
 If the \emph{tidyverse} or \emph{dplyr} packages have been loaded, you don't need to supply the \texttt{dplyr::} prefix to the \texttt{filter} command.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\#gapminder \%\textgreater{}\% filter(country=="Australia") \%\textgreater{}\% head(n=12)}
 \NormalTok{gapminder }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(country}\SpecialCharTok{==}\StringTok{"Australia"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{head}\NormalTok{(}\AttributeTok{n=}\DecValTok{12}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -649,6 +725,13 @@ If the \emph{tidyverse} or \emph{dplyr} packages have been loaded, you don't nee
 ## 11 Australia Oceania    2002    80.4 19546792    30688.
 ## 12 Australia Oceania    2007    81.2 20434176    34435.
 \end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# will produce the same output as}
+\CommentTok{\#gapminder \%\textgreater{}\% filter(country=="Australia") \%\textgreater{}\% head(n=12)}
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{subset-using-multiple-conditions}{%
 \section{Subset using multiple conditions}\label{subset-using-multiple-conditions}}
@@ -759,7 +842,7 @@ Please note that in all the above examples, the \texttt{filter} function accepts
 \hypertarget{saving-as-a-new-dataframe}{%
 \section{Saving as a new dataframe}\label{saving-as-a-new-dataframe}}
 
-Here we save the the modified dataset as a new dataframe called gap97.
+Here we save the the modified dataset as a new dataframe called gap97 by using an assignment arrow ``\textless-'' to save the resulting pipeline to gap97.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -788,7 +871,8 @@ Let's make a dataset based on the ten countries in 1997 with highest gdp.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{gapminder }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{gapminder }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{top\_n}\NormalTok{(}\AttributeTok{n =} \DecValTok{10}\NormalTok{, }\AttributeTok{wt =}\NormalTok{ gdpPercap) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{head}\NormalTok{(}\AttributeTok{n=}\DecValTok{10}\NormalTok{)}
 \end{Highlighting}
@@ -813,7 +897,7 @@ Let's make a dataset based on the ten countries in 1997 with highest gdp.
 \hypertarget{subset-using-select}{%
 \section{Subset using select}\label{subset-using-select}}
 
-The \texttt{filter} function controls the rows of the dataframe. Sometimes we might want to include only a few of the variables (columns) in a dataset. We frequently want to create a data subset with only a few variables when the original dataset has many variables. The \texttt{select} function is used to select and rename variables.
+The \texttt{filter} function relates to the rows of the dataframe. Sometimes we might want to include only a few of the variables (columns) in a dataset. We frequently want to create a data subset with only a few variables when the original dataset has many variables. The \texttt{select} function is used to select and rename variables.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -896,7 +980,7 @@ We begin by removing some columns of summary statistics that we wish to ignore. 
 \CommentTok{\# now remove unwanted columns from summary display}
 \NormalTok{funModeling}\SpecialCharTok{::}\FunctionTok{profiling\_num}\NormalTok{(gapminder) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(}\StringTok{"variation\_coef"}\NormalTok{,}\StringTok{"skewness"}\NormalTok{,}\StringTok{"kurtosis"}\NormalTok{,}\StringTok{"range\_98"}\NormalTok{,}\StringTok{"range\_80"}\NormalTok{,}\StringTok{"p\_01"}\NormalTok{,}\StringTok{"p\_99"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
-\NormalTok{  knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{()}
+\NormalTok{  knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(.,}\AttributeTok{digits=}\DecValTok{2}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -904,13 +988,13 @@ We begin by removing some columns of summary statistics that we wish to ignore. 
 \hline
 variable & mean & std\_dev & p\_05 & p\_25 & p\_50 & p\_75 & p\_95 & iqr\\
 \hline
-year & 1.979500e+03 & 1.726533e+01 & 1952.0000 & 1965.750 & 1979.5000 & 1.993250e+03 & 2007.000 & 2.750000e+01\\
+year & 1979.50 & 17.27 & 1952.00 & 1965.75 & 1979.50 & 1993.25 & 2007.00 & 27.50\\
 \hline
-lifeExp & 5.947444e+01 & 1.291711e+01 & 38.4924 & 48.198 & 60.7125 & 7.084550e+01 & 77.437 & 2.264750e+01\\
+lifeExp & 59.47 & 12.92 & 38.49 & 48.20 & 60.71 & 70.85 & 77.44 & 22.65\\
 \hline
-pop & 2.960121e+07 & 1.061579e+08 & 475458.9000 & 2793664.000 & 7023595.5000 & 1.958522e+07 & 89822054.500 & 1.679156e+07\\
+pop & 29601212.32 & 106157896.74 & 475458.90 & 2793664.00 & 7023595.50 & 19585221.75 & 89822054.50 & 16791557.75\\
 \hline
-gdpPercap & 7.215327e+03 & 9.857455e+03 & 547.9964 & 1202.060 & 3531.8470 & 9.325462e+03 & 26608.333 & 8.123402e+03\\
+gdpPercap & 7215.33 & 9857.45 & 548.00 & 1202.06 & 3531.85 & 9325.46 & 26608.33 & 8123.40\\
 \hline
 \end{tabular}
 
@@ -920,7 +1004,7 @@ In the next command we take a different approach - we explicitly select the stat
 \begin{Highlighting}[]
 \NormalTok{funModeling}\SpecialCharTok{::}\FunctionTok{profiling\_num}\NormalTok{(gapminder) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{select}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"variable"}\NormalTok{,}\StringTok{"mean"}\NormalTok{,}\StringTok{"std\_dev"}\NormalTok{,}\StringTok{"p\_25"}\NormalTok{,}\StringTok{"p\_50"}\NormalTok{,}\StringTok{"p\_75"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
-\NormalTok{  knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{()}
+\NormalTok{  knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(.,}\AttributeTok{digits=}\DecValTok{2}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -928,13 +1012,13 @@ In the next command we take a different approach - we explicitly select the stat
 \hline
 variable & mean & std\_dev & p\_25 & p\_50 & p\_75\\
 \hline
-year & 1.979500e+03 & 1.726533e+01 & 1965.750 & 1979.5000 & 1.993250e+03\\
+year & 1979.50 & 17.27 & 1965.75 & 1979.50 & 1993.25\\
 \hline
-lifeExp & 5.947444e+01 & 1.291711e+01 & 48.198 & 60.7125 & 7.084550e+01\\
+lifeExp & 59.47 & 12.92 & 48.20 & 60.71 & 70.85\\
 \hline
-pop & 2.960121e+07 & 1.061579e+08 & 2793664.000 & 7023595.5000 & 1.958522e+07\\
+pop & 29601212.32 & 106157896.74 & 2793664.00 & 7023595.50 & 19585221.75\\
 \hline
-gdpPercap & 7.215327e+03 & 9.857455e+03 & 1202.060 & 3531.8470 & 9.325462e+03\\
+gdpPercap & 7215.33 & 9857.45 & 1202.06 & 3531.85 & 9325.46\\
 \hline
 \end{tabular}
 
@@ -1001,7 +1085,7 @@ This first example uses the default alphabetical ordering of country name.
   \FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}  
   \FunctionTok{select}\NormalTok{(country, continent, lifeExp) }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{top\_n}\NormalTok{(}\AttributeTok{n=}\DecValTok{6}\NormalTok{,}\AttributeTok{wt=}\NormalTok{lifeExp) }\SpecialCharTok{\%\textgreater{}\%}
-\NormalTok{  knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{()}
+\NormalTok{  knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(.,}\AttributeTok{digits=}\DecValTok{2}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1032,7 +1116,7 @@ The results can then be ordered by the life expectancy:
   \FunctionTok{select}\NormalTok{(country, continent, lifeExp) }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{top\_n}\NormalTok{(}\AttributeTok{n=}\DecValTok{6}\NormalTok{,}\AttributeTok{wt=}\NormalTok{lifeExp) }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(lifeExp)) }\SpecialCharTok{\%\textgreater{}\%}
-\NormalTok{  knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{()}
+\NormalTok{  knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(.,}\AttributeTok{digits=}\DecValTok{2}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1063,7 +1147,7 @@ The countries with the largest life expectancy can then be ordered by another va
   \FunctionTok{select}\NormalTok{(country, continent, lifeExp, pop) }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{top\_n}\NormalTok{(}\AttributeTok{n=}\DecValTok{6}\NormalTok{,}\AttributeTok{wt=}\NormalTok{lifeExp) }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(pop)) }\SpecialCharTok{\%\textgreater{}\%}
-\NormalTok{  knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{()}
+\NormalTok{  knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(.,}\AttributeTok{digits=}\DecValTok{2}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1129,7 +1213,7 @@ New Zealand & Oceania & 77.550 & 3676187\\
 \end{tabular}
 
 \hypertarget{new-variables-using-mutate}{%
-\section{New Variables Using Mutate}\label{new-variables-using-mutate}}
+\section{New Variables Using mutate}\label{new-variables-using-mutate}}
 
 In many problems we may wish to create a new variable based on an existing variable. Here we illustrate by making a new variable - the natural logarithm of population - based on the original variable \texttt{pop} using the \texttt{mutate} function.
 
@@ -1234,7 +1318,8 @@ These examples have no grouping, no \texttt{group\_by} is being used.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{gapminder }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{gapminder }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(continent}\SpecialCharTok{==}\StringTok{"Americas"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{tally}\NormalTok{()}
 \end{Highlighting}
@@ -1249,7 +1334,8 @@ These examples have no grouping, no \texttt{group\_by} is being used.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{gapminder }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{gapminder }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(continent}\SpecialCharTok{==}\StringTok{"Americas"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{count}\NormalTok{()}
 \end{Highlighting}
@@ -1266,7 +1352,8 @@ Now we group by continent.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{gapminder }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{gapminder }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{group\_by}\NormalTok{(continent) }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(continent}\SpecialCharTok{==}\StringTok{"Americas"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{tally}\NormalTok{()}
@@ -1283,7 +1370,8 @@ Now we group by continent.
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\#}
-\NormalTok{gapminder }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{gapminder }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{group\_by}\NormalTok{(continent) }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{tally}\NormalTok{()}
 \end{Highlighting}
@@ -1302,7 +1390,8 @@ Now we group by continent.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{gapminder }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{gapminder }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{group\_by}\NormalTok{(continent) }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(continent}\SpecialCharTok{==}\StringTok{"Americas"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{count}\NormalTok{()}
@@ -1320,7 +1409,8 @@ Now we group by continent.
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\#}
-\NormalTok{gapminder }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{gapminder }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{count}\NormalTok{(continent)}
 \end{Highlighting}
 \end{Shaded}
@@ -1376,7 +1466,7 @@ First let's create a small dataset with missing values:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# count rows with missing y}
+\CommentTok{\# count rows with missing values for variable y}
 \NormalTok{tempdf }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{tally}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(y))}
 \end{Highlighting}
@@ -1424,9 +1514,9 @@ Use base \texttt{is.na} function
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{tempdf }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(x),           }\CommentTok{\# remove obs with missing x}
-         \SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(y),  }\CommentTok{\# remove obs with missing y}
-         \SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(z))                }\CommentTok{\# remove obs with missing z}
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(x),  }\CommentTok{\# allow obs with nonmissing x}
+         \SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(y),  }\CommentTok{\# allow obs with nonmissing y}
+         \SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(z))  }\CommentTok{\# allow obs with nonmissing z}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1476,19 +1566,21 @@ The next block of code takes the gapminder dataframe and ``pipes'' (\%\textgreat
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{ds }\OtherTok{\textless{}{-}}\NormalTok{ gapminder }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }
+\NormalTok{ds }\OtherTok{\textless{}{-}}\NormalTok{ gapminder }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }
 \CommentTok{\#}
 \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{ds, }\AttributeTok{mapping=}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{lifeExp)) }
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-47-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-51-1.pdf}
 
 Now we use additional code to place the dotplot in the existing graphical region. In ggplot graphics we make graphical objects with a \texttt{geom} function - here a dotplot so we use \texttt{geom\_dotplot()} to produce the dotplot specified using the variable mappings in the aesthetics command \texttt{aes} in the ggplot command.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{ds }\OtherTok{\textless{}{-}}\NormalTok{ gapminder }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }
+\NormalTok{ds }\OtherTok{\textless{}{-}}\NormalTok{ gapminder }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }
 \CommentTok{\#}
 \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{ds, }\AttributeTok{mapping=}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{lifeExp)) }\SpecialCharTok{+} 
   \FunctionTok{geom\_dotplot}\NormalTok{() }\SpecialCharTok{+} 
@@ -1496,20 +1588,21 @@ Now we use additional code to place the dotplot in the existing graphical region
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-48-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-52-1.pdf}
 
 Here we change the default size for the dots, and pipe the data directly into the first argument data (using \texttt{data=.}) of the \texttt{ggplot} command:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{gapminder }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{gapminder }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
 \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{., }\AttributeTok{mapping=}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{lifeExp)) }\SpecialCharTok{+} 
   \FunctionTok{geom\_dotplot}\NormalTok{(}\AttributeTok{dotsize=}\FloatTok{0.70}\NormalTok{) }\SpecialCharTok{+} 
   \FunctionTok{xlab}\NormalTok{(}\StringTok{"Life Expectancy (years)"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{ylab}\NormalTok{(}\StringTok{"Frequency"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-49-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-53-1.pdf}
 
 \hypertarget{dotplot-with-observations-identified-and-ordered}{%
 \subsubsection{Dotplot with observations identified and ordered}\label{dotplot-with-observations-identified-and-ordered}}
@@ -1518,7 +1611,8 @@ Here we produce a display so that life expectancy is displayed for each country 
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{ds }\OtherTok{\textless{}{-}}\NormalTok{ gapminder }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(continent}\SpecialCharTok{==}\StringTok{"Asia"}\NormalTok{,year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }
+\NormalTok{ds }\OtherTok{\textless{}{-}}\NormalTok{ gapminder }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(continent}\SpecialCharTok{==}\StringTok{"Asia"}\NormalTok{,year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }
 \CommentTok{\#  }
 \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{ds, }\AttributeTok{mapping=}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{lifeExp, }\AttributeTok{y=} \FunctionTok{reorder}\NormalTok{(country,lifeExp))) }\SpecialCharTok{+} 
   \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} 
@@ -1529,13 +1623,14 @@ Here we produce a display so that life expectancy is displayed for each country 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-50-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-54-1.pdf}
 
 Notice that in the next example we simply pipe the modified dataset into the first argument of the \texttt{ggplot} command so that there is no need to save the modified dataset to make the display.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{gapminder }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(continent}\SpecialCharTok{==}\StringTok{"Asia"}\NormalTok{,year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{gapminder }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(continent}\SpecialCharTok{==}\StringTok{"Asia"}\NormalTok{,year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
 \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{., }\AttributeTok{mapping=}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{lifeExp, }\AttributeTok{y=} \FunctionTok{reorder}\NormalTok{(country,lifeExp))) }\SpecialCharTok{+} 
   \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} 
   \FunctionTok{xlab}\NormalTok{(}\StringTok{"Life Expectancy (years) in 1997"}\NormalTok{) }\SpecialCharTok{+} 
@@ -1543,7 +1638,7 @@ Notice that in the next example we simply pipe the modified dataset into the fir
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-51-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-55-1.pdf}
 
 \hypertarget{histogram}{%
 \subsection{Histogram}\label{histogram}}
@@ -1552,7 +1647,8 @@ This code block is similar to the dotplot commands, but the geom\_histogram func
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{gapminder }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{gapminder }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
 \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{.,}\AttributeTok{mapping=}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{lifeExp)) }\SpecialCharTok{+} 
   \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{binwidth=}\DecValTok{5}\NormalTok{) }\SpecialCharTok{+} 
   \FunctionTok{xlab}\NormalTok{(}\StringTok{"Life Expectancy (years)"}\NormalTok{) }\SpecialCharTok{+}
@@ -1560,13 +1656,14 @@ This code block is similar to the dotplot commands, but the geom\_histogram func
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-52-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-56-1.pdf}
 
 Here we change the binwidth:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{gapminder }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{gapminder }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
 \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{., }\AttributeTok{mapping=}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{lifeExp)) }\SpecialCharTok{+} 
   \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{binwidth=}\FloatTok{2.5}\NormalTok{) }\SpecialCharTok{+} 
   \FunctionTok{xlab}\NormalTok{(}\StringTok{"Life Expectancy (years)"}\NormalTok{) }\SpecialCharTok{+}
@@ -1574,13 +1671,14 @@ Here we change the binwidth:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-53-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-57-1.pdf}
 
 Here we change the number of bins:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{gapminder }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{gapminder }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
 \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{., }\AttributeTok{mapping=}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{lifeExp)) }\SpecialCharTok{+} 
   \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{bins=}\DecValTok{10}\NormalTok{) }\SpecialCharTok{+} 
   \FunctionTok{xlab}\NormalTok{(}\StringTok{"Life Expectancy (years)"}\NormalTok{) }\SpecialCharTok{+}
@@ -1588,7 +1686,7 @@ Here we change the number of bins:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-54-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-58-1.pdf}
 
 \hypertarget{density-plot}{%
 \subsection{Density Plot}\label{density-plot}}
@@ -1597,7 +1695,8 @@ Density plots produces a smoothing of a histogram to display the distribution.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{ds }\OtherTok{\textless{}{-}}\NormalTok{ gapminder }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{)}
+\NormalTok{ds }\OtherTok{\textless{}{-}}\NormalTok{ gapminder }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{)}
 \CommentTok{\#}
 \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{ds, }\AttributeTok{mapping=}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{lifeExp)) }\SpecialCharTok{+} 
   \FunctionTok{geom\_density}\NormalTok{() }\SpecialCharTok{+} 
@@ -1606,13 +1705,14 @@ Density plots produces a smoothing of a histogram to display the distribution.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-55-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-59-1.pdf}
 
 The \texttt{adjust} option controls the amount of smoothing relative to a default value of 1. A smaller value gives less smoothing (more responsive line to small changes in the data distribution), and larger values will make a smoother curve that is less sensitive to the data pattern.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{ds }\OtherTok{\textless{}{-}}\NormalTok{ gapminder }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{)}
+\NormalTok{ds }\OtherTok{\textless{}{-}}\NormalTok{ gapminder }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{)}
 \CommentTok{\#}
 \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{ds, }\AttributeTok{mapping=}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{lifeExp)) }\SpecialCharTok{+} 
   \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{adjust=}\FloatTok{0.75}\NormalTok{) }\SpecialCharTok{+} 
@@ -1621,7 +1721,7 @@ The \texttt{adjust} option controls the amount of smoothing relative to a defaul
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-56-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-60-1.pdf}
 
 \hypertarget{boxplot}{%
 \subsection{Boxplot}\label{boxplot}}
@@ -1640,7 +1740,7 @@ sort of factor variable - so here we supply the year for the display, where the 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-57-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-61-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1652,7 +1752,7 @@ sort of factor variable - so here we supply the year for the display, where the 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-57-2.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-61-2.pdf}
 
 Now we overlay points on top of the boxplot display. Note the \texttt{position=position\_jitter} option to the \texttt{geom\_point} puts some random horizontal jitter so that the points don't overlay each other. Note that the points has an argument \texttt{alpha=0.5} signifying a slightly transparent plot symbol. An \texttt{alpha} value of 1 means the plot symbol is opaque, and a value of 0 is completely transparent. Careful use of \texttt{alpha} in large datasets will enable the analyst to correctly perceive point density. Without using a smaller value of \texttt{alpha} the plot may be one large blob of ink - making it difficult to judge the density of points in the display.
 
@@ -1667,13 +1767,14 @@ Now we overlay points on top of the boxplot display. Note the \texttt{position=p
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-58-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-62-1.pdf}
 
 If the dataframe has only one quantitative variable, we can make a character variable called ``sample'', then this code will produce an acceptable display.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{ds }\OtherTok{\textless{}{-}}\NormalTok{ gapminder }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{ds }\OtherTok{\textless{}{-}}\NormalTok{ gapminder }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{sample=}\StringTok{"Sample"}\NormalTok{)}
 \CommentTok{\#}
 \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{ds, }\AttributeTok{mapping=}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{sample,}\AttributeTok{y=}\NormalTok{lifeExp)) }\SpecialCharTok{+}
@@ -1683,7 +1784,7 @@ If the dataframe has only one quantitative variable, we can make a character var
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-59-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-63-1.pdf}
 
 \hypertarget{displays-of-a-categorical-variable}{%
 \section{Displays of a Categorical Variable}\label{displays-of-a-categorical-variable}}
@@ -1705,7 +1806,7 @@ A categorical variable is summarized by using the counts for each category or th
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-60-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-64-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1721,7 +1822,7 @@ A categorical variable is summarized by using the counts for each category or th
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-60-2.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-64-2.pdf}
 
 Bar graphs with percentages on vertical axis.
 
@@ -1739,7 +1840,7 @@ Bar graphs with percentages on vertical axis.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-61-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-65-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1750,7 +1851,7 @@ Bar graphs with percentages on vertical axis.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-61-2.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-65-2.pdf}
 
 Sometimes it is more convenient to have the bars oriented horizontally. Notice we set up the aesthetic mappings as usual and then flip the axes with the \texttt{coord\_flip} command.
 
@@ -1769,7 +1870,7 @@ Sometimes it is more convenient to have the bars oriented horizontally. Notice w
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-62-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-66-1.pdf}
 
 \hypertarget{pie-graph}{%
 \subsection{Pie Graph}\label{pie-graph}}
@@ -1790,7 +1891,7 @@ Pie graphs are not recommended, but the code needed to make one is given here.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-63-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-67-1.pdf}
 
 \hypertarget{summary-statistics-for-one-variable}{%
 \chapter{Summary Statistics For One Variable}\label{summary-statistics-for-one-variable}}
@@ -1803,7 +1904,10 @@ Pie graphs are not recommended, but the code needed to make one is given here.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{gapminder }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(lifeExp) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summary}\NormalTok{()}
+\NormalTok{gapminder }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(lifeExp) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summary}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1824,7 +1928,8 @@ It is often helpful to create data summaries during preliminary phases of examin
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{gapminder }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{gapminder }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
 \NormalTok{      dplyr}\SpecialCharTok{::}\FunctionTok{summarise}\NormalTok{(}\AttributeTok{meanLE=}\FunctionTok{mean}\NormalTok{(lifeExp,}\AttributeTok{na.rm=}\ConstantTok{TRUE}\NormalTok{),}
                        \AttributeTok{medLE=}\FunctionTok{median}\NormalTok{(lifeExp,}\AttributeTok{na.rm=}\ConstantTok{TRUE}\NormalTok{),}
                        \AttributeTok{sd=}\FunctionTok{sd}\NormalTok{(lifeExp,}\AttributeTok{na.rm=}\ConstantTok{TRUE}\NormalTok{),}
@@ -1841,6 +1946,40 @@ It is often helpful to create data summaries during preliminary phases of examin
 ##    <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <int>
 ## 1   65.0  69.4  11.6  18.5  55.6  74.2   142
 \end{verbatim}
+
+\hypertarget{summary-statistics-using-gtsummary-package}{%
+\subsection{Summary Statistics Using gtsummary package}\label{summary-statistics-using-gtsummary-package}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gapminder }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}  
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(lifeExp,gdpPercap) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  gtsummary}\SpecialCharTok{::}\FunctionTok{tbl\_summary}\NormalTok{(}\AttributeTok{statistic =} \FunctionTok{list}\NormalTok{(}
+\NormalTok{      gtsummary}\SpecialCharTok{::}\FunctionTok{all\_continuous}\NormalTok{() }\SpecialCharTok{\textasciitilde{}} \StringTok{"\{mean\} (\{sd\})"}\NormalTok{,}
+\NormalTok{      gtsummary}\SpecialCharTok{::}\FunctionTok{all\_categorical}\NormalTok{() }\SpecialCharTok{\textasciitilde{}} \StringTok{"\{n\} / \{N\} (\{p\}\%)"}\NormalTok{),}
+    \AttributeTok{digits =}\NormalTok{ gtsummary}\SpecialCharTok{::}\FunctionTok{all\_continuous}\NormalTok{() }\SpecialCharTok{\textasciitilde{}} \DecValTok{2}\NormalTok{,}
+    \AttributeTok{label =} \FunctionTok{c}\NormalTok{(gdpPercap }\SpecialCharTok{\textasciitilde{}} \StringTok{"Per Person GDP"}\NormalTok{,}
+\NormalTok{              lifeExp }\SpecialCharTok{\textasciitilde{}} \StringTok{"Life Expectancy (years)"}\NormalTok{)}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Table printed with `knitr::kable()`, not {gt}. Learn why at
+## https://www.danieldsjoberg.com/gtsummary/articles/rmarkdown.html
+## To suppress this message, include `message = FALSE` in code chunk header.
+\end{verbatim}
+
+\begin{tabular}{l|c}
+\hline
+**Characteristic** & **N = 142**\\
+\hline
+Life Expectancy (years) & 65.01 (11.56)\\
+\hline
+Per Person GDP & 9,090.18 (10,171.49)\\
+\hline
+\end{tabular}
 
 \hypertarget{summary-statistics-using-funmodeling-package}{%
 \subsection{Summary Statistics Using funModeling package}\label{summary-statistics-using-funmodeling-package}}
@@ -1885,11 +2024,16 @@ dataframe.
 \end{Shaded}
 
 \begin{verbatim}
-## Warning: `guides(<scale> = FALSE)` is deprecated. Please use `guides(<scale> =
-## "none")` instead.
+## Warning: The `<scale>` argument of `guides()` cannot be `FALSE`. Use "none" instead as
+## of ggplot2 3.3.4.
+## i The deprecated feature was likely used in the funModeling package.
+##   Please report the issue at <https://github.com/pablo14/funModeling/issues>.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.
 \end{verbatim}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-67-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-72-1.pdf}
 
 This example shows summary statistics for two quantitative variables. For only one variable, simply use \texttt{select} to obtain the desired variable.
 
@@ -1924,12 +2068,7 @@ This example shows summary statistics for two quantitative variables. For only o
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## Warning: `guides(<scale> = FALSE)` is deprecated. Please use `guides(<scale> =
-## "none")` instead.
-\end{verbatim}
-
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-68-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-73-1.pdf}
 
 \hypertarget{summary-statistics-skimr-package}{%
 \subsection{Summary Statistics: skimr package}\label{summary-statistics-skimr-package}}
@@ -1941,7 +2080,8 @@ The next code supplies a dataframe that contains both categorical variables (con
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{varlist }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"n\_missing"}\NormalTok{,}\StringTok{"complete\_rate"}\NormalTok{)}
-\NormalTok{gapminder }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{gapminder }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{year, }\SpecialCharTok{{-}}\NormalTok{country, }\SpecialCharTok{{-}}\NormalTok{pop) }\SpecialCharTok{\%\textgreater{}\%} 
 \NormalTok{  skimr}\SpecialCharTok{::}\FunctionTok{skim\_without\_charts}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{  skimr}\SpecialCharTok{::}\FunctionTok{yank}\NormalTok{(}\StringTok{"numeric"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
@@ -2058,6 +2198,45 @@ Oceania & 4 & 2\\
 \hline
 \end{tabular}
 
+\hypertarget{categorical-variable-gtsummary-package}{%
+\subsection{Categorical variable: gtsummary package}\label{categorical-variable-gtsummary-package}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gapminder }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(continent,year) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  gtsummary}\SpecialCharTok{::}\FunctionTok{tbl\_summary}\NormalTok{(}\AttributeTok{include =} \FunctionTok{c}\NormalTok{(continent),}
+                          \AttributeTok{statistic =} \FunctionTok{list}\NormalTok{(}
+\NormalTok{      gtsummary}\SpecialCharTok{::}\FunctionTok{all\_categorical}\NormalTok{() }\SpecialCharTok{\textasciitilde{}} \StringTok{"\{n\} / \{N\} (\{p\}\%)"}\NormalTok{)}
+\NormalTok{      )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Table printed with `knitr::kable()`, not {gt}. Learn why at
+## https://www.danieldsjoberg.com/gtsummary/articles/rmarkdown.html
+## To suppress this message, include `message = FALSE` in code chunk header.
+\end{verbatim}
+
+\begin{tabular}{l|c}
+\hline
+**Characteristic** & **N = 142**\\
+\hline
+continent & \\
+\hline
+Africa & 52 / 142 (37\%)\\
+\hline
+Americas & 25 / 142 (18\%)\\
+\hline
+Asia & 33 / 142 (23\%)\\
+\hline
+Europe & 30 / 142 (21\%)\\
+\hline
+Oceania & 2 / 142 (1.4\%)\\
+\hline
+\end{tabular}
+
 \hypertarget{categorical-variable-skimr-package}{%
 \subsection{Categorical variable: skimr package}\label{categorical-variable-skimr-package}}
 
@@ -2100,7 +2279,7 @@ this command for only the continent variable.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-73-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-79-1.pdf}
 
 \begin{verbatim}
 ##        var frequency percentage cumulative_perc
@@ -2128,7 +2307,7 @@ Let's begin with the base R function \texttt{table}:
 \end{Shaded}
 
 \begin{verbatim}
-## .
+## continent
 ##   Africa Americas     Asia   Europe  Oceania 
 ##       52       25       33       30        2
 \end{verbatim}
@@ -2318,6 +2497,42 @@ Africa & 53.59827 & 52.759 & 9.103387 & 11.92825 & 36.087 & 74.772 & 52\\
 \hline
 \end{tabular}
 
+\hypertarget{summary-statistics-gtsummary}{%
+\section{Summary Statistics: gtsummary}\label{summary-statistics-gtsummary}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#}
+\NormalTok{gapminder }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(year}\SpecialCharTok{==}\DecValTok{1997}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  gtsummary}\SpecialCharTok{::}\FunctionTok{tbl\_summary}\NormalTok{(}\AttributeTok{by =}\NormalTok{ continent,}\AttributeTok{include =} \FunctionTok{c}\NormalTok{(lifeExp, gdpPercap),}
+                          \AttributeTok{statistic =} \FunctionTok{list}\NormalTok{(}
+\NormalTok{      gtsummary}\SpecialCharTok{::}\FunctionTok{all\_continuous}\NormalTok{() }\SpecialCharTok{\textasciitilde{}} \StringTok{"\{mean\} (\{sd\})"}\NormalTok{,}
+\NormalTok{      gtsummary}\SpecialCharTok{::}\FunctionTok{all\_categorical}\NormalTok{() }\SpecialCharTok{\textasciitilde{}} \StringTok{"\{n\} / \{N\} (\{p\}\%)"}\NormalTok{),}
+    \AttributeTok{digits =}\NormalTok{ gtsummary}\SpecialCharTok{::}\FunctionTok{all\_continuous}\NormalTok{() }\SpecialCharTok{\textasciitilde{}} \DecValTok{2}\NormalTok{,}
+    \AttributeTok{label =} \FunctionTok{c}\NormalTok{(gdpPercap }\SpecialCharTok{\textasciitilde{}} \StringTok{"Per Person GDP"}\NormalTok{,}
+\NormalTok{              continent }\SpecialCharTok{\textasciitilde{}} \StringTok{"Continent"}\NormalTok{,}
+\NormalTok{              lifeExp }\SpecialCharTok{\textasciitilde{}} \StringTok{"Life Expectancy (years)"}\NormalTok{)}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Table printed with `knitr::kable()`, not {gt}. Learn why at
+## https://www.danieldsjoberg.com/gtsummary/articles/rmarkdown.html
+## To suppress this message, include `message = FALSE` in code chunk header.
+\end{verbatim}
+
+\begin{tabular}{l|c|c|c|c|c}
+\hline
+**Characteristic** & **Africa**, N = 52 & **Americas**, N = 25 & **Asia**, N = 33 & **Europe**, N = 30 & **Oceania**, N = 2\\
+\hline
+Life Expectancy (years) & 53.60 (9.10) & 71.15 (4.89) & 68.02 (8.09) & 75.51 (3.10) & 78.19 (0.91)\\
+\hline
+Per Person GDP & 2,378.76 (2,820.73) & 8,889.30 (7,874.23) & 9,834.09 (11,094.18) & 19,076.78 (10,065.46) & 24,024.18 (4,205.53)\\
+\hline
+\end{tabular}
+
 \hypertarget{summary-statistics-skimr}{%
 \section{Summary Statistics: skimr}\label{summary-statistics-skimr}}
 
@@ -2377,7 +2592,7 @@ In each example, the first lines create the dataset to be graphed - followed by 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-81-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-88-1.pdf}
 
 \hypertarget{histograms}{%
 \subsection{Histograms}\label{histograms}}
@@ -2396,7 +2611,7 @@ In each example, the first lines create the dataset to be graphed - followed by 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-82-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-89-1.pdf}
 
 \hypertarget{density-plots-in-facets}{%
 \subsection{Density Plots in Facets}\label{density-plots-in-facets}}
@@ -2418,7 +2633,7 @@ The code given here shows how to produce a density plot in separate panels for e
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-83-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-90-1.pdf}
 
 \hypertarget{overlaid-density-plots}{%
 \subsection{Overlaid Density Plots}\label{overlaid-density-plots}}
@@ -2438,7 +2653,7 @@ The initial command below takes the gapminder data and consider only observation
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-84-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-91-1.pdf}
 
 \hypertarget{boxplots-grouped-data}{%
 \subsection{Boxplots, Grouped Data}\label{boxplots-grouped-data}}
@@ -2460,7 +2675,7 @@ The last set of boxplots uses both vertical(height) and horizontal(width) jitter
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-85-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-92-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2472,7 +2687,7 @@ The last set of boxplots uses both vertical(height) and horizontal(width) jitter
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-85-2.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-92-2.pdf}
 
 \hypertarget{boxplots-overlay-points-on-the-boxplots-with-color-control}{%
 \subsection{Boxplots, overlay points on the boxplots with color control}\label{boxplots-overlay-points-on-the-boxplots-with-color-control}}
@@ -2524,6 +2739,9 @@ We will restrict ourselves to the 113th congress, a meeting of the legislative b
 
 \hypertarget{tables}{%
 \section{Tables}\label{tables}}
+
+\hypertarget{base-functions}{%
+\subsection{Base Functions}\label{base-functions}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2588,6 +2806,9 @@ We will restrict ourselves to the 113th congress, a meeting of the legislative b
 ##   senate 0.2200772 1.0000000 0.1625442
 \end{verbatim}
 
+\hypertarget{janitor-package-tools}{%
+\subsection{janitor package tools}\label{janitor-package-tools}}
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{ds }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{  janitor}\SpecialCharTok{::}\FunctionTok{tabyl}\NormalTok{(chamber, party)}
@@ -2649,6 +2870,9 @@ We will restrict ourselves to the 113th congress, a meeting of the legislative b
 ##   senate 10.48%  (57) 0.37% (2)  8.46%  (46)
 \end{verbatim}
 
+\hypertarget{tidyverse-tools}{%
+\subsection{tidyverse tools}\label{tidyverse-tools}}
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{congage }\OtherTok{\textless{}{-}}\NormalTok{ fivethirtyeight}\SpecialCharTok{::}\NormalTok{congress\_age}
@@ -2673,6 +2897,44 @@ We will restrict ourselves to the 113th congress, a meeting of the legislative b
 ## 2 senate     57    46     2
 \end{verbatim}
 
+\hypertarget{gtsummary-tools}{%
+\subsection{gtsummary tools}\label{gtsummary-tools}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{congage }\OtherTok{\textless{}{-}}\NormalTok{ fivethirtyeight}\SpecialCharTok{::}\NormalTok{congress\_age}
+\NormalTok{ds1 }\OtherTok{\textless{}{-}}\NormalTok{ congage }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(congress }\SpecialCharTok{\textgreater{}} \DecValTok{112}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(congress,chamber,state,party,incumbent,age) }
+\CommentTok{\#  We declare party and chamber as factor/categorical variables, and control their levels.}
+\NormalTok{ds1 }\OtherTok{\textless{}{-}}\NormalTok{ ds1 }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{party =} \FunctionTok{factor}\NormalTok{(party,}\AttributeTok{levels=}\FunctionTok{c}\NormalTok{(}\StringTok{"D"}\NormalTok{,}\StringTok{"I"}\NormalTok{,}\StringTok{"R"}\NormalTok{)),}
+                    \AttributeTok{chamber =} \FunctionTok{factor}\NormalTok{(chamber)) }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(party,chamber)}
+\NormalTok{ds1 }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{na.omit}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  gtsummary}\SpecialCharTok{::}\FunctionTok{tbl\_summary}\NormalTok{(}
+    \AttributeTok{by =}\NormalTok{ chamber,}
+    \AttributeTok{statistic=}\NormalTok{gtsummary}\SpecialCharTok{::}\FunctionTok{all\_categorical}\NormalTok{() }\SpecialCharTok{\textasciitilde{}} \StringTok{"\{n\} / \{N\} (\{p\}\%)"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Table printed with `knitr::kable()`, not {gt}. Learn why at
+## https://www.danieldsjoberg.com/gtsummary/articles/rmarkdown.html
+## To suppress this message, include `message = FALSE` in code chunk header.
+\end{verbatim}
+
+\begin{tabular}{l|c|c}
+\hline
+**Characteristic** & **house**, N = 439 & **senate**, N = 105\\
+\hline
+party &  & \\
+\hline
+D & 202 / 439 (46\%) & 57 / 105 (54\%)\\
+\hline
+I & 0 / 439 (0\%) & 2 / 105 (1.9\%)\\
+\hline
+R & 237 / 439 (54\%) & 46 / 105 (44\%)\\
+\hline
+\end{tabular}
+
 \hypertarget{graphical-displays}{%
 \section{Graphical Displays}\label{graphical-displays}}
 
@@ -2685,7 +2947,7 @@ We will restrict ourselves to the 113th congress, a meeting of the legislative b
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-90-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-98-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2697,7 +2959,7 @@ We will restrict ourselves to the 113th congress, a meeting of the legislative b
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-91-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-99-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2709,7 +2971,7 @@ We will restrict ourselves to the 113th congress, a meeting of the legislative b
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-91-2.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-99-2.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2745,7 +3007,7 @@ We will restrict ourselves to the 113th congress, a meeting of the legislative b
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-92-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-100-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2764,7 +3026,7 @@ We will restrict ourselves to the 113th congress, a meeting of the legislative b
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-93-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-101-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2783,7 +3045,7 @@ We will restrict ourselves to the 113th congress, a meeting of the legislative b
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-94-1.pdf}
+\includegraphics{bookdown-R-Essentials_files/figure-latex/unnamed-chunk-102-1.pdf}
 
   \bibliography{book.bib,packages.bib}
 

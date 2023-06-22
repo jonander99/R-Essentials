@@ -23,7 +23,7 @@
 <meta name="author" content="UMN-Morris Statistics Discipline" />
 
 
-<meta name="date" content="2023-06-21" />
+<meta name="date" content="2023-06-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -365,12 +365,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb48-4"><a href="IntroDataWrangling.html#cb48-4" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">glimpse</span>(gap97)</span></code></pre></div>
 <pre><code>## Rows: 140
 ## Columns: 6
-## $ country   &lt;fct&gt; &quot;Afghanistan&quot;, &quot;Albania&quot;, &quot;Algeria&quot;, &quot;Angola&quot;, &quot;Argentina&quot;, &quot;Austria&quot;, &quot;Bahrain&quot;, &quot;Bangladesh&quot;, &quot;Belgium&quot;, &quot;…
-## $ continent &lt;fct&gt; Asia, Europe, Africa, Africa, Americas, Europe, Asia, Asia, Europe, Africa, Americas, Europe, Africa, Americ…
-## $ year      &lt;int&gt; 1997, 1997, 1997, 1997, 1997, 1997, 1997, 1997, 1997, 1997, 1997, 1997, 1997, 1997, 1997, 1997, 1997, 1997, …
-## $ lifeExp   &lt;dbl&gt; 41.763, 72.950, 69.152, 40.963, 73.275, 77.510, 73.925, 59.412, 77.530, 54.777, 62.050, 73.244, 52.556, 69.3…
-## $ pop       &lt;int&gt; 22227415, 3428038, 29072015, 9875024, 36203463, 8069876, 598561, 123315288, 10199787, 6066080, 7693188, 3607…
-## $ gdpPercap &lt;dbl&gt; 635.3414, 3193.0546, 4797.2951, 2277.1409, 10967.2820, 29095.9207, 20292.0168, 972.7700, 27561.1966, 1232.97…</code></pre>
+## $ country   &lt;fct&gt; &quot;Afghanistan&quot;, &quot;Albania&quot;, &quot;Algeria&quot;, &quot;Angola&quot;, &quot;Argentina&quot;, …
+## $ continent &lt;fct&gt; Asia, Europe, Africa, Africa, Americas, Europe, Asia, Asia, …
+## $ year      &lt;int&gt; 1997, 1997, 1997, 1997, 1997, 1997, 1997, 1997, 1997, 1997, …
+## $ lifeExp   &lt;dbl&gt; 41.763, 72.950, 69.152, 40.963, 73.275, 77.510, 73.925, 59.4…
+## $ pop       &lt;int&gt; 22227415, 3428038, 29072015, 9875024, 36203463, 8069876, 598…
+## $ gdpPercap &lt;dbl&gt; 635.3414, 3193.0546, 4797.2951, 2277.1409, 10967.2820, 29095…</code></pre>
 </div>
 <div id="subset-using-top_n" class="section level2 hasAnchor" number="4.5">
 <h2><span class="header-section-number">4.5</span> Subset using top_n<a href="IntroDataWrangling.html#subset-using-top_n" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -444,20 +444,20 @@ show how to modify the output of this command here. The command produces a dataf
 ## $ skewness       &lt;dbl&gt; 0.0000000, -0.2524798, 8.3328742, 3.8468819
 ## $ kurtosis       &lt;dbl&gt; 1.783217, 1.873099, 80.716151, 30.431702
 ## $ iqr            &lt;dbl&gt; 2.750000e+01, 2.264750e+01, 1.679156e+07, 8.123402e+03
-## $ range_98       &lt;chr&gt; &quot;[1952, 2007]&quot;, &quot;[33.4926, 80.23892]&quot;, &quot;[154117.92, 631990000.000002]&quot;, &quot;[369.220127794, 36783.5723707]&quot;
-## $ range_80       &lt;chr&gt; &quot;[1957, 2002]&quot;, &quot;[41.5108, 75.097]&quot;, &quot;[946367.1, 54801369.5]&quot;, &quot;[687.71836128, 19449.138209]&quot;</code></pre>
+## $ range_98       &lt;chr&gt; &quot;[1952, 2007]&quot;, &quot;[33.4926, 80.23892]&quot;, &quot;[154117.92, 631…
+## $ range_80       &lt;chr&gt; &quot;[1957, 2002]&quot;, &quot;[41.5108, 75.097]&quot;, &quot;[946367.1, 548013…</code></pre>
 <div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="IntroDataWrangling.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># now remove unwanted columns from summary display</span></span>
 <span id="cb58-2"><a href="IntroDataWrangling.html#cb58-2" aria-hidden="true" tabindex="-1"></a>funModeling<span class="sc">::</span><span class="fu">profiling_num</span>(gapminder) <span class="sc">%&gt;%</span></span>
 <span id="cb58-3"><a href="IntroDataWrangling.html#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(<span class="st">&quot;variation_coef&quot;</span>,<span class="st">&quot;skewness&quot;</span>,<span class="st">&quot;kurtosis&quot;</span>,<span class="st">&quot;range_98&quot;</span>,<span class="st">&quot;range_80&quot;</span>,<span class="st">&quot;p_01&quot;</span>,<span class="st">&quot;p_99&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb58-4"><a href="IntroDataWrangling.html#cb58-4" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div>
-<table>
+<span id="cb58-4"><a href="IntroDataWrangling.html#cb58-4" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(.,<span class="at">digits=</span><span class="dv">2</span>)</span></code></pre></div>
+<table style="width:100%;">
 <colgroup>
-<col width="8%" />
+<col width="9%" />
 <col width="11%" />
-<col width="11%" />
+<col width="12%" />
+<col width="9%" />
 <col width="10%" />
 <col width="10%" />
-<col width="11%" />
 <col width="11%" />
 <col width="11%" />
 <col width="11%" />
@@ -478,61 +478,61 @@ show how to modify the output of this command here. The command produces a dataf
 <tbody>
 <tr class="odd">
 <td align="left">year</td>
-<td align="right">1.979500e+03</td>
-<td align="right">1.726533e+01</td>
-<td align="right">1952.0000</td>
-<td align="right">1965.750</td>
-<td align="right">1979.5000</td>
-<td align="right">1.993250e+03</td>
-<td align="right">2007.000</td>
-<td align="right">2.750000e+01</td>
+<td align="right">1979.50</td>
+<td align="right">17.27</td>
+<td align="right">1952.00</td>
+<td align="right">1965.75</td>
+<td align="right">1979.50</td>
+<td align="right">1993.25</td>
+<td align="right">2007.00</td>
+<td align="right">27.50</td>
 </tr>
 <tr class="even">
 <td align="left">lifeExp</td>
-<td align="right">5.947444e+01</td>
-<td align="right">1.291711e+01</td>
-<td align="right">38.4924</td>
-<td align="right">48.198</td>
-<td align="right">60.7125</td>
-<td align="right">7.084550e+01</td>
-<td align="right">77.437</td>
-<td align="right">2.264750e+01</td>
+<td align="right">59.47</td>
+<td align="right">12.92</td>
+<td align="right">38.49</td>
+<td align="right">48.20</td>
+<td align="right">60.71</td>
+<td align="right">70.85</td>
+<td align="right">77.44</td>
+<td align="right">22.65</td>
 </tr>
 <tr class="odd">
 <td align="left">pop</td>
-<td align="right">2.960121e+07</td>
-<td align="right">1.061579e+08</td>
-<td align="right">475458.9000</td>
-<td align="right">2793664.000</td>
-<td align="right">7023595.5000</td>
-<td align="right">1.958522e+07</td>
-<td align="right">89822054.500</td>
-<td align="right">1.679156e+07</td>
+<td align="right">29601212.32</td>
+<td align="right">106157896.74</td>
+<td align="right">475458.90</td>
+<td align="right">2793664.00</td>
+<td align="right">7023595.50</td>
+<td align="right">19585221.75</td>
+<td align="right">89822054.50</td>
+<td align="right">16791557.75</td>
 </tr>
 <tr class="even">
 <td align="left">gdpPercap</td>
-<td align="right">7.215327e+03</td>
-<td align="right">9.857455e+03</td>
-<td align="right">547.9964</td>
-<td align="right">1202.060</td>
-<td align="right">3531.8470</td>
-<td align="right">9.325462e+03</td>
-<td align="right">26608.333</td>
-<td align="right">8.123402e+03</td>
+<td align="right">7215.33</td>
+<td align="right">9857.45</td>
+<td align="right">548.00</td>
+<td align="right">1202.06</td>
+<td align="right">3531.85</td>
+<td align="right">9325.46</td>
+<td align="right">26608.33</td>
+<td align="right">8123.40</td>
 </tr>
 </tbody>
 </table>
 <p>In the next command we take a different approach - we explicitly select the statistics (columns) we want to keep and display. The most commonly used summaries are chosen.</p>
 <div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="IntroDataWrangling.html#cb59-1" aria-hidden="true" tabindex="-1"></a>funModeling<span class="sc">::</span><span class="fu">profiling_num</span>(gapminder) <span class="sc">%&gt;%</span></span>
 <span id="cb59-2"><a href="IntroDataWrangling.html#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">c</span>(<span class="st">&quot;variable&quot;</span>,<span class="st">&quot;mean&quot;</span>,<span class="st">&quot;std_dev&quot;</span>,<span class="st">&quot;p_25&quot;</span>,<span class="st">&quot;p_50&quot;</span>,<span class="st">&quot;p_75&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb59-3"><a href="IntroDataWrangling.html#cb59-3" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div>
+<span id="cb59-3"><a href="IntroDataWrangling.html#cb59-3" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(.,<span class="at">digits=</span><span class="dv">2</span>)</span></code></pre></div>
 <table>
 <colgroup>
-<col width="13%" />
+<col width="14%" />
 <col width="17%" />
-<col width="17%" />
-<col width="16%" />
-<col width="17%" />
+<col width="18%" />
+<col width="15%" />
+<col width="15%" />
 <col width="17%" />
 </colgroup>
 <thead>
@@ -548,35 +548,35 @@ show how to modify the output of this command here. The command produces a dataf
 <tbody>
 <tr class="odd">
 <td align="left">year</td>
-<td align="right">1.979500e+03</td>
-<td align="right">1.726533e+01</td>
-<td align="right">1965.750</td>
-<td align="right">1979.5000</td>
-<td align="right">1.993250e+03</td>
+<td align="right">1979.50</td>
+<td align="right">17.27</td>
+<td align="right">1965.75</td>
+<td align="right">1979.50</td>
+<td align="right">1993.25</td>
 </tr>
 <tr class="even">
 <td align="left">lifeExp</td>
-<td align="right">5.947444e+01</td>
-<td align="right">1.291711e+01</td>
-<td align="right">48.198</td>
-<td align="right">60.7125</td>
-<td align="right">7.084550e+01</td>
+<td align="right">59.47</td>
+<td align="right">12.92</td>
+<td align="right">48.20</td>
+<td align="right">60.71</td>
+<td align="right">70.85</td>
 </tr>
 <tr class="odd">
 <td align="left">pop</td>
-<td align="right">2.960121e+07</td>
-<td align="right">1.061579e+08</td>
-<td align="right">2793664.000</td>
-<td align="right">7023595.5000</td>
-<td align="right">1.958522e+07</td>
+<td align="right">29601212.32</td>
+<td align="right">106157896.74</td>
+<td align="right">2793664.00</td>
+<td align="right">7023595.50</td>
+<td align="right">19585221.75</td>
 </tr>
 <tr class="even">
 <td align="left">gdpPercap</td>
-<td align="right">7.215327e+03</td>
-<td align="right">9.857455e+03</td>
-<td align="right">1202.060</td>
-<td align="right">3531.8470</td>
-<td align="right">9.325462e+03</td>
+<td align="right">7215.33</td>
+<td align="right">9857.45</td>
+<td align="right">1202.06</td>
+<td align="right">3531.85</td>
+<td align="right">9325.46</td>
 </tr>
 </tbody>
 </table>
@@ -622,7 +622,7 @@ show how to modify the output of this command here. The command produces a dataf
 <span id="cb64-2"><a href="IntroDataWrangling.html#cb64-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year<span class="sc">==</span><span class="dv">1997</span>) <span class="sc">%&gt;%</span>  </span>
 <span id="cb64-3"><a href="IntroDataWrangling.html#cb64-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(country, continent, lifeExp) <span class="sc">%&gt;%</span></span>
 <span id="cb64-4"><a href="IntroDataWrangling.html#cb64-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">top_n</span>(<span class="at">n=</span><span class="dv">6</span>,<span class="at">wt=</span>lifeExp) <span class="sc">%&gt;%</span></span>
-<span id="cb64-5"><a href="IntroDataWrangling.html#cb64-5" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div>
+<span id="cb64-5"><a href="IntroDataWrangling.html#cb64-5" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(.,<span class="at">digits=</span><span class="dv">2</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -670,7 +670,7 @@ show how to modify the output of this command here. The command produces a dataf
 <span id="cb65-3"><a href="IntroDataWrangling.html#cb65-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(country, continent, lifeExp) <span class="sc">%&gt;%</span></span>
 <span id="cb65-4"><a href="IntroDataWrangling.html#cb65-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">top_n</span>(<span class="at">n=</span><span class="dv">6</span>,<span class="at">wt=</span>lifeExp) <span class="sc">%&gt;%</span></span>
 <span id="cb65-5"><a href="IntroDataWrangling.html#cb65-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(<span class="fu">desc</span>(lifeExp)) <span class="sc">%&gt;%</span></span>
-<span id="cb65-6"><a href="IntroDataWrangling.html#cb65-6" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div>
+<span id="cb65-6"><a href="IntroDataWrangling.html#cb65-6" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(.,<span class="at">digits=</span><span class="dv">2</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -718,7 +718,7 @@ show how to modify the output of this command here. The command produces a dataf
 <span id="cb66-3"><a href="IntroDataWrangling.html#cb66-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(country, continent, lifeExp, pop) <span class="sc">%&gt;%</span></span>
 <span id="cb66-4"><a href="IntroDataWrangling.html#cb66-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">top_n</span>(<span class="at">n=</span><span class="dv">6</span>,<span class="at">wt=</span>lifeExp) <span class="sc">%&gt;%</span></span>
 <span id="cb66-5"><a href="IntroDataWrangling.html#cb66-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(<span class="fu">desc</span>(pop)) <span class="sc">%&gt;%</span></span>
-<span id="cb66-6"><a href="IntroDataWrangling.html#cb66-6" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div>
+<span id="cb66-6"><a href="IntroDataWrangling.html#cb66-6" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(.,<span class="at">digits=</span><span class="dv">2</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -859,13 +859,13 @@ show how to modify the output of this command here. The command produces a dataf
 <span id="cb68-3"><a href="IntroDataWrangling.html#cb68-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">glimpse</span>()</span></code></pre></div>
 <pre><code>## Rows: 1,704
 ## Columns: 7
-## $ country       &lt;fct&gt; &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, &quot;Afghanistan&quot;,…
-## $ continent     &lt;fct&gt; Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Europe, Europe, Europe, Europe, …
-## $ year          &lt;int&gt; 1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992, 1997, 2002, 2007, 1952, 1957, 1962, 1967, 1972, 19…
-## $ lifeExp       &lt;dbl&gt; 28.801, 30.332, 31.997, 34.020, 36.088, 38.438, 39.854, 40.822, 41.674, 41.763, 42.129, 43.828, 55.230, …
-## $ pop           &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13079460, 14880372, 12881816, 13867957, 16317921, 22227415, 252684…
-## $ gdpPercap     &lt;dbl&gt; 779.4453, 820.8530, 853.1007, 836.1971, 739.9811, 786.1134, 978.0114, 852.3959, 649.3414, 635.3414, 726.…
-## $ logpopulation &lt;dbl&gt; 15.94675, 16.03915, 16.14445, 16.26115, 16.38655, 16.51555, 16.37133, 16.44509, 16.60777, 16.91684, 17.0…</code></pre>
+## $ country       &lt;fct&gt; &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, &quot;Afghanista…
+## $ continent     &lt;fct&gt; Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, As…
+## $ year          &lt;int&gt; 1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992, 19…
+## $ lifeExp       &lt;dbl&gt; 28.801, 30.332, 31.997, 34.020, 36.088, 38.438, 39.854, …
+## $ pop           &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13079460, 14880372…
+## $ gdpPercap     &lt;dbl&gt; 779.4453, 820.8530, 853.1007, 836.1971, 739.9811, 786.11…
+## $ logpopulation &lt;dbl&gt; 15.94675, 16.03915, 16.14445, 16.26115, 16.38655, 16.515…</code></pre>
 <p>If I want to change the name of the new variable from <code>logpopulation</code> to something shorter like <code>logPop</code>, we could re-run the <code>mutate</code> command, or use a <code>rename</code> function.</p>
 <p>In addition we create a new version of the gapminder dataset that contains the new variable - called gapVers1. This dataframe is now available to be used in
 the ongoing analysis.</p>
@@ -876,13 +876,13 @@ the ongoing analysis.</p>
 <span id="cb70-5"><a href="IntroDataWrangling.html#cb70-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">glimpse</span>(gapVers1)</span></code></pre></div>
 <pre><code>## Rows: 1,704
 ## Columns: 7
-## $ country   &lt;fct&gt; &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, &quot;Af…
-## $ continent &lt;fct&gt; Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Europe, Europe, Europe, Europe, Euro…
-## $ year      &lt;int&gt; 1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992, 1997, 2002, 2007, 1952, 1957, 1962, 1967, 1972, 1977, …
-## $ lifeExp   &lt;dbl&gt; 28.801, 30.332, 31.997, 34.020, 36.088, 38.438, 39.854, 40.822, 41.674, 41.763, 42.129, 43.828, 55.230, 59.2…
-## $ pop       &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13079460, 14880372, 12881816, 13867957, 16317921, 22227415, 25268405, …
-## $ gdpPercap &lt;dbl&gt; 779.4453, 820.8530, 853.1007, 836.1971, 739.9811, 786.1134, 978.0114, 852.3959, 649.3414, 635.3414, 726.7341…
-## $ logPop    &lt;dbl&gt; 15.94675, 16.03915, 16.14445, 16.26115, 16.38655, 16.51555, 16.37133, 16.44509, 16.60777, 16.91684, 17.04507…</code></pre>
+## $ country   &lt;fct&gt; &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, …
+## $ continent &lt;fct&gt; Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, …
+## $ year      &lt;int&gt; 1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992, 1997, …
+## $ lifeExp   &lt;dbl&gt; 28.801, 30.332, 31.997, 34.020, 36.088, 38.438, 39.854, 40.8…
+## $ pop       &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13079460, 14880372, 12…
+## $ gdpPercap &lt;dbl&gt; 779.4453, 820.8530, 853.1007, 836.1971, 739.9811, 786.1134, …
+## $ logPop    &lt;dbl&gt; 15.94675, 16.03915, 16.14445, 16.26115, 16.38655, 16.51555, …</code></pre>
 <p>The next code uses a <code>mutate</code> command with logical conditions to make a new, two-level categorical variable region as a character variable. Then we use <code>mutate</code> again to convert <code>region</code> (character) to a factor variable named <code>regionf</code>. In statistical models, factor variables are preferred, but in data handling stages, character versions are probably easier to manipulate.</p>
 <p>The <code>if_else</code> function from <em>dplyr</em> has the form `if_else(logical condition,value if TRUE, value if FALSE).</p>
 <p>The next example uses the “T-pipe” function <code>%T&gt;%</code> to break the piping so that the result of the second <code>mutate</code> flows to both <code>glimpse</code> and to <code>head</code> - in this construction, it is understood the output of <code>glimpse</code> does not pipe to <code>head</code>, but rather the original data flow from the second <code>mutate</code>.</p>
@@ -893,14 +893,14 @@ the ongoing analysis.</p>
 <span id="cb72-5"><a href="IntroDataWrangling.html#cb72-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div>
 <pre><code>## Rows: 1,704
 ## Columns: 8
-## $ country   &lt;fct&gt; &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, &quot;Af…
-## $ continent &lt;fct&gt; Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Europe, Europe, Europe, Europe, Euro…
-## $ year      &lt;int&gt; 1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992, 1997, 2002, 2007, 1952, 1957, 1962, 1967, 1972, 1977, …
-## $ lifeExp   &lt;dbl&gt; 28.801, 30.332, 31.997, 34.020, 36.088, 38.438, 39.854, 40.822, 41.674, 41.763, 42.129, 43.828, 55.230, 59.2…
-## $ pop       &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13079460, 14880372, 12881816, 13867957, 16317921, 22227415, 25268405, …
-## $ gdpPercap &lt;dbl&gt; 779.4453, 820.8530, 853.1007, 836.1971, 739.9811, 786.1134, 978.0114, 852.3959, 649.3414, 635.3414, 726.7341…
-## $ region    &lt;chr&gt; &quot;NotOceania&quot;, &quot;NotOceania&quot;, &quot;NotOceania&quot;, &quot;NotOceania&quot;, &quot;NotOceania&quot;, &quot;NotOceania&quot;, &quot;NotOceania&quot;, &quot;NotOceani…
-## $ regionf   &lt;fct&gt; NotOceania, NotOceania, NotOceania, NotOceania, NotOceania, NotOceania, NotOceania, NotOceania, NotOceania, …</code></pre>
+## $ country   &lt;fct&gt; &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, …
+## $ continent &lt;fct&gt; Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, …
+## $ year      &lt;int&gt; 1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992, 1997, …
+## $ lifeExp   &lt;dbl&gt; 28.801, 30.332, 31.997, 34.020, 36.088, 38.438, 39.854, 40.8…
+## $ pop       &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13079460, 14880372, 12…
+## $ gdpPercap &lt;dbl&gt; 779.4453, 820.8530, 853.1007, 836.1971, 739.9811, 786.1134, …
+## $ region    &lt;chr&gt; &quot;NotOceania&quot;, &quot;NotOceania&quot;, &quot;NotOceania&quot;, &quot;NotOceania&quot;, &quot;Not…
+## $ regionf   &lt;fct&gt; NotOceania, NotOceania, NotOceania, NotOceania, NotOceania, …</code></pre>
 <pre><code>## # A tibble: 6 × 8
 ##   country     continent  year lifeExp      pop gdpPercap region     regionf   
 ##   &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;      &lt;fct&gt;     
