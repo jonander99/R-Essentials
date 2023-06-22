@@ -57,6 +57,42 @@ statstable <- gapminder %>% filter(year==1997) %>%
 knitr::kable(statstable)
 ```
 
+We could also "pipe" the data object into the `kable` function:
+
+```{r,tidy=FALSE,message=FALSE,warning=FALSE}
+gapminder %>% filter(year==1997) %>% 
+  filter(continent != "Oceania") %>% 
+  group_by(continent) %>% 
+  summarise(meanLE=mean(lifeExp,na.rm=TRUE),
+            medLE=median(lifeExp,na.rm=TRUE),
+            sd=sd(lifeExp,na.rm=TRUE),
+            iqr=IQR(lifeExp,na.rm=TRUE),
+            min=min(lifeExp),
+            max=max(lifeExp),
+            n=n(),.groups = 'drop')  %>% 
+  arrange(desc(meanLE)) %>%
+  knitr::kable()
+```
+
+## Summary Statistics: gtsummary
+
+
+```{r}
+#
+gapminder %>% 
+  dplyr::filter(year==1997) %>% 
+  gtsummary::tbl_summary(by = continent,include = c(lifeExp, gdpPercap),
+                          statistic = list(
+      gtsummary::all_continuous() ~ "{mean} ({sd})",
+      gtsummary::all_categorical() ~ "{n} / {N} ({p}%)"),
+    digits = gtsummary::all_continuous() ~ 2,
+    label = c(gdpPercap ~ "Per Person GDP",
+              continent ~ "Continent",
+              lifeExp ~ "Life Expectancy (years)")
+  )
+
+```
+
 
 ## Summary Statistics:  skimr
 
@@ -91,12 +127,11 @@ ggplot(data=ds,mapping=aes(x=lifeExp)) +
 ### Histograms
 
 ```{r,eval=TRUE,tidy= FALSE}
-ds <- gapminder %>% 
+gapminder %>% 
   filter(year==1997) %>% 
   filter(continent != "Oceania") %>% 
-  group_by(continent) 
-#
-ggplot(data=ds, mapping=aes(x=lifeExp)) + 
+  group_by(continent) %>%
+ggplot(data=., mapping=aes(x=lifeExp)) + 
   geom_histogram(binwidth=5) + 
   facet_wrap( ~ continent,ncol=2) + 
   xlab("Life Expectancy (years)") +
@@ -109,12 +144,11 @@ ggplot(data=ds, mapping=aes(x=lifeExp)) +
 The code given here shows how to produce a density plot in separate panels for each continent.
 
 ```{r,eval=TRUE,tidy=FALSE}
-ds <- gapminder %>% 
+gapminder %>% 
   filter(year==1997) %>% 
   filter(continent != "Oceania") %>% 
-  group_by(continent) 
-#
-ggplot(data=ds, mapping=aes(x=lifeExp, colour=continent, fill=continent)) + 
+  group_by(continent) %>%
+ggplot(data=., mapping=aes(x=lifeExp, colour=continent, fill=continent)) + 
   geom_density(alpha = 0.35) + 
   xlab("Life Expectancy (years)") +
   ylab("Density") +
@@ -130,7 +164,7 @@ gapminder %>%
   filter(year==1997) %>% 
   filter(continent != "Oceania") %>% 
   group_by(continent) %>%
-ggplot(mapping=aes(x=lifeExp, colour=continent, fill=continent)) + 
+ggplot(data=., mapping=aes(x=lifeExp, colour=continent, fill=continent)) + 
   geom_density(alpha = 0.35) + 
   xlab("Life Expectancy (years)") +
   ylab("Density")
@@ -140,6 +174,8 @@ ggplot(mapping=aes(x=lifeExp, colour=continent, fill=continent)) +
 ### Boxplots, Grouped Data
 
 In the code below, the `alpha` value again controls the transparency of the points alpha=1 means opaque, alpha=0 means completely see-through.  When there is a lot of data, use a smaller value of alpha.
+
+The last set of boxplots uses both vertical(height) and horizontal(width) jitter to prevent points being overlaid, and be more visible.
 
 ```{r,tidy=FALSE}
 ds <- gapminder %>% 

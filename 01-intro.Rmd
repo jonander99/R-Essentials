@@ -2,14 +2,7 @@
 
 ## Packages
 
-When you start R studio, basic functionality is initially available.  However, in most projects we will want to use some special code and functions contained in packages that are not initially available whe R starts.  Before packages can be used in our analyses, they must be installed in our R workspace.  We presume that the R Studio development environment is being used by our students.  Any package can be installed by clicking the "Packages" tab in the lower right panel of the R Studio workspace.  Then click "Install" to produce an entry bar where you type the name of the desired package.  
-
-Or you can type a command to install a package:
-
-```{r,eval=FALSE,echo=TRUE}
-install.packages("alr4")
-```
-
+When you start R studio, basic functionality is initially available.  However, in most projects we will want to use some special code and functions contained in packages that are not initially available when R starts.  Before packages can be used in our analyses, they must be installed in our R workspace.  We presume that the R Studio development environment is being used by our students.  Any package can be installed by clicking the "Packages" tab in the lower right panel of the R Studio workspace.  Then click "Install" to produce an entry bar where you type the name of the desired package.  You can also instruct R Studio to install a package directly by typing "install.packages("tidyverse")" in the "Console" window in the lower left area of R Studio.  This command will execute and install the *tidyverse* package.
 
 Once a package is installed into your R Studio environment, you make it available by loading with the `library()` command.  For this document, some additional packages are needed, and are loaded in the next code block.  The *knitr* and *tidyverse* packages have been previously installed.  If you attempt to load a package (in this case zelig) that has not been installed, you will get an error message similar to this:
 
@@ -42,13 +35,15 @@ library(gapminder)
 
 In the "Files" tab in the lower right portion of the R Studio work area, you can choose where you want to store files and conduct your work by navigating to a suitable folder by making folders and sub-folders and then clicking to navigate to a suitable work area.
 
-You should notify R Studio and the R software to this location called the working directory.  Once you have navigated to where you want files, data, and results to reside, you notify R Studio by clicking the blue "More" gear and choose "set working directory."   This will help R understand where to expect files and dat to be located.
+You should notify R Studio and the R software to this location called the working directory.  Once you have navigated to where you want files, data, and results to reside, you notify R Studio by clicking the blue "More" gear and choose "set working directory."   This will help R understand where to expect files and data to be located.
 
 One of the most common problems students experience is that they work on files in a location not specified as the "working directory."
 
 ## Reading Data From a CSV File
 
 The most common way to read data into R is from an excel spreadsheet that has been saved into a comma-separated-values (csv) file.  This means that data elements are separated from each other by commas ",".
+
+### CSV File Located in Working Directory
 
 We consider a data file named (file.csv) that contains variable names in the first row of the file. Place this file in your working directory and read,
 
@@ -62,13 +57,46 @@ A frequent issue with `read.csv` is that character variables are automatically c
 cardata <- read.csv(file = 'carspeeds.csv', stringsAsFactors = FALSE)
 ```
 
-The *readr* package inside the *tidyverse* family of packages has a slightly nicer read csv function you should know about.  We use the `readr::` prefix to inform readers that the `read_csv` function resides in the *readr* package.  This read function will not auto-convert character variables to category/factor variables.
+The *readr* package inside the *tidyverse* family of packages has a slightly nicer read function you should know about.  We use the `readr::` prefix to inform readers that the `read_csv` function resides in the *readr* package.  This read function will not auto-convert character variables to category/factor variables.
 
 ```{r,eval=FALSE}
 dataframe <- readr::read_csv("file.csv",col_names = TRUE)
 ```
 
+### Read Data From a URL Web Location
 
-Reading data directly from excel spreadsheets is more complex and you should read documentation for the *readxl* package.
+If data is located in an accessible location on the internet, you can simply add the location pathway or URL address to the *read.csv* command to access the data.
+
+```{r}
+#import data from URL
+data <- read.csv('https://raw.githubusercontent.com/Statology/Miscellaneous/main/basketball_data.csv')
+
+#view first five rows
+head(data)
+```
+
+Here is a similar command using the *readr* package.
+
+```{r}
+#import data from URL
+data3 <- data.table::fread('https://raw.githubusercontent.com/Statology/Miscellaneous/main/basketball_data.csv')
+
+#view first five rows
+head(data3)
+```
+
+### Reading Data From Excel Files
+
+Reading data directly from excel spreadsheets is more complex and you should read documentation for the *readxl* package.  Here we illustrate the basic idea.
+
+```{r,echo=TRUE,eval=FALSE}
+library(readxl)
+# Read sheet names 'sheet_name' from excel file
+df = read_excel("/Users/new_file.xlsx", sheet='sheet_name')
+#or
+# Read sheet 3 from excel file
+df = read_excel("/Users/new_file.xlsx", sheet=3)
+```
+
 
 

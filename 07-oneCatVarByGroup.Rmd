@@ -15,6 +15,7 @@ We will restrict ourselves to the 113th congress, a meeting of the legislative b
 
 ## Tables
 
+### Base Functions
 ```{r}
 congage <- fivethirtyeight::congress_age
 ds1 <- congage %>% filter(congress > 112) %>% select(congress,chamber,state,party,incumbent,age) 
@@ -32,6 +33,9 @@ prop.table(mytable) # cell percentages
 prop.table(mytable, 1) # row percentages
 prop.table(mytable, 2) # column percentages
 ```
+
+
+### janitor package tools
 
 ```{r}
 ds %>%  janitor::tabyl(chamber, party)
@@ -53,6 +57,7 @@ t2 %>%
   janitor::adorn_ns()
 ```
 
+### tidyverse tools
 ```{r,tidy=FALSE}
 congage <- fivethirtyeight::congress_age
 ds1 <- congage %>% filter(congress > 112) %>% select(congress,chamber,state,party,incumbent,age) 
@@ -66,12 +71,28 @@ ds %>% group_by(chamber,party) %>%
   tidyr::pivot_wider(names_from = party, values_from = n)
 ```
 
+### gtsummary tools
+
+```{r}
+congage <- fivethirtyeight::congress_age
+ds1 <- congage %>% dplyr::filter(congress > 112) %>% dplyr::select(congress,chamber,state,party,incumbent,age) 
+#  We declare party and chamber as factor/categorical variables, and control their levels.
+ds1 <- ds1 %>% mutate(party = factor(party,levels=c("D","I","R")),
+                    chamber = factor(chamber)) %>% dplyr::select(party,chamber)
+ds1 %>% 
+  na.omit() %>%
+  gtsummary::tbl_summary(
+    by = chamber,
+    statistic=gtsummary::all_categorical() ~ "{n} / {N} ({p}%)")
+    
+```
+
 
 ## Graphical Displays
 
 ```{r,tidy=FALSE}
 # basic bar plot of party affiliation
-ggplot(data=ds, aes(x=party)) + 
+ggplot(data=ds, mapping=aes(x=party)) + 
   geom_bar() +
   labs(x="Party", y="Count")
 ```
@@ -80,11 +101,11 @@ ggplot(data=ds, aes(x=party)) +
 ```{r, tidy=FALSE}
 ds <- ds1 %>% group_by(party,chamber)
 #
-ggplot(data=ds, aes(x=chamber)) + 
+ggplot(data=ds, mapping=aes(x=chamber)) + 
   geom_bar(aes(fill=party),position="dodge") +
   labs(x="Chamber", y="Count")
 #
-ggplot(data=ds, aes(x=party)) + 
+ggplot(data=ds, mapping=aes(x=party)) + 
   geom_bar(aes(fill=party)) +
   facet_wrap( ~ chamber) +
   labs(x="Party", y="Count")
@@ -101,7 +122,7 @@ ds <- ds1 %>% group_by(chamber,party)  %>%
 #
 ds
 #
-ggplot(data=ds, aes(x=party, y=pct)) + 
+ggplot(data=ds, mapping=aes(x=party, y=pct)) + 
   geom_bar(aes(fill=party),stat="identity") +
   facet_wrap( ~ chamber) +
   labs(x="Party", y="Percent")
@@ -113,7 +134,7 @@ ggplot(data=ds, aes(x=party, y=pct)) +
 ```{r,tidy=FALSE,message=FALSE,warning=FALSE}
 ds1 <- congage %>% filter(congress > 112) %>% select(congress,chamber,state,party,incumbent,age) %>%
  mutate(party = factor(party,levels=c("D","I","R")),
-                    chamber = factor(chamber)) %>% 
+        chamber = factor(chamber)) %>% 
   na.omit()
 #
 ds <- ds1 %>% group_by(chamber,party)  %>%
@@ -128,7 +149,7 @@ ggplot(data=ds, mapping=aes(x=chamber,y=pct,fill=party)) +
 ```{r,tidy=FALSE,message=FALSE,warning=FALSE}
 ds1 <- congage %>% filter(congress > 112) %>% select(congress,chamber,state,party,incumbent,age) %>%
  mutate(party = factor(party,levels=c("D","I","R")),
-                    chamber = factor(chamber)) %>% 
+        chamber = factor(chamber)) %>% 
   na.omit()
 #
 ds1 %>% group_by(chamber,party)  %>%

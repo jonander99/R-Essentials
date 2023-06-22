@@ -11,9 +11,9 @@ In each example, the first line creates the dataset to be graphed - followed by 
 
 ## Overview of ggplot
 
-The *ggplot2* package uses the `ggplot` command - and builds a graphical display in steps and layers.  We always start with the `ggplot` command which typically has two basic elements:  a dataset to be used, and a list of mappings `aes` that is used to connect dataset variables to aspects of the plot like the vertical axis, horizontal axis, or perhaps the size of a point.
+The *ggplot2* package uses the `ggplot` command - and builds a graphical display in steps and layers.  We always start with the `ggplot` command which typically has two basic elements:  a dataset to be used, and a list of mappings using the `aes` instruction used to connect dataset variables to aspects of the plot like the vertical axis, horizontal axis, or perhaps the size of a point.
 
-The kind of object being displayed is called a `geom`, and a plot can have several `geom`s, and they are added to a display in layers - connected by a `+` sign.
+The kind of object being displayed is called a `geom`, (a geometry) and a plot can have several `geom`s, and they are added to a display in layers - connected by a `+` sign.
 
 
 ## A Quantitative Variable
@@ -23,7 +23,8 @@ The kind of object being displayed is called a `geom`, and a plot can have sever
 The next block of code takes the gapminder dataframe and "pipes" (%>%, a pipeline like plumbing) the data through a filter so that only data from year 1997 flows through to define the new dataset named `ds`.  The `ggplot` command uses dataset ds, and variable x life expectancy.  The next example shows what using only the `ggplot` command produces an empty graphical region that is awaiting further instructions:
 
 ```{r,message=FALSE,tidy=FALSE}
-ds <- gapminder %>% filter(year==1997) 
+ds <- gapminder %>% 
+  filter(year==1997) 
 #
 ggplot(data=ds, mapping=aes(x=lifeExp)) 
 ```
@@ -31,18 +32,19 @@ ggplot(data=ds, mapping=aes(x=lifeExp))
 Now we use additional code to place the dotplot in the existing graphical region.  In ggplot graphics we make graphical objects with a `geom` function - here a dotplot so we use `geom_dotplot()` to produce the dotplot specified using the variable mappings in the aesthetics command `aes` in the ggplot command.  
 
 ```{r,message=FALSE,tidy=FALSE}
-ds <- gapminder %>% filter(year==1997) 
+ds <- gapminder %>% 
+  filter(year==1997) 
 #
 ggplot(data=ds, mapping=aes(x=lifeExp)) + 
   geom_dotplot() + 
   xlab("Life Expectancy (years)") + ylab("Frequency")
 ```
 
-Here we change the default size for the dots.
+Here we change the default size for the dots, and pipe the data directly into the first argument data (using `data=.`) of the `ggplot` command:
 ```{r,message=FALSE,tidy=FALSE}
-ds <- gapminder %>% filter(year==1997) 
-#
-ggplot(data=ds, mapping=aes(x=lifeExp)) + 
+gapminder %>% 
+  filter(year==1997) %>%
+ggplot(data=., mapping=aes(x=lifeExp)) + 
   geom_dotplot(dotsize=0.70) + 
   xlab("Life Expectancy (years)") + ylab("Frequency")
 ```
@@ -52,17 +54,21 @@ ggplot(data=ds, mapping=aes(x=lifeExp)) +
 
 Here we produce a display so that life expectancy is displayed for each country in Asia, and the values are ordered.
 ```{r}
-ds <- gapminder %>% filter(continent=="Asia",year==1997) 
+ds <- gapminder %>% 
+  filter(continent=="Asia",year==1997) 
 #  
 ggplot(data=ds, mapping=aes(x=lifeExp, y= reorder(country,lifeExp))) + 
   geom_point() + 
-  xlab("Life Expectancy (years) in 1997") + 
-  ylab("Asian Countries")
+  labs(title="Life Expectancy in Asian Countries",
+       subtitle="Year=1997",
+       x="Life Expectancy (years) in 1997",
+       y="Asian Countries")
 ```
 
-Notice that in the next example we simply pipe the modified dataset into the first argument of the `ggplot` command so that there is no need to save the modified dataset to make the display.  In the next block we pipe the modified dataset directly inside the `ggplot` command to automatically replace the first argument.
+Notice that in the next example we simply pipe the modified dataset into the first argument of the `ggplot` command so that there is no need to save the modified dataset to make the display.
 ```{r}
-gapminder %>% filter(continent=="Asia",year==1997) %>%
+gapminder %>% 
+  filter(continent=="Asia",year==1997) %>%
 ggplot(data=., mapping=aes(x=lifeExp, y= reorder(country,lifeExp))) + 
   geom_point() + 
   xlab("Life Expectancy (years) in 1997") + 
@@ -74,7 +80,8 @@ ggplot(data=., mapping=aes(x=lifeExp, y= reorder(country,lifeExp))) +
 
 This code block is similar to the dotplot commands, but the geom_histogram function controls the bin width in units of the x variable - in this case 5 years.
 ```{r,eval=TRUE,tidy=FALSE}
-gapminder %>% filter(year==1997) %>%
+gapminder %>% 
+  filter(year==1997) %>%
 ggplot(data=.,mapping=aes(x=lifeExp)) + 
   geom_histogram(binwidth=5) + 
   xlab("Life Expectancy (years)") +
@@ -83,28 +90,30 @@ ggplot(data=.,mapping=aes(x=lifeExp)) +
 
 Here we change the binwidth:
 ```{r,eval=TRUE,tidy=FALSE}
-gapminder %>% filter(year==1997) %>%
-ggplot(data=.,mapping=aes(x=lifeExp)) + 
+gapminder %>% 
+  filter(year==1997) %>%
+ggplot(data=., mapping=aes(x=lifeExp)) + 
   geom_histogram(binwidth=2.5) + 
   xlab("Life Expectancy (years)") +
   ylab("Relative Frequency")
 ```
 
-Here we change the number of bins, notice the data argument is replaced by the piped data:
+Here we change the number of bins:
 ```{r,eval=TRUE,tidy=FALSE}
-gapminder %>% filter(year==1997) %>%
-ggplot(mapping=aes(x=lifeExp)) + 
-  geom_histogram(bins=12) + 
+gapminder %>% 
+  filter(year==1997) %>%
+ggplot(data=., mapping=aes(x=lifeExp)) + 
+  geom_histogram(bins=10) + 
   xlab("Life Expectancy (years)") +
   ylab("Relative Frequency")
 ```
-
 
 ### Density Plot
 
 Density plots produces a smoothing of a histogram to display the distribution.
 ```{r,eval=TRUE,tidy=FALSE}
-ds <- gapminder %>% filter(year==1997)
+ds <- gapminder %>% 
+  filter(year==1997)
 #
 ggplot(data=ds, mapping=aes(x=lifeExp)) + 
   geom_density() + 
@@ -114,7 +123,8 @@ ggplot(data=ds, mapping=aes(x=lifeExp)) +
 
 The `adjust` option controls the amount of smoothing relative to a default value of 1.  A smaller value gives less smoothing (more responsive line to small changes in the data distribution), and larger values will make a smoother curve that is less sensitive to the data pattern.
 ```{r,eval=TRUE,tidy=FALSE}
-ds <- gapminder %>% filter(year==1997)
+ds <- gapminder %>% 
+  filter(year==1997)
 #
 ggplot(data=ds, mapping=aes(x=lifeExp)) + 
   geom_density(adjust=0.75) + 
@@ -131,7 +141,8 @@ ds <- gapminder %>% filter(year==1997)
 #
 ggplot(data=ds, mapping=aes(x=factor(year),y=lifeExp)) +
  geom_boxplot() + 
-  labs(x="Year",y="Life Expectancy (years)")
+  labs(x="Year",
+       y="Life Expectancy (years)")
 # Change orientation
 ggplot(data=ds, mapping=aes(x=factor(year),y=lifeExp)) +
  geom_boxplot() + 
@@ -139,14 +150,14 @@ ggplot(data=ds, mapping=aes(x=factor(year),y=lifeExp)) +
   labs(x="Year",y="Life Expectancy (years)")
 ```
 
-Now we overlay points on top of the boxplot display.  Note the `geom_jitter` that overlays the points has an argument `alpha=0.5` signifying a slightly transparent plot symbol.  An alpha value of 1 means the plot symbol is opaque, and a value of 0 is completely transparent.  Careful use of alpha in large datasets will enable the analyst to correctly perceive point density.  Without using a smaller value of `alpha` the plot may be one large blob of ink - making it difficult to judge the density of points in the display.
+Now we overlay points on top of the boxplot display.  Note the `position=position_jitter` option to the `geom_point` puts some random horizontal jitter so that the points don't overlay each other.  Note that the points has an argument `alpha=0.5` signifying a slightly transparent plot symbol.  An `alpha` value of 1 means the plot symbol is opaque, and a value of 0 is completely transparent.  Careful use of `alpha` in large datasets will enable the analyst to correctly perceive point density.  Without using a smaller value of `alpha` the plot may be one large blob of ink - making it difficult to judge the density of points in the display.
 
 ```{r,tidy=FALSE}
 ds <- gapminder %>% filter(year==1997) 
 #
 ggplot(data=ds, mapping=aes(x=factor(year),y=lifeExp)) +
  geom_boxplot(outlier.shape = NA) + 
- geom_jitter(alpha=0.5, width=0.35) +
+ geom_point(alpha=0.5, position=position_jitter(width=0.25)) +
   labs(x="Year",y="Life Expectancy (years)")
 ```
 
@@ -154,7 +165,8 @@ ggplot(data=ds, mapping=aes(x=factor(year),y=lifeExp)) +
 If the dataframe has only one quantitative variable, we can make a character variable called "sample", then this code will produce an acceptable display.
 
 ```{r,tidy=FALSE}
-ds <- gapminder %>% filter(year==1997) %>%
+ds <- gapminder %>% 
+  filter(year==1997) %>%
   mutate(sample="Sample")
 #
 ggplot(data=ds, mapping=aes(x=sample,y=lifeExp)) +
@@ -164,6 +176,8 @@ ggplot(data=ds, mapping=aes(x=sample,y=lifeExp)) +
 ```
 
 ## Displays of a Categorical Variable
+
+A categorical variable is summarized by using the counts for each category or the relative frequency (percentage) of each category.
 
 ### Bar Graph
 
@@ -186,16 +200,14 @@ ggplot(data=ds, mapping=aes(x=continent)) +
   theme(axis.text.x = element_text(angle=45,vjust = 0.6))
 ```
 
-Bar graph with percentages on vertical axis.
+Bar graphs with percentages on vertical axis.
 
-```{r,tidy=FALSE,message=FALSE,warning=FALSE}
+```{r,tidy=FALSE}
 ds <- gapminder %>% 
   filter(year==1997) %>% 
   group_by(continent)  %>%
   summarise (n = n()) %>%
   mutate(pct = 100*n / sum(n)) 
-#
-head(ds)
 #
 ggplot(data=ds, mapping=aes(x = continent, y = pct)) + 
   geom_bar(stat = "identity") + 
@@ -208,7 +220,7 @@ ggplot(data=ds, mapping=aes(x = reorder(continent, -pct), y = pct)) +
 
 Sometimes it is more convenient to have the bars oriented horizontally.  Notice we set up the aesthetic mappings as usual and then flip the axes with the `coord_flip` command.
 
-```{r,tidy=FALSE,message=FALSE,warning=FALSE}
+```{r,tidy=FALSE}
 ds <- gapminder %>% 
   filter(year==1997) %>% 
   group_by(continent)  %>%
@@ -221,18 +233,10 @@ ggplot(data=ds, mapping=aes(x = reorder(continent, pct), y = pct)) +
   xlab("Continent") + ylab("Percentage")
 ```
 
-You can produce a similar display using `geom_col` on the summarized data tibble.
-```{r}
-ggplot(data = ds, mapping = aes(x = continent, y = n)) +
-  geom_col() +
-  ylab("Frequency")
-```
-
-
 ### Pie Graph
 
 Pie graphs are not recommended, but the code needed to make one is given here.
-```{r,tidy=FALSE,message=FALSE,warning=FALSE}
+```{r,tidy=FALSE}
 contin.prop<- gapminder %>% 
   group_by(continent) %>%
   summarise (n = n()) %>%

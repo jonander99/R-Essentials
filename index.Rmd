@@ -5,6 +5,7 @@ date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
+geometry: "left=2.0cm, right=2.75cm, top=2.25cm, bottom=2.25cm"
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes

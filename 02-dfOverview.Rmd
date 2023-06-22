@@ -13,8 +13,9 @@ Let's look at what is inside the gapminder dataset using the `glimpse` command f
 
 ```{r}
 # the next command would also execute if
-# dplyr or tidyverse was loaded..
+# dplyr or tidyverse was previously loaded with library(dplyr)
 #glimpse(gapminder)
+# instead, we note the package (dplyr) where command (glimpse) is found:
 dplyr::glimpse(gapminder)
 ```
 
@@ -26,16 +27,36 @@ Each variable name is listed along with a variable type designation.
 * int: means a quantitative variable that takes only integer or whole number values.
 * dbl: means double precision, a quantitative variable that is essentially continuous - taking decimal values.
 
+## dim
+The dim command quickly tells us the number of rows (observations) and columns (variables) in a data frame.
+
+```{r}
+dim(gapminder)
+```
+
+
 ## head 
 
 By default, the `head` command will show the first 6 rows of the dataset gapminder. Datasets in R are called "dataframes."  The gapminder dataframe is denoted as a "tibble" which is a type of dataframe.   
 
-Options to the head command can change the rows displayed.
+Options to the `head` command can change the rows displayed.
 ```{r}
 # default is to show 6 rows
 head(gapminder)
 # show only 4 rows...
 head(gapminder,n=4)
+```
+
+## tail
+
+By default, the `tail` command will show the last 6 rows of the dataset gapminder. 
+
+Options to the `tail` command can change the rows displayed.
+```{r}
+# default is to show 6 rows
+tail(gapminder)
+# show only 4 rows...
+tail(gapminder,n=4)
 ```
 
 ## summary  
@@ -51,7 +72,7 @@ The next command illustrates a "pipe" - here the dataframe gapminder is "piped" 
 the summary function to be processed.  Note the same output is produce as using
 `summary(gapminder)`.  Note, the pipe operation %>% is contained in tidyverse package: *magrittr* which is loaded when *tidyverse* is loaded.
 ```{r}
-# Same idea, but using tidyverse pipe
+# Same idea, as summary(gapminder) but using tidyverse pipe
 gapminder %>% summary()
 ```
 

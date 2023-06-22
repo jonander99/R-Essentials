@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 8 Analysis of One Categorical Variable by another categorical variable | Essential R Skills</title>
   <meta name="description" content="This book provides R code examples expected in all UMN-Morris Statistics courses." />
-  <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 8 Analysis of One Categorical Variable by another categorical variable | Essential R Skills" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="This book provides R code examples expected in all UMN-Morris Statistics courses." />
   <meta name="github-repo" content="jonander99/R-Essentials" />
@@ -24,7 +23,7 @@
 <meta name="author" content="UMN-Morris Statistics Discipline" />
 
 
-<meta name="date" content="2020-06-19" />
+<meta name="date" content="2023-06-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +32,8 @@
   
 <link rel="prev" href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"/>
 
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -49,45 +49,79 @@
 
 
 
-
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -107,75 +141,103 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Motivation</a></li>
-<li class="chapter" data-level="2" data-path="GettingStarted.html"><a href="GettingStarted.html"><i class="fa fa-check"></i><b>2</b> Getting Started</a><ul>
+<li class="chapter" data-level="2" data-path="GettingStarted.html"><a href="GettingStarted.html"><i class="fa fa-check"></i><b>2</b> Getting Started</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="GettingStarted.html"><a href="GettingStarted.html#packages"><i class="fa fa-check"></i><b>2.1</b> Packages</a></li>
 <li class="chapter" data-level="2.2" data-path="GettingStarted.html"><a href="GettingStarted.html#the-tidyverse-package"><i class="fa fa-check"></i><b>2.2</b> The tidyverse Package</a></li>
 <li class="chapter" data-level="2.3" data-path="GettingStarted.html"><a href="GettingStarted.html#gapminder-data"><i class="fa fa-check"></i><b>2.3</b> Gapminder Data:</a></li>
 <li class="chapter" data-level="2.4" data-path="GettingStarted.html"><a href="GettingStarted.html#set-working-directory"><i class="fa fa-check"></i><b>2.4</b> Set Working Directory</a></li>
-<li class="chapter" data-level="2.5" data-path="GettingStarted.html"><a href="GettingStarted.html#reading-data-from-a-csv-file"><i class="fa fa-check"></i><b>2.5</b> Reading Data From a CSV File</a></li>
+<li class="chapter" data-level="2.5" data-path="GettingStarted.html"><a href="GettingStarted.html#reading-data-from-a-csv-file"><i class="fa fa-check"></i><b>2.5</b> Reading Data From a CSV File</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="GettingStarted.html"><a href="GettingStarted.html#csv-file-located-in-working-directory"><i class="fa fa-check"></i><b>2.5.1</b> CSV File Located in Working Directory</a></li>
+<li class="chapter" data-level="2.5.2" data-path="GettingStarted.html"><a href="GettingStarted.html#read-data-from-a-url-web-location"><i class="fa fa-check"></i><b>2.5.2</b> Read Data From a URL Web Location</a></li>
+<li class="chapter" data-level="2.5.3" data-path="GettingStarted.html"><a href="GettingStarted.html#reading-data-from-excel-files"><i class="fa fa-check"></i><b>2.5.3</b> Reading Data From Excel Files</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="OverviewDataframe.html"><a href="OverviewDataframe.html"><i class="fa fa-check"></i><b>3</b> Overview of a Dataframe</a><ul>
+</ul></li>
+<li class="chapter" data-level="3" data-path="OverviewDataframe.html"><a href="OverviewDataframe.html"><i class="fa fa-check"></i><b>3</b> Overview of a Dataframe</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="OverviewDataframe.html"><a href="OverviewDataframe.html#glimpse"><i class="fa fa-check"></i><b>3.1</b> glimpse</a></li>
-<li class="chapter" data-level="3.2" data-path="OverviewDataframe.html"><a href="OverviewDataframe.html#head"><i class="fa fa-check"></i><b>3.2</b> head</a></li>
-<li class="chapter" data-level="3.3" data-path="OverviewDataframe.html"><a href="OverviewDataframe.html#summary"><i class="fa fa-check"></i><b>3.3</b> summary</a></li>
-<li class="chapter" data-level="3.4" data-path="OverviewDataframe.html"><a href="OverviewDataframe.html#dataframe-details-funmodeling-package"><i class="fa fa-check"></i><b>3.4</b> Dataframe Details: funModeling package</a></li>
-<li class="chapter" data-level="3.5" data-path="OverviewDataframe.html"><a href="OverviewDataframe.html#dataframe-details-skimr-package"><i class="fa fa-check"></i><b>3.5</b> Dataframe Details: skimr package</a></li>
-<li class="chapter" data-level="3.6" data-path="OverviewDataframe.html"><a href="OverviewDataframe.html#describe-hmisc-package"><i class="fa fa-check"></i><b>3.6</b> describe: Hmisc package</a></li>
+<li class="chapter" data-level="3.2" data-path="OverviewDataframe.html"><a href="OverviewDataframe.html#dim"><i class="fa fa-check"></i><b>3.2</b> dim</a></li>
+<li class="chapter" data-level="3.3" data-path="OverviewDataframe.html"><a href="OverviewDataframe.html#head"><i class="fa fa-check"></i><b>3.3</b> head</a></li>
+<li class="chapter" data-level="3.4" data-path="OverviewDataframe.html"><a href="OverviewDataframe.html#tail"><i class="fa fa-check"></i><b>3.4</b> tail</a></li>
+<li class="chapter" data-level="3.5" data-path="OverviewDataframe.html"><a href="OverviewDataframe.html#summary"><i class="fa fa-check"></i><b>3.5</b> summary</a></li>
+<li class="chapter" data-level="3.6" data-path="OverviewDataframe.html"><a href="OverviewDataframe.html#dataframe-details-funmodeling-package"><i class="fa fa-check"></i><b>3.6</b> Dataframe Details: funModeling package</a></li>
+<li class="chapter" data-level="3.7" data-path="OverviewDataframe.html"><a href="OverviewDataframe.html#dataframe-details-skimr-package"><i class="fa fa-check"></i><b>3.7</b> Dataframe Details: skimr package</a></li>
+<li class="chapter" data-level="3.8" data-path="OverviewDataframe.html"><a href="OverviewDataframe.html#describe-hmisc-package"><i class="fa fa-check"></i><b>3.8</b> describe: Hmisc package</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html"><i class="fa fa-check"></i><b>4</b> Introduction to Data Wrangling</a><ul>
+<li class="chapter" data-level="4" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html"><i class="fa fa-check"></i><b>4</b> Introduction to Data Wrangling</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#tidy-data"><i class="fa fa-check"></i><b>4.1</b> Tidy Data</a></li>
-<li class="chapter" data-level="4.2" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#subset-using-filter"><i class="fa fa-check"></i><b>4.2</b> Subset using filter</a></li>
+<li class="chapter" data-level="4.2" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#subset-observations-using-filter"><i class="fa fa-check"></i><b>4.2</b> Subset Observations using filter</a></li>
 <li class="chapter" data-level="4.3" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#subset-using-multiple-conditions"><i class="fa fa-check"></i><b>4.3</b> Subset using multiple conditions</a></li>
 <li class="chapter" data-level="4.4" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#saving-as-a-new-dataframe"><i class="fa fa-check"></i><b>4.4</b> Saving as a new dataframe</a></li>
 <li class="chapter" data-level="4.5" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#subset-using-top_n"><i class="fa fa-check"></i><b>4.5</b> Subset using top_n</a></li>
 <li class="chapter" data-level="4.6" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#subset-using-select"><i class="fa fa-check"></i><b>4.6</b> Subset using select</a></li>
 <li class="chapter" data-level="4.7" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#order-using-arrange"><i class="fa fa-check"></i><b>4.7</b> Order using arrange</a></li>
 <li class="chapter" data-level="4.8" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#grouped-filter"><i class="fa fa-check"></i><b>4.8</b> Grouped Filter</a></li>
-<li class="chapter" data-level="4.9" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#new-variables-using-mutate"><i class="fa fa-check"></i><b>4.9</b> New Variables Using Mutate</a></li>
+<li class="chapter" data-level="4.9" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#new-variables-using-mutate"><i class="fa fa-check"></i><b>4.9</b> New Variables Using mutate</a></li>
 <li class="chapter" data-level="4.10" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#simple-counting-using-tally-and-count"><i class="fa fa-check"></i><b>4.10</b> Simple Counting Using tally() and count()</a></li>
 <li class="chapter" data-level="4.11" data-path="IntroDataWrangling.html"><a href="IntroDataWrangling.html#missing-values"><i class="fa fa-check"></i><b>4.11</b> Missing Values</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html"><i class="fa fa-check"></i><b>5</b> Univariate Graphical Displays</a><ul>
+<li class="chapter" data-level="5" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html"><i class="fa fa-check"></i><b>5</b> Univariate Graphical Displays</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html#overview-of-ggplot"><i class="fa fa-check"></i><b>5.1</b> Overview of ggplot</a></li>
-<li class="chapter" data-level="5.2" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html#a-quantitative-variable"><i class="fa fa-check"></i><b>5.2</b> A Quantitative Variable</a><ul>
+<li class="chapter" data-level="5.2" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html#a-quantitative-variable"><i class="fa fa-check"></i><b>5.2</b> A Quantitative Variable</a>
+<ul>
 <li class="chapter" data-level="5.2.1" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html#dotplot"><i class="fa fa-check"></i><b>5.2.1</b> Dotplot</a></li>
 <li class="chapter" data-level="5.2.2" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html#histogram"><i class="fa fa-check"></i><b>5.2.2</b> Histogram</a></li>
 <li class="chapter" data-level="5.2.3" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html#density-plot"><i class="fa fa-check"></i><b>5.2.3</b> Density Plot</a></li>
 <li class="chapter" data-level="5.2.4" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html#boxplot"><i class="fa fa-check"></i><b>5.2.4</b> Boxplot</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html#displays-of-a-categorical-variable"><i class="fa fa-check"></i><b>5.3</b> Displays of a Categorical Variable</a><ul>
+<li class="chapter" data-level="5.3" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html#displays-of-a-categorical-variable"><i class="fa fa-check"></i><b>5.3</b> Displays of a Categorical Variable</a>
+<ul>
 <li class="chapter" data-level="5.3.1" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html#bar-graph"><i class="fa fa-check"></i><b>5.3.1</b> Bar Graph</a></li>
 <li class="chapter" data-level="5.3.2" data-path="UnivariateGraphicalDisplays.html"><a href="UnivariateGraphicalDisplays.html#pie-graph"><i class="fa fa-check"></i><b>5.3.2</b> Pie Graph</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html"><i class="fa fa-check"></i><b>6</b> Summary Statistics For One Variable</a><ul>
-<li class="chapter" data-level="6.1" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#one-quantitative-variable"><i class="fa fa-check"></i><b>6.1</b> One Quantitative Variable</a><ul>
+<li class="chapter" data-level="6" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html"><i class="fa fa-check"></i><b>6</b> Summary Statistics For One Variable</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#one-quantitative-variable"><i class="fa fa-check"></i><b>6.1</b> One Quantitative Variable</a>
+<ul>
 <li class="chapter" data-level="6.1.1" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#using-base-r-summary-function"><i class="fa fa-check"></i><b>6.1.1</b> Using base R summary function</a></li>
 <li class="chapter" data-level="6.1.2" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#using-dplyr-summarise-function"><i class="fa fa-check"></i><b>6.1.2</b> Using dplyr summarise function</a></li>
-<li class="chapter" data-level="6.1.3" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#summary-statistics-using-funmodeling-package"><i class="fa fa-check"></i><b>6.1.3</b> Summary Statistics Using funModeling package</a></li>
-<li class="chapter" data-level="6.1.4" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#summary-statistics-skimr-package"><i class="fa fa-check"></i><b>6.1.4</b> Summary Statistics: skimr package</a></li>
+<li class="chapter" data-level="6.1.3" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#summary-statistics-using-gtsummary-package"><i class="fa fa-check"></i><b>6.1.3</b> Summary Statistics Using gtsummary package</a></li>
+<li class="chapter" data-level="6.1.4" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#summary-statistics-using-funmodeling-package"><i class="fa fa-check"></i><b>6.1.4</b> Summary Statistics Using funModeling package</a></li>
+<li class="chapter" data-level="6.1.5" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#summary-statistics-skimr-package"><i class="fa fa-check"></i><b>6.1.5</b> Summary Statistics: skimr package</a></li>
 </ul></li>
-<li class="chapter" data-level="6.2" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#one-categorical-variable"><i class="fa fa-check"></i><b>6.2</b> One Categorical Variable</a><ul>
+<li class="chapter" data-level="6.2" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#one-categorical-variable"><i class="fa fa-check"></i><b>6.2</b> One Categorical Variable</a>
+<ul>
 <li class="chapter" data-level="6.2.1" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#counting-values"><i class="fa fa-check"></i><b>6.2.1</b> Counting Values</a></li>
-<li class="chapter" data-level="6.2.2" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#categorical-variable-skimr-package"><i class="fa fa-check"></i><b>6.2.2</b> Categorical variable: skimr package</a></li>
-<li class="chapter" data-level="6.2.3" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#categorical-variable-funmodeling-package"><i class="fa fa-check"></i><b>6.2.3</b> Categorical variable: funModeling package</a></li>
-<li class="chapter" data-level="6.2.4" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#categorical-variable-janitor-package"><i class="fa fa-check"></i><b>6.2.4</b> Categorical variable: janitor package</a></li>
+<li class="chapter" data-level="6.2.2" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#categorical-variable-gtsummary-package"><i class="fa fa-check"></i><b>6.2.2</b> Categorical variable: gtsummary package</a></li>
+<li class="chapter" data-level="6.2.3" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#categorical-variable-skimr-package"><i class="fa fa-check"></i><b>6.2.3</b> Categorical variable: skimr package</a></li>
+<li class="chapter" data-level="6.2.4" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#categorical-variable-funmodeling-package"><i class="fa fa-check"></i><b>6.2.4</b> Categorical variable: funModeling package</a></li>
+<li class="chapter" data-level="6.2.5" data-path="summary-statistics-for-one-variable.html"><a href="summary-statistics-for-one-variable.html#categorical-variable-janitor-package"><i class="fa fa-check"></i><b>6.2.5</b> Categorical variable: janitor package</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><i class="fa fa-check"></i><b>7</b> Exploratory Data Analysis For One Quantitative Variable: by Groups</a><ul>
+<li class="chapter" data-level="7" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><i class="fa fa-check"></i><b>7</b> Exploratory Data Analysis For One Quantitative Variable: by Groups</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#summary-statistics-dplyr"><i class="fa fa-check"></i><b>7.1</b> Summary Statistics: dplyr</a></li>
-<li class="chapter" data-level="7.2" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#summary-statistics-skimr"><i class="fa fa-check"></i><b>7.2</b> Summary Statistics: skimr</a></li>
-<li class="chapter" data-level="7.3" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#graphical-displays-of-a-quantitative-variable-separated-by-groups"><i class="fa fa-check"></i><b>7.3</b> Graphical Displays of a quantitative variable, separated by groups</a><ul>
-<li class="chapter" data-level="7.3.1" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#dotplots"><i class="fa fa-check"></i><b>7.3.1</b> Dotplots</a></li>
-<li class="chapter" data-level="7.3.2" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#histograms"><i class="fa fa-check"></i><b>7.3.2</b> Histograms</a></li>
-<li class="chapter" data-level="7.3.3" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#density-plots-in-facets"><i class="fa fa-check"></i><b>7.3.3</b> Density Plots in Facets</a></li>
-<li class="chapter" data-level="7.3.4" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#overlaid-density-plots"><i class="fa fa-check"></i><b>7.3.4</b> Overlaid Density Plots</a></li>
-<li class="chapter" data-level="7.3.5" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#boxplots-grouped-data"><i class="fa fa-check"></i><b>7.3.5</b> Boxplots, Grouped Data</a></li>
-<li class="chapter" data-level="7.3.6" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#boxplots-overlay-points-on-the-boxplots-with-color-control"><i class="fa fa-check"></i><b>7.3.6</b> Boxplots, overlay points on the boxplots with color control</a></li>
+<li class="chapter" data-level="7.2" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#summary-statistics-gtsummary"><i class="fa fa-check"></i><b>7.2</b> Summary Statistics: gtsummary</a></li>
+<li class="chapter" data-level="7.3" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#summary-statistics-skimr"><i class="fa fa-check"></i><b>7.3</b> Summary Statistics: skimr</a></li>
+<li class="chapter" data-level="7.4" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#graphical-displays-of-a-quantitative-variable-separated-by-groups"><i class="fa fa-check"></i><b>7.4</b> Graphical Displays of a quantitative variable, separated by groups</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#dotplots"><i class="fa fa-check"></i><b>7.4.1</b> Dotplots</a></li>
+<li class="chapter" data-level="7.4.2" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#histograms"><i class="fa fa-check"></i><b>7.4.2</b> Histograms</a></li>
+<li class="chapter" data-level="7.4.3" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#density-plots-in-facets"><i class="fa fa-check"></i><b>7.4.3</b> Density Plots in Facets</a></li>
+<li class="chapter" data-level="7.4.4" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#overlaid-density-plots"><i class="fa fa-check"></i><b>7.4.4</b> Overlaid Density Plots</a></li>
+<li class="chapter" data-level="7.4.5" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#boxplots-grouped-data"><i class="fa fa-check"></i><b>7.4.5</b> Boxplots, Grouped Data</a></li>
+<li class="chapter" data-level="7.4.6" data-path="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html"><a href="exploratory-data-analysis-for-one-quantitative-variable-by-groups.html#boxplots-overlay-points-on-the-boxplots-with-color-control"><i class="fa fa-check"></i><b>7.4.6</b> Boxplots, overlay points on the boxplots with color control</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="analysis-of-one-categorical-variable-by-another-categorical-variable.html"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html"><i class="fa fa-check"></i><b>8</b> Analysis of One Categorical Variable by another categorical variable</a><ul>
-<li class="chapter" data-level="8.1" data-path="analysis-of-one-categorical-variable-by-another-categorical-variable.html"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#tables"><i class="fa fa-check"></i><b>8.1</b> Tables</a></li>
+<li class="chapter" data-level="8" data-path="analysis-of-one-categorical-variable-by-another-categorical-variable.html"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html"><i class="fa fa-check"></i><b>8</b> Analysis of One Categorical Variable by another categorical variable</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="analysis-of-one-categorical-variable-by-another-categorical-variable.html"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#tables"><i class="fa fa-check"></i><b>8.1</b> Tables</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="analysis-of-one-categorical-variable-by-another-categorical-variable.html"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#base-functions"><i class="fa fa-check"></i><b>8.1.1</b> Base Functions</a></li>
+<li class="chapter" data-level="8.1.2" data-path="analysis-of-one-categorical-variable-by-another-categorical-variable.html"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#janitor-package-tools"><i class="fa fa-check"></i><b>8.1.2</b> janitor package tools</a></li>
+<li class="chapter" data-level="8.1.3" data-path="analysis-of-one-categorical-variable-by-another-categorical-variable.html"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#tidyverse-tools"><i class="fa fa-check"></i><b>8.1.3</b> tidyverse tools</a></li>
+<li class="chapter" data-level="8.1.4" data-path="analysis-of-one-categorical-variable-by-another-categorical-variable.html"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#gtsummary-tools"><i class="fa fa-check"></i><b>8.1.4</b> gtsummary tools</a></li>
+</ul></li>
 <li class="chapter" data-level="8.2" data-path="analysis-of-one-categorical-variable-by-another-categorical-variable.html"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#graphical-displays"><i class="fa fa-check"></i><b>8.2</b> Graphical Displays</a></li>
 </ul></li>
 <li class="divider"></li>
@@ -198,118 +260,613 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="analysis-of-one-categorical-variable-by-another-categorical-variable" class="section level1">
-<h1><span class="header-section-number">Chapter 8</span> Analysis of One Categorical Variable by another categorical variable</h1>
+<div id="analysis-of-one-categorical-variable-by-another-categorical-variable" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">Chapter 8</span> Analysis of One Categorical Variable by another categorical variable<a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#analysis-of-one-categorical-variable-by-another-categorical-variable" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>To demonstrate graphical displays of two categorical variables, we need a new dataset with two categorical variables. We use the <code>congress_age</code> dataframe from the <em>fivethirtyeight</em> package. In these displays we will use categorical variables:</p>
 <ul>
 <li>party affiliation (party) with values: D, I, R.</li>
 <li>congressional chamber (chamber) with values: house, senate</li>
 </ul>
 <p>We will restrict ourselves to the 113th congress, a meeting of the legislative branch of the United States federal government, from January 3, 2013, to January 3, 2015, during the fifth and sixth years of Barack Obama’s presidency.</p>
-<div id="tables" class="section level2">
-<h2><span class="header-section-number">8.1</span> Tables</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">congage &lt;-<span class="st"> </span>fivethirtyeight<span class="op">::</span>congress_age
-ds1 &lt;-<span class="st"> </span>congage <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(congress <span class="op">&gt;</span><span class="st"> </span><span class="dv">112</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(congress,chamber,state,party,incumbent,age) 
-<span class="co">#  We declare party and chamber as factor/categorical variables, and control their levels.</span>
-ds1 &lt;-<span class="st"> </span>ds1 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">party =</span> <span class="kw">factor</span>(party,<span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&quot;D&quot;</span>,<span class="st">&quot;I&quot;</span>,<span class="st">&quot;R&quot;</span>)),
-                    <span class="dt">chamber =</span> <span class="kw">factor</span>(chamber))
-ds1 &lt;-<span class="st"> </span>ds1 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">na.omit</span>()
-ds &lt;-<span class="st"> </span>ds1  
-<span class="co">#</span>
-<span class="kw">table</span>(ds<span class="op">$</span>chamber,ds<span class="op">$</span>party)</code></pre></div>
+<div id="tables" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">8.1</span> Tables<a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#tables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="base-functions" class="section level3 hasAnchor" number="8.1.1">
+<h3><span class="header-section-number">8.1.1</span> Base Functions<a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#base-functions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb162-1" aria-hidden="true" tabindex="-1"></a>congage <span class="ot">&lt;-</span> fivethirtyeight<span class="sc">::</span>congress_age</span>
+<span id="cb162-2"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb162-2" aria-hidden="true" tabindex="-1"></a>ds1 <span class="ot">&lt;-</span> congage <span class="sc">%&gt;%</span> <span class="fu">filter</span>(congress <span class="sc">&gt;</span> <span class="dv">112</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(congress,chamber,state,party,incumbent,age) </span>
+<span id="cb162-3"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb162-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  We declare party and chamber as factor/categorical variables, and control their levels.</span></span>
+<span id="cb162-4"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb162-4" aria-hidden="true" tabindex="-1"></a>ds1 <span class="ot">&lt;-</span> ds1 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">party =</span> <span class="fu">factor</span>(party,<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;D&quot;</span>,<span class="st">&quot;I&quot;</span>,<span class="st">&quot;R&quot;</span>)),</span>
+<span id="cb162-5"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb162-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">chamber =</span> <span class="fu">factor</span>(chamber))</span>
+<span id="cb162-6"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb162-6" aria-hidden="true" tabindex="-1"></a>ds1 <span class="ot">&lt;-</span> ds1 <span class="sc">%&gt;%</span> <span class="fu">na.omit</span>()</span>
+<span id="cb162-7"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb162-7" aria-hidden="true" tabindex="-1"></a>ds <span class="ot">&lt;-</span> ds1  </span>
+<span id="cb162-8"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb162-8" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb162-9"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb162-9" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(ds<span class="sc">$</span>chamber,ds<span class="sc">$</span>party)</span></code></pre></div>
 <pre><code>##         
 ##            D   I   R
 ##   house  202   0 237
 ##   senate  57   2  46</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#</span>
-mytable &lt;-<span class="st"> </span><span class="kw">table</span>(ds<span class="op">$</span>chamber,ds<span class="op">$</span>party)
-<span class="co">#</span>
-<span class="kw">prop.table</span>(mytable) <span class="co"># cell percentages</span></code></pre></div>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb164-2"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb164-2" aria-hidden="true" tabindex="-1"></a>mytable <span class="ot">&lt;-</span> <span class="fu">table</span>(ds<span class="sc">$</span>chamber,ds<span class="sc">$</span>party)</span>
+<span id="cb164-3"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb164-3" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb164-4"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb164-4" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(mytable) <span class="co"># cell percentages</span></span></code></pre></div>
 <pre><code>##         
 ##                    D           I           R
 ##   house  0.371323529 0.000000000 0.435661765
 ##   senate 0.104779412 0.003676471 0.084558824</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">prop.table</span>(mytable, <span class="dv">1</span>) <span class="co"># row percentages</span></code></pre></div>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb166-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(mytable, <span class="dv">1</span>) <span class="co"># row percentages</span></span></code></pre></div>
 <pre><code>##         
 ##                   D          I          R
 ##   house  0.46013667 0.00000000 0.53986333
 ##   senate 0.54285714 0.01904762 0.43809524</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">prop.table</span>(mytable, <span class="dv">2</span>) <span class="co"># column percentages</span></code></pre></div>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb168-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(mytable, <span class="dv">2</span>) <span class="co"># column percentages</span></span></code></pre></div>
 <pre><code>##         
 ##                  D         I         R
 ##   house  0.7799228 0.0000000 0.8374558
 ##   senate 0.2200772 1.0000000 0.1625442</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ds <span class="op">%&gt;%</span><span class="st">  </span>janitor<span class="op">::</span><span class="kw">tabyl</span>(chamber, party)</code></pre></div>
+</div>
+<div id="janitor-package-tools" class="section level3 hasAnchor" number="8.1.2">
+<h3><span class="header-section-number">8.1.2</span> janitor package tools<a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#janitor-package-tools" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb170-1" aria-hidden="true" tabindex="-1"></a>ds <span class="sc">%&gt;%</span>  janitor<span class="sc">::</span><span class="fu">tabyl</span>(chamber, party)</span></code></pre></div>
 <pre><code>##  chamber   D I   R
 ##    house 202 0 237
 ##   senate  57 2  46</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#</span>
-t2 &lt;-<span class="st"> </span>ds <span class="op">%&gt;%</span><span class="st">  </span>janitor<span class="op">::</span><span class="kw">tabyl</span>(chamber, party)
-t2 <span class="op">%&gt;%</span>
-<span class="st">  </span>janitor<span class="op">::</span><span class="kw">adorn_percentages</span>(<span class="st">&quot;row&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span>janitor<span class="op">::</span><span class="kw">adorn_pct_formatting</span>(<span class="dt">digits =</span> <span class="dv">2</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span>janitor<span class="op">::</span><span class="kw">adorn_ns</span>()</code></pre></div>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb172-1" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb172-2"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb172-2" aria-hidden="true" tabindex="-1"></a>t2 <span class="ot">&lt;-</span> ds <span class="sc">%&gt;%</span>  janitor<span class="sc">::</span><span class="fu">tabyl</span>(chamber, party)</span>
+<span id="cb172-3"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb172-3" aria-hidden="true" tabindex="-1"></a>t2 <span class="sc">%&gt;%</span></span>
+<span id="cb172-4"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb172-4" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">adorn_percentages</span>(<span class="st">&quot;row&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb172-5"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb172-5" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">adorn_pct_formatting</span>(<span class="at">digits =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb172-6"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb172-6" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">adorn_ns</span>()</span></code></pre></div>
 <pre><code>##  chamber            D         I            R
 ##    house 46.01% (202) 0.00% (0) 53.99% (237)
 ##   senate 54.29%  (57) 1.90% (2) 43.81%  (46)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># column percentages</span>
-t2 <span class="op">%&gt;%</span>
-<span class="st">  </span>janitor<span class="op">::</span><span class="kw">adorn_percentages</span>(<span class="st">&quot;col&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span>janitor<span class="op">::</span><span class="kw">adorn_pct_formatting</span>(<span class="dt">digits =</span> <span class="dv">2</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span>janitor<span class="op">::</span><span class="kw">adorn_ns</span>()</code></pre></div>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb174-1" aria-hidden="true" tabindex="-1"></a><span class="co"># column percentages</span></span>
+<span id="cb174-2"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb174-2" aria-hidden="true" tabindex="-1"></a>t2 <span class="sc">%&gt;%</span></span>
+<span id="cb174-3"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb174-3" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">adorn_percentages</span>(<span class="st">&quot;col&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb174-4"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb174-4" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">adorn_pct_formatting</span>(<span class="at">digits =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb174-5"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb174-5" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">adorn_ns</span>()</span></code></pre></div>
 <pre><code>##  chamber            D           I            R
 ##    house 77.99% (202)   0.00% (0) 83.75% (237)
 ##   senate 22.01%  (57) 100.00% (2) 16.25%  (46)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># both row and column percentages</span>
-t2 <span class="op">%&gt;%</span>
-<span class="st">  </span>janitor<span class="op">::</span><span class="kw">adorn_percentages</span>(<span class="st">&quot;all&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span>janitor<span class="op">::</span><span class="kw">adorn_pct_formatting</span>(<span class="dt">digits =</span> <span class="dv">2</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span>janitor<span class="op">::</span><span class="kw">adorn_ns</span>()</code></pre></div>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb176-1" aria-hidden="true" tabindex="-1"></a><span class="co"># both row and column percentages</span></span>
+<span id="cb176-2"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb176-2" aria-hidden="true" tabindex="-1"></a>t2 <span class="sc">%&gt;%</span></span>
+<span id="cb176-3"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb176-3" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">adorn_percentages</span>(<span class="st">&quot;all&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb176-4"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb176-4" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">adorn_pct_formatting</span>(<span class="at">digits =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb176-5"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb176-5" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">adorn_ns</span>()</span></code></pre></div>
 <pre><code>##  chamber            D         I            R
 ##    house 37.13% (202) 0.00% (0) 43.57% (237)
 ##   senate 10.48%  (57) 0.37% (2)  8.46%  (46)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">congage &lt;-<span class="st"> </span>fivethirtyeight<span class="op">::</span>congress_age
-ds1 &lt;-<span class="st"> </span>congage <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(congress <span class="op">&gt;</span><span class="st"> </span><span class="dv">112</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(congress,chamber,state,party,incumbent,age) 
-<span class="co">#  We declare party and chamber as factor/categorical variables, and control their levels.</span>
-ds1 &lt;-<span class="st"> </span>ds1 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">party =</span> <span class="kw">factor</span>(party,<span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&quot;D&quot;</span>,<span class="st">&quot;I&quot;</span>,<span class="st">&quot;R&quot;</span>)),
-                    <span class="dt">chamber =</span> <span class="kw">factor</span>(chamber))
-ds1 &lt;-<span class="st"> </span>ds1 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">na.omit</span>()
-ds &lt;-<span class="st"> </span>ds1  
-ds <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(chamber,party) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">count</span>() <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span>tidyr<span class="op">::</span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> party, <span class="dt">values_from =</span> n)</code></pre></div>
-<pre><code>## # A tibble: 2 x 4
+</div>
+<div id="tidyverse-tools" class="section level3 hasAnchor" number="8.1.3">
+<h3><span class="header-section-number">8.1.3</span> tidyverse tools<a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#tidyverse-tools" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb178-1" aria-hidden="true" tabindex="-1"></a>congage <span class="ot">&lt;-</span> fivethirtyeight<span class="sc">::</span>congress_age</span>
+<span id="cb178-2"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb178-2" aria-hidden="true" tabindex="-1"></a>ds1 <span class="ot">&lt;-</span> congage <span class="sc">%&gt;%</span> <span class="fu">filter</span>(congress <span class="sc">&gt;</span> <span class="dv">112</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(congress,chamber,state,party,incumbent,age) </span>
+<span id="cb178-3"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb178-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  We declare party and chamber as factor/categorical variables, and control their levels.</span></span>
+<span id="cb178-4"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb178-4" aria-hidden="true" tabindex="-1"></a>ds1 <span class="ot">&lt;-</span> ds1 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">party =</span> <span class="fu">factor</span>(party,<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;D&quot;</span>,<span class="st">&quot;I&quot;</span>,<span class="st">&quot;R&quot;</span>)),</span>
+<span id="cb178-5"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb178-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">chamber =</span> <span class="fu">factor</span>(chamber))</span>
+<span id="cb178-6"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb178-6" aria-hidden="true" tabindex="-1"></a>ds1 <span class="ot">&lt;-</span> ds1 <span class="sc">%&gt;%</span> <span class="fu">na.omit</span>()</span>
+<span id="cb178-7"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb178-7" aria-hidden="true" tabindex="-1"></a>ds <span class="ot">&lt;-</span> ds1  </span>
+<span id="cb178-8"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb178-8" aria-hidden="true" tabindex="-1"></a>ds <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(chamber,party) <span class="sc">%&gt;%</span> </span>
+<span id="cb178-9"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb178-9" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb178-10"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb178-10" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(<span class="at">names_from =</span> party, <span class="at">values_from =</span> n)</span></code></pre></div>
+<pre><code>## # A tibble: 2 × 4
 ## # Groups:   chamber [2]
 ##   chamber     D     R     I
 ##   &lt;fct&gt;   &lt;int&gt; &lt;int&gt; &lt;int&gt;
 ## 1 house     202   237    NA
 ## 2 senate     57    46     2</code></pre>
 </div>
-<div id="graphical-displays" class="section level2">
-<h2><span class="header-section-number">8.2</span> Graphical Displays</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># basic bar plot of party affiliation</span>
-<span class="kw">ggplot</span>(<span class="dt">data=</span>ds, <span class="kw">aes</span>(<span class="dt">x=</span>party)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Party&quot;</span>, <span class="dt">y=</span><span class="st">&quot;Count&quot;</span>)</code></pre></div>
-<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-87-1.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ds &lt;-<span class="st"> </span>ds1 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(party,chamber)
-<span class="co">#</span>
-<span class="kw">ggplot</span>(<span class="dt">data=</span>ds, <span class="kw">aes</span>(<span class="dt">x=</span>chamber)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">fill=</span>party),<span class="dt">position=</span><span class="st">&quot;dodge&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Chamber&quot;</span>, <span class="dt">y=</span><span class="st">&quot;Count&quot;</span>)</code></pre></div>
-<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-88-1.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#</span>
-<span class="kw">ggplot</span>(<span class="dt">data=</span>ds, <span class="kw">aes</span>(<span class="dt">x=</span>party)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">fill=</span>party)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>chamber) <span class="op">+</span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Party&quot;</span>, <span class="dt">y=</span><span class="st">&quot;Count&quot;</span>)</code></pre></div>
-<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-88-2.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#  The next display attempts to use percentages on the vertical axis defined within chamber.</span>
-<span class="co"># This means the next command must list chamber as the FIRST group_by variable.</span>
-ds &lt;-<span class="st"> </span>ds1 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(chamber,party)  <span class="op">%&gt;%</span>
-<span class="st">   </span><span class="kw">summarise</span> (<span class="dt">n =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">pct =</span> <span class="dv">100</span><span class="op">*</span>n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n)) 
-<span class="co">#</span>
-ds</code></pre></div>
-<pre><code>## # A tibble: 5 x 4
+<div id="gtsummary-tools" class="section level3 hasAnchor" number="8.1.4">
+<h3><span class="header-section-number">8.1.4</span> gtsummary tools<a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#gtsummary-tools" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb180-1" aria-hidden="true" tabindex="-1"></a>congage <span class="ot">&lt;-</span> fivethirtyeight<span class="sc">::</span>congress_age</span>
+<span id="cb180-2"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb180-2" aria-hidden="true" tabindex="-1"></a>ds1 <span class="ot">&lt;-</span> congage <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(congress <span class="sc">&gt;</span> <span class="dv">112</span>) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(congress,chamber,state,party,incumbent,age) </span>
+<span id="cb180-3"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb180-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  We declare party and chamber as factor/categorical variables, and control their levels.</span></span>
+<span id="cb180-4"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb180-4" aria-hidden="true" tabindex="-1"></a>ds1 <span class="ot">&lt;-</span> ds1 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">party =</span> <span class="fu">factor</span>(party,<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;D&quot;</span>,<span class="st">&quot;I&quot;</span>,<span class="st">&quot;R&quot;</span>)),</span>
+<span id="cb180-5"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb180-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">chamber =</span> <span class="fu">factor</span>(chamber)) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(party,chamber)</span>
+<span id="cb180-6"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb180-6" aria-hidden="true" tabindex="-1"></a>ds1 <span class="sc">%&gt;%</span> </span>
+<span id="cb180-7"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb180-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb180-8"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb180-8" aria-hidden="true" tabindex="-1"></a>  gtsummary<span class="sc">::</span><span class="fu">tbl_summary</span>(</span>
+<span id="cb180-9"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb180-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> chamber,</span>
+<span id="cb180-10"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb180-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">statistic=</span>gtsummary<span class="sc">::</span><span class="fu">all_categorical</span>() <span class="sc">~</span> <span class="st">&quot;{n} / {N} ({p}%)&quot;</span>)</span></code></pre></div>
+<div id="frygqiwull" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#frygqiwull table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#frygqiwull thead, #frygqiwull tbody, #frygqiwull tfoot, #frygqiwull tr, #frygqiwull td, #frygqiwull th {
+  border-style: none;
+}
+
+#frygqiwull p {
+  margin: 0;
+  padding: 0;
+}
+
+#frygqiwull .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#frygqiwull .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#frygqiwull .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#frygqiwull .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#frygqiwull .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#frygqiwull .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#frygqiwull .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#frygqiwull .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#frygqiwull .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#frygqiwull .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#frygqiwull .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#frygqiwull .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#frygqiwull .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#frygqiwull .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#frygqiwull .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#frygqiwull .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#frygqiwull .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#frygqiwull .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#frygqiwull .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#frygqiwull .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#frygqiwull .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#frygqiwull .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#frygqiwull .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#frygqiwull .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#frygqiwull .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#frygqiwull .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#frygqiwull .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#frygqiwull .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#frygqiwull .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#frygqiwull .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#frygqiwull .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#frygqiwull .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#frygqiwull .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#frygqiwull .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#frygqiwull .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#frygqiwull .gt_left {
+  text-align: left;
+}
+
+#frygqiwull .gt_center {
+  text-align: center;
+}
+
+#frygqiwull .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#frygqiwull .gt_font_normal {
+  font-weight: normal;
+}
+
+#frygqiwull .gt_font_bold {
+  font-weight: bold;
+}
+
+#frygqiwull .gt_font_italic {
+  font-style: italic;
+}
+
+#frygqiwull .gt_super {
+  font-size: 65%;
+}
+
+#frygqiwull .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#frygqiwull .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#frygqiwull .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#frygqiwull .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#frygqiwull .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#frygqiwull .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#frygqiwull .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="&lt;strong&gt;Characteristic&lt;/strong&gt;"><strong>Characteristic</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="&lt;strong&gt;house&lt;/strong&gt;, N = 439&lt;span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/span&gt;"><strong>house</strong>, N = 439<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="&lt;strong&gt;senate&lt;/strong&gt;, N = 105&lt;span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/span&gt;"><strong>senate</strong>, N = 105<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span></th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="label" class="gt_row gt_left">party</td>
+<td headers="stat_1" class="gt_row gt_center"></td>
+<td headers="stat_2" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    D</td>
+<td headers="stat_1" class="gt_row gt_center">202 / 439 (46%)</td>
+<td headers="stat_2" class="gt_row gt_center">57 / 105 (54%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    I</td>
+<td headers="stat_1" class="gt_row gt_center">0 / 439 (0%)</td>
+<td headers="stat_2" class="gt_row gt_center">2 / 105 (1.9%)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    R</td>
+<td headers="stat_1" class="gt_row gt_center">237 / 439 (54%)</td>
+<td headers="stat_2" class="gt_row gt_center">46 / 105 (44%)</td></tr>
+  </tbody>
+  
+  <tfoot class="gt_footnotes">
+    <tr>
+      <td class="gt_footnote" colspan="3"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span> n / N (%)</td>
+    </tr>
+  </tfoot>
+</table>
+</div>
+</div>
+</div>
+<div id="graphical-displays" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">8.2</span> Graphical Displays<a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#graphical-displays" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb181-1" aria-hidden="true" tabindex="-1"></a><span class="co"># basic bar plot of party affiliation</span></span>
+<span id="cb181-2"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb181-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>ds, <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>party)) <span class="sc">+</span> </span>
+<span id="cb181-3"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb181-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb181-4"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb181-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Party&quot;</span>, <span class="at">y=</span><span class="st">&quot;Count&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-98-1.png" width="672" /></p>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb182-1" aria-hidden="true" tabindex="-1"></a>ds <span class="ot">&lt;-</span> ds1 <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(party,chamber)</span>
+<span id="cb182-2"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb182-2" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb182-3"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb182-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>ds, <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>chamber)) <span class="sc">+</span> </span>
+<span id="cb182-4"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb182-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">fill=</span>party),<span class="at">position=</span><span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span></span>
+<span id="cb182-5"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb182-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Chamber&quot;</span>, <span class="at">y=</span><span class="st">&quot;Count&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-99-1.png" width="672" /></p>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb183-1" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb183-2"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb183-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>ds, <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>party)) <span class="sc">+</span> </span>
+<span id="cb183-3"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb183-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">fill=</span>party)) <span class="sc">+</span></span>
+<span id="cb183-4"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb183-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>( <span class="sc">~</span> chamber) <span class="sc">+</span></span>
+<span id="cb183-5"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb183-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Party&quot;</span>, <span class="at">y=</span><span class="st">&quot;Count&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-99-2.png" width="672" /></p>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb184-1" aria-hidden="true" tabindex="-1"></a><span class="co">#  The next display attempts to use percentages on the vertical axis defined within chamber.</span></span>
+<span id="cb184-2"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb184-2" aria-hidden="true" tabindex="-1"></a><span class="co"># This means the next command must list chamber as the FIRST group_by variable.</span></span>
+<span id="cb184-3"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb184-3" aria-hidden="true" tabindex="-1"></a>ds <span class="ot">&lt;-</span> ds1 <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(chamber,party)  <span class="sc">%&gt;%</span></span>
+<span id="cb184-4"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb184-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">summarise</span> (<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb184-5"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb184-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pct =</span> <span class="dv">100</span><span class="sc">*</span>n <span class="sc">/</span> <span class="fu">sum</span>(n)) </span>
+<span id="cb184-6"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb184-6" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb184-7"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb184-7" aria-hidden="true" tabindex="-1"></a>ds</span></code></pre></div>
+<pre><code>## # A tibble: 5 × 4
 ## # Groups:   chamber [2]
 ##   chamber party     n   pct
 ##   &lt;fct&gt;   &lt;fct&gt; &lt;int&gt; &lt;dbl&gt;
@@ -318,37 +875,38 @@ ds</code></pre></div>
 ## 3 senate  D        57 54.3 
 ## 4 senate  I         2  1.90
 ## 5 senate  R        46 43.8</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#</span>
-<span class="kw">ggplot</span>(<span class="dt">data=</span>ds, <span class="kw">aes</span>(<span class="dt">x=</span>party, <span class="dt">y=</span>pct)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">fill=</span>party),<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>chamber) <span class="op">+</span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Party&quot;</span>, <span class="dt">y=</span><span class="st">&quot;Percent&quot;</span>)</code></pre></div>
-<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-89-1.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ds1 &lt;-<span class="st"> </span>congage <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(congress <span class="op">&gt;</span><span class="st"> </span><span class="dv">112</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(congress,chamber,state,party,incumbent,age) <span class="op">%&gt;%</span>
-<span class="st"> </span><span class="kw">mutate</span>(<span class="dt">party =</span> <span class="kw">factor</span>(party,<span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&quot;D&quot;</span>,<span class="st">&quot;I&quot;</span>,<span class="st">&quot;R&quot;</span>)),
-                    <span class="dt">chamber =</span> <span class="kw">factor</span>(chamber)) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">na.omit</span>()
-<span class="co">#</span>
-ds &lt;-<span class="st"> </span>ds1 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(chamber,party)  <span class="op">%&gt;%</span>
-<span class="st">   </span><span class="kw">summarise</span> (<span class="dt">n =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">pct =</span> <span class="dv">100</span><span class="op">*</span>n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n)) 
-<span class="co">#</span>
-<span class="kw">ggplot</span>(<span class="dt">data=</span>ds, <span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span>chamber,<span class="dt">y=</span>pct,<span class="dt">fill=</span>party)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_col</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Chamber&quot;</span>, <span class="dt">y=</span><span class="st">&quot;Percent&quot;</span>)</code></pre></div>
-<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-90-1.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ds1 &lt;-<span class="st"> </span>congage <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(congress <span class="op">&gt;</span><span class="st"> </span><span class="dv">112</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(congress,chamber,state,party,incumbent,age) <span class="op">%&gt;%</span>
-<span class="st"> </span><span class="kw">mutate</span>(<span class="dt">party =</span> <span class="kw">factor</span>(party,<span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&quot;D&quot;</span>,<span class="st">&quot;I&quot;</span>,<span class="st">&quot;R&quot;</span>)),
-                    <span class="dt">chamber =</span> <span class="kw">factor</span>(chamber)) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">na.omit</span>()
-<span class="co">#</span>
-ds1 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(chamber,party)  <span class="op">%&gt;%</span>
-<span class="st">   </span><span class="kw">summarise</span> (<span class="dt">n =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">pct =</span> <span class="dv">100</span><span class="op">*</span>n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n)) <span class="op">%&gt;%</span>
-<span class="kw">ggplot</span>( <span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span>chamber,<span class="dt">y=</span>pct,<span class="dt">fill=</span>party)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_col</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Chamber&quot;</span>, <span class="dt">y=</span><span class="st">&quot;Percent&quot;</span>)</code></pre></div>
-<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-91-1.png" width="672" /></p>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb186-1" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb186-2"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb186-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>ds, <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>party, <span class="at">y=</span>pct)) <span class="sc">+</span> </span>
+<span id="cb186-3"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb186-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">fill=</span>party),<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>) <span class="sc">+</span></span>
+<span id="cb186-4"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb186-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>( <span class="sc">~</span> chamber) <span class="sc">+</span></span>
+<span id="cb186-5"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb186-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Party&quot;</span>, <span class="at">y=</span><span class="st">&quot;Percent&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-100-1.png" width="672" /></p>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb187-1" aria-hidden="true" tabindex="-1"></a>ds1 <span class="ot">&lt;-</span> congage <span class="sc">%&gt;%</span> <span class="fu">filter</span>(congress <span class="sc">&gt;</span> <span class="dv">112</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(congress,chamber,state,party,incumbent,age) <span class="sc">%&gt;%</span></span>
+<span id="cb187-2"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb187-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">mutate</span>(<span class="at">party =</span> <span class="fu">factor</span>(party,<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;D&quot;</span>,<span class="st">&quot;I&quot;</span>,<span class="st">&quot;R&quot;</span>)),</span>
+<span id="cb187-3"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb187-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">chamber =</span> <span class="fu">factor</span>(chamber)) <span class="sc">%&gt;%</span> </span>
+<span id="cb187-4"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb187-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span>
+<span id="cb187-5"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb187-5" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb187-6"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb187-6" aria-hidden="true" tabindex="-1"></a>ds <span class="ot">&lt;-</span> ds1 <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(chamber,party)  <span class="sc">%&gt;%</span></span>
+<span id="cb187-7"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb187-7" aria-hidden="true" tabindex="-1"></a>   <span class="fu">summarise</span> (<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb187-8"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb187-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pct =</span> <span class="dv">100</span><span class="sc">*</span>n <span class="sc">/</span> <span class="fu">sum</span>(n)) </span>
+<span id="cb187-9"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb187-9" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb187-10"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb187-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>ds, <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>chamber,<span class="at">y=</span>pct,<span class="at">fill=</span>party)) <span class="sc">+</span> </span>
+<span id="cb187-11"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb187-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb187-12"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb187-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Chamber&quot;</span>, <span class="at">y=</span><span class="st">&quot;Percent&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-101-1.png" width="672" /></p>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb188-1" aria-hidden="true" tabindex="-1"></a>ds1 <span class="ot">&lt;-</span> congage <span class="sc">%&gt;%</span> <span class="fu">filter</span>(congress <span class="sc">&gt;</span> <span class="dv">112</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(congress,chamber,state,party,incumbent,age) <span class="sc">%&gt;%</span></span>
+<span id="cb188-2"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb188-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">mutate</span>(<span class="at">party =</span> <span class="fu">factor</span>(party,<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;D&quot;</span>,<span class="st">&quot;I&quot;</span>,<span class="st">&quot;R&quot;</span>)),</span>
+<span id="cb188-3"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb188-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">chamber =</span> <span class="fu">factor</span>(chamber)) <span class="sc">%&gt;%</span> </span>
+<span id="cb188-4"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb188-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span>
+<span id="cb188-5"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb188-5" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb188-6"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb188-6" aria-hidden="true" tabindex="-1"></a>ds1 <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(chamber,party)  <span class="sc">%&gt;%</span></span>
+<span id="cb188-7"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb188-7" aria-hidden="true" tabindex="-1"></a>   <span class="fu">summarise</span> (<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb188-8"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb188-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pct =</span> <span class="dv">100</span><span class="sc">*</span>n <span class="sc">/</span> <span class="fu">sum</span>(n)) <span class="sc">%&gt;%</span></span>
+<span id="cb188-9"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb188-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>., <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>chamber,<span class="at">y=</span>pct,<span class="at">fill=</span>party)) <span class="sc">+</span> </span>
+<span id="cb188-10"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb188-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb188-11"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb188-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb188-12"><a href="analysis-of-one-categorical-variable-by-another-categorical-variable.html#cb188-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Chamber&quot;</span>, <span class="at">y=</span><span class="st">&quot;Percent&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown-R-Essentials_files/figure-html/unnamed-chunk-102-1.png" width="672" /></p>
 
 </div>
 </div>
@@ -362,7 +920,6 @@ ds1 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">grou
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -381,6 +938,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -401,6 +959,10 @@ gitbook.start({
 "text": null
 },
 "download": ["bookdown-R-Essentials.pdf", "bookdown-R-Essentials.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }
